@@ -1,6 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400);
 body {
 	margin: 0;
-	font-family: 'Helvetica Neue', 'Helvetica', 'Roboto', 'Segoe UI', 'Segoe', 'Arial', sans-serif;
+	font-family: 'Open Sans', 'Helvetica', 'Roboto', 'Segoe UI', 'Segoe', 'Arial', sans-serif;
 	background: #3934B9;
 }
 .center-box {
@@ -71,9 +72,11 @@ body {
 	border: 0;
 	color: #fff;
 	background: #29A6FF;
-	padding: 5px;
+	padding: 4.5px;
 	box-sizing: border-box;
 	width: 94px;
+	text-transform: uppercase;
+	font-weight: 600;
 }
 #tidy-btn:active {
 	background: #fff;
