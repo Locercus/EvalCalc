@@ -33,7 +33,7 @@ function inputHandle() {
 
 		
 		if(answer != "undefined") {
-			var tex = texHotfixes(output.toTex());
+			var tex = generateTeX(output);
 
 			var infinite = answer.match(/^(\d*)\.(?:([1-4])\2+$|(5)5+6|(6)6+7)|(7)7+8|(8)8+9$/);
 			var fractionInfinite = answer.match(/^\d*\.(?:(\d)\1*(?!\1+)\d+|[0-4]+)$/);
@@ -95,12 +95,4 @@ function inputHandle() {
 	else {
 		$('#output').addClass('error');
 	}
-}
-
-function texHotfixes(tex) {
-	// Degree symbol
-	// replaces \deg and a leading \cdot if one is in place
-	tex = tex.replace(/( +\\cdot +)?{?(\\deg)}?/g, "^{\\circ}");
-
-	return tex;
 }
