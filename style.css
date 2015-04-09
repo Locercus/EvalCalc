@@ -47,6 +47,7 @@ body {
 	font: inherit;
 	font-size: 28px;
 	padding: 5px;
+	padding-right: 70px;
 	border: none;
 	background: #29A6FF;
 	color: #fff;
@@ -70,7 +71,10 @@ body {
 	border: 0;
 	color: #fff;
 	background: #29A6FF;
+	padding: 5px;
 	height: 47px;
+	box-sizing: border-box;
+	width: 64px;
 }
 #tidy-btn:active {
 	background: #fff;
