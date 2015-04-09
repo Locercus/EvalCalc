@@ -57,10 +57,11 @@ function inputHandle() {
 					fraction = "= \\frac{" + fractionArr[1] + "}{" + fractionArr[2] + "}";
 			}
 
-			if(!infinite)
-				exact = "= " + answer;
-			else
-				exact = "= " + answer.substr(0, baseLengthLiteral + 1) + "\\bar{" + answer.substr(baseLengthLiteral + 1, 1) + "}";
+			if(value.indexOf("=") === -1)
+				if(!infinite)
+					exact = "= " + answer;
+				else
+					exact = "= " + answer.substr(0, baseLengthLiteral + 1) + "\\bar{" + answer.substr(baseLengthLiteral + 1, 1) + "}";
 
 
 			var rounded = math.format(eval, {precision: Math.min(3 + baseLength, 13)});
