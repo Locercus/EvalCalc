@@ -57,7 +57,7 @@ function inputHandle() {
 					fraction = "= \\frac{" + fractionArr[1] + "}{" + fractionArr[2] + "}";
 			}
 
-			if(value.indexOf("=") === -1) {
+			if(value.indexOf("=") === -1 || !value.match(/^(?:[a-z] *= *[0-9.]+|[0-9.]+ *= *[a-z])$/i)) { // If there's no equals sign, or there's no math involved in a variable (definition)
 				if(!infinite)
 					exact = "= " + answer;
 				else
