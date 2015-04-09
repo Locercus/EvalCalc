@@ -37,12 +37,6 @@ body {
 	display: flex;
 	border-bottom: 1px solid #fff;
 }
-.variable::before {
-	content: attr(data-key);
-	width: 100%;
-	box-sizing: border-box;
-	text-align: center;
-}
 .variable .variable-render {
 	position: relative;
 	width: 100%;
