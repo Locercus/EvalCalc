@@ -61,6 +61,26 @@ body {
 	-webkit-box-shadow: 0 3px 10px 0 rgba(0,0,0,0.2);
 	box-shadow: 0 3px 10px 0 rgba(0,0,0,0.2);
 }
+#tidy-btn {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font: inherit;
+	font-size: 20px;
+	border: 0;
+	color: #fff;
+	background: #29A6FF;
+	height: 47px;
+}
+#tidy-btn:active {
+	background: #fff;
+	color: #29a6ff;
+}
+#tidy-btn:focus {
+	outline: none;
+	border-left: 1px solid #fff;
+}
+
 #output {
 	height: calc(100% - 38px);
 	width: 100%;
