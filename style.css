@@ -47,7 +47,7 @@ body {
 	font: inherit;
 	font-size: 28px;
 	padding: 5px;
-	padding-right: 70px;
+	padding-right: 100px;
 	border: none;
 	background: #29A6FF;
 	color: #fff;
@@ -67,14 +67,13 @@ body {
 	bottom: 0;
 	right: 0;
 	font: inherit;
-	font-size: 20px;
+	font-size: 28px;
 	border: 0;
 	color: #fff;
 	background: #29A6FF;
 	padding: 5px;
-	height: 47px;
 	box-sizing: border-box;
-	width: 64px;
+	width: 94px;
 }
 #tidy-btn:active {
 	background: #fff;
@@ -82,7 +81,6 @@ body {
 }
 #tidy-btn:focus {
 	outline: none;
-	border-left: 1px solid #fff;
 }
 
 #output {
