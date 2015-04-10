@@ -12,8 +12,6 @@ var degRadVal = "nul";
 		variableRemoveListeners.push(f);
 	}
 	callRemoveVariable = function(k) {
-		console.log("removing variable " + k );
-		console.log("Listeners: ", variableRemoveListeners);
 		for( var i in variableRemoveListeners ) {
 			try {
 				variableRemoveListeners[i](k);
@@ -92,24 +90,73 @@ $(document).ready(function(){
 		var touchStartX = 0;
 		var touchX = 0;
 		variable.on('touchstart', function(e){
-			touchStartX = e.pageX - variable.offset().left;
+			touchStartX = e.originalEvent.touches[0].pageX - variable.offset().left;
 			touchX = 0;
 			touching = true;
-			toast("Touch Start");
 		});
 		$(document).on('touchmove', function(e){
 			if( touching ) {
 				if( variable.scrollLeft() <= 0 ) {
 					e.preventDefault();
-					touchX = e.pageX - variable.offset().left - touchStartX;
+					var px = e.originalEvent.touches[0].pageX;
+					touchX = px - $("#variables").offset().left - touchStartX;
+					if( touchX < 0 ) {
+						touchX = -Math.pow(Math.abs(touchX), 1/1.2);
+					}
+					variable.css('-webkit-transform','translateX(' + touchX + 'px)');
+					variable.css('-o-transform','translateX(' + touchX + 'px)');
 					variable.css('transform','translateX(' + touchX + 'px)');
+					if( touchX > $("#variables").width() / 2 ) {
+						variable.addClass('removePotential');
+					} else {
+						variable.removeClass('removePotential');
+					}
 				}
 			}
 		}).on('touchend', function(e){
 			if( touching ) {
 				touching = false;
-				
+				if( touchX < 0 || touchX < $("#variables").width() / 2 ) {
+					variable.css({
+						'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1)',
+						'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1)',
+						'transition': 'transform .3s cubic-bezier(.2,.3,0,1)'
+					});
+					reqFrame(function(){
+						function tEnd() {
+							variable.off('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
+							variable.css({
+								'-webkit-transition': '',
+								'-o-transition': '',
+								'transition': ''
+							});
+						}
+						variable.css({
+							'-webkit-transform': '',
+							'-o-transform': '',
+							'transform': ''
+						}).on('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
+					});
+				} else {
+					variable.css({
+						'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1)',
+						'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1)',
+						'transition': 'transform .3s cubic-bezier(.2,.3,0,1)'
+					});
+					reqFrame(function(){
+						function tEnd() {
+							variable.off('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
+							variable.remove();
+							callRemoveVariable(variable.data('key'));
+						}
+						variable.css({
+							'-webkit-transform': 'translateX(100%)',
+							'-o-transform': 'translateX(100%)',
+							'transform': 'translateX(100%)'
+						}).on('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
+					});
+				}
 			}
-		})
+		});
 	}
 });

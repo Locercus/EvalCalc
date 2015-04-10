@@ -170,6 +170,9 @@ body {
 	padding-left: 20px;
 	overflow-x: auto;
 }
+.variable.removePotential {
+	background: #ec385e;
+}
 .variable .variable-render {
 	position: relative;
 	width: 100%;
