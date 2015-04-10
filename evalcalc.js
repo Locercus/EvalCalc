@@ -44,6 +44,9 @@ $(document).ready(function(){
 		}
 
 		if(valid) {
+			if(output === 'undefined')
+				output = '';
+
 			input.val(output);
 		}
 	});
