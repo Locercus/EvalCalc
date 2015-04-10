@@ -21,9 +21,9 @@ $('#input').keydown(function(e) {
 		}
 
 		if(valid) {
-			oldScope = $.extend({}, scope);
+			updateVariables(scope, oldScope);
 
-			updateVariables(scope);
+			oldScope = $.extend({}, scope);
 		}
 	}
 });
@@ -141,6 +141,91 @@ function inputHandle() {
 	}
 }
 
-function updateVariables(scope) {
-	// TODO: Update #variables
+function updateVariables(scope, oldScope) {
+	scope = sortObjectByKey(scope);
+
+	$.each(scope, function(variable, value) {
+		var type = typeof value;
+		var variableName = variable;
+
+		if(type === 'function') {
+			value = 'u n i m p l e m e n t e d';
+			variableName = variable;
+		}
+
+		if(oldScope[variable] === undefined) { // Adding new variable
+			var el = $('<div></div>');
+
+			el.addClass('variable');
+			el.attr('data-key', variable);
+			el.attr('data-value', value);
+			el.attr('data-type', type);
+
+			el.html('<div class="variable-render"></div>');
+
+			// Insert the div into #variables, sorted by data-key
+			var otherVars = $("#variables>div");
+
+			if(otherVars.length) {
+				otherVars = otherVars.get().reverse();
+				var inserted = false;
+
+				$.each(otherVars, function() {
+					if($(this).attr('data-key').charCodeAt(0) < variable.charCodeAt(0)) {
+						el.insertAfter(this);
+						inserted = true;
+
+						return false;
+					}
+				});
+
+				if(!inserted)
+					$('#variables').append(el);
+			}
+			else {
+				$('#variables').prepend(el);
+			}
+
+			var el = $('#variables>div[data-key=' + variable + ']')[0];
+
+			var tex = generateTeX(math.parse(variableName + " = " + value), null);
+
+			katex.render(tex, el, {displayMode: true});
+		}
+		else { // Updating old variable
+			var el = $('#variables>div[data-key=' + variable + ']');
+
+			el.attr('data-value', value);
+
+			var tex = generateTeX(math.parse(variableName + " = " + value), null);
+
+			katex.render(tex, el[0], {displayMode: true});
+		}
+	});
+}
+
+/**
+ * Return an Object sorted by it's Key
+ *
+ * From: http://stackoverflow.com/a/12834464/1248084
+ */
+function sortObjectByKey(obj){
+	var keys = [];
+	var sorted_obj = {};
+
+	for(var key in obj) {
+		if(obj.hasOwnProperty(key)) {
+			keys.push(key);
+		}
+	}
+
+	// Sort keys
+	keys.sort();
+
+	// Create new array based on sorted keys
+	jQuery.each(keys, function(i, key) {
+		sorted_obj[key] = obj[key];
+	});
+
+	return sorted_obj;
 }
