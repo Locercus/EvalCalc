@@ -67,6 +67,10 @@ body {
 #controls:hover > * {
 	opacity: 1;
 }
+#controls:hover.pending > * {
+	opacity: .5;
+	pointer-events: none;
+}
 #variables.hidden {
 	-webkit-transform: translateX(20vw) translateY(-50%);
 	-ms-transform: translateX(20vw) translateY(-50%);
