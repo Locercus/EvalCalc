@@ -161,7 +161,7 @@ function generateTeX(node, parent) {
 
 			switch(node.fn) {
 				case 'add': {
-					if(parent !== null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
+					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
 						return '\\left(' + args[0] + " + " + args[1] + "\\right)";
 					else
 						return args[0] + " + " + args[1];
@@ -178,7 +178,7 @@ function generateTeX(node, parent) {
 					return args[0] + ' \\cdot ' + args[1];
 				}
 				case 'subtract': {
-					if(parent !== null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
+					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
 						return '\\left(' + args[0] + " - " + args[1] + "\\right)";
 					else
 						return args[0] + " - " + args[1];

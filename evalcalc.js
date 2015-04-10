@@ -1,8 +1,31 @@
 var inputLastPress;
+var scope = {}; // Stored variables
+var oldScope = {}; // We reset the scope unless the user clicks enter
 
 $('#input').on('input', function() {
 	clearTimeout(inputLastPress);
-	inputLastPress = setTimeout(inputHandle, 150); // 150ms delay between keystrokes before calculations. Increase if this causes lag
+	inputLastPress = setTimeout(inputHandle, 300); // 300ms delay between keystrokes before calculations. Increase if this causes lag
+});
+
+$('#input').keydown(function(e) {
+	if(e.which === 13) {
+		var value = $('#input').val();
+		var output, eval;
+		var valid = true;
+
+		try {
+			output = math.parse(value);
+			eval = output.compile(math).eval(scope);
+		} catch(e) {
+			valid = false;
+		}
+
+		if(valid) {
+			oldScope = $.extend({}, scope);
+
+			updateVariables(scope);
+		}
+	}
 });
 
 function inputHandle() {
@@ -12,7 +35,7 @@ function inputHandle() {
 
 	try {
 		output = math.parse(value);
-		eval = output.compile(math).eval();
+		eval = output.compile(math).eval(scope);
 	} catch(e) {
 		valid = false;
 	}
@@ -88,12 +111,18 @@ function inputHandle() {
 				katex.render(approx, $('#outputApprox')[0], {displayMode: true});
 			else
 				$('#outputApprox').html('');
-		}
-		else {
-			$('output').html('');
+
+
+
+			// Reset variables to how it was before
+			scope = $.extend({}, oldScope); // Clone, JavaScript is silly
 		}
 	}
 	else {
 		$('#output').addClass('error');
 	}
+}
+
+function updateVariables(scope) {
+	// TODO: Update #variables
 }
