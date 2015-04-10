@@ -27,6 +27,7 @@ $(document).ready(function(){
 			value = $(this).find('.toggle-item:last-child').attr('value');
 		}
 		setAngles(value);
+		inputHandle();
 		storage.data.degrad = value;
 		$(this).attr('value', value );
 	});
