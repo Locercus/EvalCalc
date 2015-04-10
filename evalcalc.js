@@ -177,11 +177,6 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 	});
 
 
-
-
-
-
-
 	$.each(scope, function(variable, value) {
 		var type = typeof value;
 		var fullString = variable + " = " + value.toString();
@@ -243,6 +238,9 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
 		}
 	});
+
+	// Call the UI equivalent of this function, that updates event listeners
+	rebindVariables();
 }
 
 /**
