@@ -12,7 +12,7 @@ body {
 }
 @media (min-width: 700px) {
 	.center-box {
-		width: 60vw;
+		width: 77.5vw;
 		height: 600px;
 		max-height: 100%;
 		top: 50%;
@@ -25,7 +25,7 @@ body {
 	}
 }
 #calculator {
-	right: 20vw;
+	right: 2.5vw;
 }
 #variables, #controls {
 	left: 0;
@@ -41,6 +41,31 @@ body {
 	right: 0;
 	padding: 10px;
 	box-sizing: border-box;
+	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
+	transition: transform .3s cubic-bezier(.2,.3,0,1);
+	-webkit-transform-origin: 100% 50%;
+	-moz-transform-origin: 100% 50%;
+	-ms-transform-origin: 100% 50%;
+	-o-transform-origin: 100% 50%;
+	transform-origin: 100% 50%;
+	-webkit-transform: translate(17.5vw, -50%);
+	-ms-transform: translate(17.5vw, -50%);
+	-o-transform: translate(17.5vw, -50%);
+	transform: translate(17.5vw, -50%);
+	z-index: 5;
+}
+#controls > * {
+	opacity: 0;
+}
+#controls:hover {
+	-webkit-transform: translate(0, -50%);
+	-ms-transform: translate(0, -50%);
+	-o-transform: translate(0, -50%);
+	transform: translate(0, -50%);
+}
+#controls:hover > * {
+	opacity: 1;
 }
 #variables.hidden {
 	-webkit-transform: translateX(20vw) translateY(-50%);
