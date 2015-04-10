@@ -217,7 +217,7 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 				$('#variables').prepend(el);
 			}
 
-			var el = $('#variables>div[data-key=' + variable + ']')[0];
+			var el = $('#variables>div[data-key=' + variable + ']>.variable-render')[0];
 
 			var tex = generateTeX(math.parse(fullString), null);
 
@@ -230,7 +230,7 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 
 			var tex = generateTeX(math.parse(fullString), null);
 
-			katex.render(tex, el[0], {displayMode: true});
+			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
 		}
 	});
 }
