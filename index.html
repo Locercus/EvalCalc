@@ -11,12 +11,21 @@
 		<script src="libraries/math.js"></script>
 		<script src="libraries/katex/katex.min.js"></script>
 		<script src="libraries/fraction.js"></script>
+		<script src="storage.js"></script>
 		<script src="toast.js"></script>
 		<script src="tex.js"></script>
+		<script src="ui.js"></script>
 	</head>
 	<body>
 		<div id="variables" class="center-box"></div>
-		<div id="controls" class="center-box"></div>
+		<div id="controls" class="center-box">
+			<button id="ctrl-degrad" class="toggle-button" value="rad">
+				<div class="toggle-slider">
+					<div class="toggle-item" value="rad">Rad</div>
+					<div class="toggle-item" value="deg">Deg</div>
+				</div>
+			</button>
+		</div>
 		<div id="calculator" class="center-box">
 			<div id="output">
 				<div id="outputMath"></div>
