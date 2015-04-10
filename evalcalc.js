@@ -1,6 +1,6 @@
 var inputLastPress;
 
-$('#input').on('input keydown', function() {
+$('#input').on('input', function() {
 	clearTimeout(inputLastPress);
 	inputLastPress = setTimeout(inputHandle, 150); // 150ms delay between keystrokes before calculations. Increase if this causes lag
 });
@@ -34,6 +34,7 @@ function inputHandle() {
 		
 		if(answer != "undefined") {
 			var tex = generateTeX(output);
+			console.log(tex);
 
 			var infinite = answer.match(/^(\d*)\.(?:([1-4])\2+$|(5)5+6|(6)6+7)|(7)7+8|(8)8+9$/);
 			var fractionInfinite = answer.match(/^\d*\.(?:(\d)\1*(?!\1+)\d+|[0-4]+)$/);
@@ -58,6 +59,7 @@ function inputHandle() {
 			}
 
 			if(value.indexOf("=") === -1 || !value.match(/^(?:[a-z] *= *[0-9.]+|[0-9.]+ *= *[a-z])$/i)) { // If there's no equals sign, or there's no math involved in a variable (definition)
+				// TODO: Change this to a recursive loop that checks output to see if everything's AssignmentNodes or the like
 				if(!infinite)
 					exact = "= " + answer;
 				else
