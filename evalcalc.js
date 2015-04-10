@@ -1,6 +1,7 @@
 var inputLastPress;
 var scope = {}; // Stored variables
 var oldScope = {}; // We reset the scope unless the user clicks enter
+var stringScope = {}; // Sometimes the data types math.js provides just aren't good enough. This is the case for functions for example.
 
 $(document).ready(function(){
 	$('#input').on('input', function() {
@@ -22,7 +23,7 @@ $(document).ready(function(){
 			}
 
 			if(valid) {
-				updateVariables(scope, oldScope);
+				updateVariables(scope, oldScope, stringScope, output);
 
 				oldScope = $.extend({}, scope);
 			}
@@ -151,16 +152,33 @@ function inputHandle() {
 	$('#output').toggleClass('empty', isEmpty);
 }
 
-function updateVariables(scope, oldScope) {
+function updateVariables(scope, oldScope, stringScope, parse) {
 	scope = sortObjectByKey(scope);
+
+
+	// Find all FunctionAssignmentNodes in parse
+	parse.traverse(function(node) {
+		if(node.type === 'FunctionAssignmentNode') {
+			stringScope[node.name] = [
+				node.params.join(', '),
+				node.expr.toString()
+			];
+		}
+	});
+
+
+
+
+
+
 
 	$.each(scope, function(variable, value) {
 		var type = typeof value;
-		var variableName = variable;
+		var fullString = variable + " = " + value.toString();
 
 		if(type === 'function') {
-			value = 'u n i m p l e m e n t e d';
-			variableName = variable;
+			fullString = variable + "(" + stringScope[variable][0] + ") = " + stringScope[variable][1];
+			value = stringScope[variable][1];
 		}
 
 		if(oldScope[variable] === undefined) { // Adding new variable
@@ -171,7 +189,10 @@ function updateVariables(scope, oldScope) {
 			el.attr('data-value', value);
 			el.attr('data-type', type);
 
-			el.html('<div class="variable-render"></div>');
+			el.html(
+				'<div class="variable-remove"></div>' +
+				'<div class="variable-render"></div>'
+			);
 
 			// Insert the div into #variables, sorted by data-key
 			var otherVars = $("#variables>div");
@@ -198,7 +219,7 @@ function updateVariables(scope, oldScope) {
 
 			var el = $('#variables>div[data-key=' + variable + ']')[0];
 
-			var tex = generateTeX(math.parse(variableName + " = " + value), null);
+			var tex = generateTeX(math.parse(fullString), null);
 
 			katex.render(tex, el, {displayMode: true});
 		}
@@ -207,7 +228,7 @@ function updateVariables(scope, oldScope) {
 
 			el.attr('data-value', value);
 
-			var tex = generateTeX(math.parse(variableName + " = " + value), null);
+			var tex = generateTeX(math.parse(fullString), null);
 
 			katex.render(tex, el[0], {displayMode: true});
 		}
