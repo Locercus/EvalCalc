@@ -1,5 +1,26 @@
 var addedVariable = function(){};
 var onVariableRemove = function(){};
+var callRemoveVariable = function(){};
+(function(){
+	var variableRemoveListeners = [];
+	onVariableRemove = function(f) {
+		if( typeof f != 'function' ) {
+			throw new Error("Argument 0 must be a function");
+		}
+		variableRemoveListeners.push(f);
+	}
+	callRemoveVariable = function(k) {
+		console.log("removing variable " + k );
+		console.log("Listeners: ", variableRemoveListeners);
+		for( var i in variableRemoveListeners ) {
+			try {
+				variableRemoveListeners[i](k);
+			} catch(baby) {
+				throw baby;
+			}
+		}
+	}
+})();
 $(document).ready(function(){
 	var reqFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(f){setTimeout(f,17)};
 	
@@ -31,23 +52,6 @@ $(document).ready(function(){
 		storage.data.degrad = value;
 		$(this).attr('value', value );
 	});
-	
-	var variableRemoveListeners = [];
-	onVariableRemove = function(f) {
-		if( typeof f != 'function' ) {
-			throw new Error("Argument 0 must be a function");
-		}
-		variableRemoveListeners.push(f);
-	}
-	var callRemoveVariable = function(k) {
-		for( var i in variableRemoveListeners ) {
-			try {
-				variableRemoveListeners[i](k);
-			} catch(baby) {
-				throw baby;
-			}
-		}
-	}
 	
 	var eventVariableRemoveClick = function(e) {
 		var variable = $(this).parent();
