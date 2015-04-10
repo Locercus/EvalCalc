@@ -1,7 +1,23 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400);
+@font-face {
+	font-family: 'Maven Pro';
+	font-weight: 400;
+	src: url(assets/fonts/maven-pro-regular.woff2) format('woff2'),
+		url(assets/fonts/maven-pro-regular.woff) format('woff'),
+		url(assets/fonts/maven-pro-regular.ttf) format('ttf'),
+		url(assets/fonts/maven-pro-regular.svg) format('svg');
+}
+@font-face {
+	font-family: 'Maven Pro';
+	font-weight: 500;
+	src: url(assets/fonts/maven-pro-medium.woff2) format('woff2'),
+		url(assets/fonts/maven-pro-medium.woff) format('woff'),
+		url(assets/fonts/maven-pro-medium.ttf) format('ttf'),
+		url(assets/fonts/maven-pro-medium.svg) format('svg');
+}
+
 body {
 	margin: 0;
-	font-family: 'Open Sans', 'Helvetica', 'Roboto', 'Segoe UI', 'Segoe', 'Arial', sans-serif;
+	font-family: 'Maven Pro', 'Helvetica', 'Roboto', 'Segoe UI', 'Segoe', 'Arial', sans-serif;
 	background: #3934B9;
 }
 .center-box {
@@ -161,7 +177,7 @@ body {
 
 #input {
 	width: 100%;
-	font-family: 'Monaco', 'Source Code Pro', 'Consolas', monospace;
+	font-family: inherit;
 	font-size: 28px;
 	padding: 5px;
 	padding-right: 100px;
@@ -184,7 +200,7 @@ body {
 	bottom: 0;
 	right: 0;
 	font: inherit;
-	font-size: 20px;
+	font-size: 28px;
 	border: 0;
 	color: #fff;
 	background: #29A6FF;
@@ -192,7 +208,7 @@ body {
 	box-sizing: border-box;
 	width: 94px;
 	text-transform: uppercase;
-	font-weight: 600;
+	font-weight: 500;
 }
 #tidy-btn:active {
 	background: #fff;
@@ -234,6 +250,10 @@ body {
 /* TODO: .empty */
 #output.error.empty::before {
 	content: "error";
+}
+
+button {
+	cursor: pointer;
 }
 
 .toggle-button {
