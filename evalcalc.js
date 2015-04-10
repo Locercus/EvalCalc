@@ -2,48 +2,50 @@ var inputLastPress;
 var scope = {}; // Stored variables
 var oldScope = {}; // We reset the scope unless the user clicks enter
 
-$('#input').on('input', function() {
-	clearTimeout(inputLastPress);
-	inputLastPress = setTimeout(inputHandle, 300); // 300ms delay between keystrokes before calculations. Increase if this causes lag
-});
+$(document).ready(function(){
+	$('#input').on('input', function() {
+		clearTimeout(inputLastPress);
+		inputLastPress = setTimeout(inputHandle, 300); // 300ms delay between keystrokes before calculations. Increase if this causes lag
+	});
 
-$('#input').keydown(function(e) {
-	if(e.which === 13) {
-		var value = $('#input').val();
+	$('#input').keydown(function(e) {
+		if(e.which === 13) {
+			var value = $('#input').val();
+			var output, eval;
+			var valid = true;
+
+			try {
+				output = math.parse(value);
+				eval = output.compile(math).eval(scope);
+			} catch(e) {
+				valid = false;
+			}
+
+			if(valid) {
+				updateVariables(scope, oldScope);
+
+				oldScope = $.extend({}, scope);
+			}
+		}
+	});
+
+	$('#tidy-btn').click(function() {
+		var input = $('#input');
+		var value = input.val();
+
 		var output, eval;
 		var valid = true;
 
 		try {
-			output = math.parse(value);
-			eval = output.compile(math).eval(scope);
+			output = math.parse(value).toString();
 		} catch(e) {
 			valid = false;
 		}
 
 		if(valid) {
-			updateVariables(scope, oldScope);
-
-			oldScope = $.extend({}, scope);
+			input.val(output);
 		}
-	}
-});
-
-$('#tidy-btn').click(function() {
-	var input = $('#input');
-	var value = input.val();
-
-	var output, eval;
-	var valid = true;
-
-	try {
-		output = math.parse(value).toString();
-	} catch(e) {
-		valid = false;
-	}
-
-	if(valid) {
-		input.val(output);
-	}
+	});
 });
 
 function inputHandle() {
