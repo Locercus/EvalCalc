@@ -1,6 +1,8 @@
 var addedVariable = function(){};
 var onVariableRemove = function(){};
 var callRemoveVariable = function(){};
+
+var degRadVal = "nul";
 (function(){
 	var variableRemoveListeners = [];
 	onVariableRemove = function(f) {
@@ -30,12 +32,12 @@ $(document).ready(function(){
 		if( storage.data.degrad ) {
 			if( storage.data.degrad == "deg" ) {
 				$(".toggle-button").addClass('switch').attr('value','deg');
-				setAngles("deg");
+				degRadVal = "deg";
 			} else {
-				setAngles("rad");
+				degRadVal = "rad";
 			}
 		} else {
-			setAngles("rad");
+			degRadVal = "rad";
 		}
 	});
 	initStorage();
@@ -79,15 +81,32 @@ $(document).ready(function(){
 		});
 	}
 	
-	var eventVariableTouchStart = function(e){
-		
-	}
-	
 	addedVariable = function(obj) {
 		if( typeof obj != 'object' ) {
 			throw new Error("Argument 0 must be an object");
 		}
 		var variable = $(obj);
 		variable.find(".variable-remove").on('click', eventVariableRemoveClick);
+		
+		var touching = false;
+		var touchStartX = 0;
+		var touchX = 0;
+		variable.on('touchstart', function(e){
+			touchStartX = e.pageX - variable.offset().left;
+			touchX = 0;
+			touching = true;
+		});
+		$(document).on('touchmove', function(e){
+			if( touching ) {
+				if( variable.scrollLeft() <= 0 ) {
+					touchX = e.pageX - variable.offset().left - touchStartX;
+				}
+			}
+		}).on('touchend', function(e){
+			if( touching ) {
+				touching = false;
+				
+			}
+		})
 	}
 });
