@@ -28,6 +28,24 @@ $('#input').keydown(function(e) {
 	}
 });
 
+$('#tidy-btn').click(function() {
+	var input = $('#input');
+	var value = input.val();
+
+	var output, eval;
+	var valid = true;
+
+	try {
+		output = math.parse(value).toString();
+	} catch(e) {
+		valid = false;
+	}
+
+	if(valid) {
+		input.val(output);
+	}
+});
+
 function inputHandle() {
 	var value = $('#input').val();
 	var output, eval;
