@@ -24,7 +24,8 @@ var toast = function(text) {
 		'transform': 'scale(.7)',
 		'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1), opacity .3s',
 		'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1), opacity .3s',
-		'transition': 'transform .3s cubic-bezier(.2,.3,0,1), opacity .3s'
+		'transition': 'transform .3s cubic-bezier(.2,.3,0,1), opacity .3s',
+		'z-index': 999
 	});
 	var tHeight = toast.outerHeight();
 	$(".toast").each(function(){
