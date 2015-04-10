@@ -49,7 +49,7 @@ $(document).ready(function(){
 		if( $(this).hasClass('switch')) {
 			value = $(this).find('.toggle-item:last-child').attr('value');
 		}
-		setAngles(value);
+		degRadVal = value;
 		inputHandle();
 		storage.data.degrad = value;
 		$(this).attr('value', value );
@@ -95,11 +95,14 @@ $(document).ready(function(){
 			touchStartX = e.pageX - variable.offset().left;
 			touchX = 0;
 			touching = true;
+			toast("Touch Start");
 		});
 		$(document).on('touchmove', function(e){
 			if( touching ) {
 				if( variable.scrollLeft() <= 0 ) {
+					e.preventDefault();
 					touchX = e.pageX - variable.offset().left - touchStartX;
+					variable.css('transform','translateX(' + touchX + 'px)');
 				}
 			}
 		}).on('touchend', function(e){
