@@ -101,8 +101,15 @@ function inputHandle() {
 					fraction = "= \\frac{" + fractionArr[1] + "}{" + fractionArr[2] + "}";
 			}
 
-			if(value.indexOf("=") === -1 || !value.match(/^(?:[a-z] *= *[0-9.]+|[0-9.]+ *= *[a-z])$/i)) { // If there's no equals sign, or there's no math involved in a variable (definition)
-				// TODO: Change this to a recursive loop that checks output to see if everything's AssignmentNodes or the like
+			var isAssignments = false;
+			output.traverse(function(node) {
+				if(node.type === 'FunctionAssignmentNode' || node.type === 'AssignmentNode') {
+					isAssignments = true;
+					return false;
+				}
+			});
+
+			if(!isAssignments) {
 				if(!infinite)
 					exact = "= " + answer;
 				else
