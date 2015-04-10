@@ -41,7 +41,7 @@ body {
 #controls {
 	left: auto;
 	right: 0;
-	padding: 10px;
+	padding: 7.5px;
 	box-sizing: border-box;
 	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
 	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
