@@ -12,7 +12,7 @@ body {
 }
 @media (min-width: 700px) {
 	.center-box {
-		width: 72vw;
+		width: calc( 80vw - 3em - 40px );
 		height: 600px;
 		max-height: 100%;
 		top: 50%;
@@ -25,7 +25,7 @@ body {
 	}
 }
 #calculator {
-	right: 8vw;
+	right: calc( 3em + 40px );
 }
 #variables, #controls {
 	left: 0;
@@ -51,10 +51,10 @@ body {
 	-ms-transform-origin: 100% 50%;
 	-o-transform-origin: 100% 50%;
 	transform-origin: 100% 50%;
-	-webkit-transform: translate(12vw, -50%);
-	-ms-transform: translate(12vw, -50%);
-	-o-transform: translate(12vw, -50%);
-	transform: translate(12vw, -50%);
+	-webkit-transform: translate(calc( 20vw - 3em - 40px ), -50%);
+	-ms-transform: translate(calc( 20vw - 3em - 40px ), -50%);
+	-o-transform: translate(calc( 20vw - 3em - 40px ), -50%);
+	transform: translate(calc( 20vw - 3em - 40px ), -50%);
 	z-index: 5;
 }
 #controls > * {
