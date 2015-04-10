@@ -243,6 +243,12 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 	});
 }
 
+onVariableRemove(function(key){
+	delete scope[key];
+	delete oldScope[key];
+	delete stringScope[key];
+});
+
 /**
  * Return an Object sorted by it's Key
  *
