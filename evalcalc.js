@@ -222,11 +222,14 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 				$('#variables').prepend(el);
 			}
 
-			var el = $('#variables>div[data-key=' + variable + ']>.variable-render')[0];
+			var el = $('#variables>div[data-key=' + variable + ']');
 
 			var tex = generateTeX(math.parse(fullString), null);
 
-			katex.render(tex, el, {displayMode: true});
+			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
+
+			// Call the UI equivalent of this function, that updates event listeners
+			addedVariable(el)
 		}
 		else { // Updating old variable
 			var el = $('#variables>div[data-key=' + variable + ']');
@@ -238,9 +241,6 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
 		}
 	});
-
-	// Call the UI equivalent of this function, that updates event listeners
-	rebindVariables();
 }
 
 /**
