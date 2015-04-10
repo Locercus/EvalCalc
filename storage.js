@@ -5,8 +5,8 @@ var storage = {
 	ready: false
 };
 function initStorage() {
-	if( chrome ) {
-		if( chrome.storage ) {
+	if( 'chrome' in window ) {
+		if( typeof chrome.storage != 'undefined' ) {
 			console.log("Chrome storage found");
 			storage.type = 1;
 			chrome.storage.sync.get(null, function(data){
