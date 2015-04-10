@@ -141,6 +141,14 @@ function inputHandle() {
 	else {
 		$('#output').addClass('error');
 	}
+
+	var isEmpty = false;
+
+	if($('#outputMath').is(':empty'))
+		if($('#outputResult>div').is(':empty'))
+			isEmpty = true;
+
+	$('#output').toggleClass('empty', isEmpty);
 }
 
 function updateVariables(scope, oldScope) {
