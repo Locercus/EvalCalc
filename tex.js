@@ -2,13 +2,13 @@
 
 // s = (3 * 4) / (sqrt(2) * sin(30deg)) + 5
 // 4 / 5 + 3
-function generateTeX(node) { // TODO: Make it respect paranthesis (currently they don't render)
+function generateTeX(node, parent) {
 	switch(node.type) {
 		case 'ArrayNode': {
 			var args = [];
 
 			$.each(node.nodes, function() {
-				args.push(generateTeX(this));
+				args.push(generateTeX(this, node));
 			});
 
 			return "[" + args.join(", ") + "]";
@@ -20,7 +20,7 @@ function generateTeX(node) { // TODO: Make it respect paranthesis (currently the
 			var args = [];
 
 			$.each(node.blocks, function() {
-				args.push(generateTeX(this.node));
+				args.push(generateTeX(this.node, node));
 			});
 
 			return args.join('; ');
@@ -37,14 +37,14 @@ function generateTeX(node) { // TODO: Make it respect paranthesis (currently the
 			}
 		}
 		case 'FunctionAssignmentNode': {
-			var value = generateTeX(node.expr);
+			var value = generateTeX(node.expr, node);
 			return node.name + "(" + node.params.join(", ") + ") = " + value;
 		}
 		case 'FunctionNode': {
 			var args = [];
 
 			$.each(node.args, function() {
-				args.push(generateTeX(this));
+				args.push(generateTeX(this, node));
 			});
 
 			switch(node.name) {
@@ -106,7 +106,40 @@ function generateTeX(node) { // TODO: Make it respect paranthesis (currently the
 					return args[0] + "\\ \\&\\ " + args[1];
 				}
 				case 'bitNot': {
-					return '!\\left(' + args[0] + '\\right)';
+					return '\\neg\\left(' + args[0] + '\\right)';
+				}
+				case 'bitOr': {
+					return args[0] + '\\ \\vee\\ ' + args[1];
+				}
+				case 'bitXor': {
+					return args[0] + "\\ \\oplus\\ " + args[1];
+				}
+				case 'boolean': {
+					return '\\text{boolean}\\left(' + args[0] + '\\right)';
+				}
+				case 'ceil': {
+					return '\\lceil' + args[0] + '\\rceil';
+				}
+				case 'chain': {
+					return '\\text{chain}(' + args[0] + ')';
+				}
+				case 'clone': {
+					return '\\text{clone}(' + args[0] + ')';
+				}
+				case 'combinations': {
+					return '\\frac{' + args[0] + '!}{' + args[1] + '!( ' + args[0] + ' - ' + args[1] + ' )!' + '}';
+				}
+				case 'compare': {
+					return '\\text{compare}(' + args[0] + ', ' + args[1] + ')'
+				}
+				case 'compile': {
+					return '\\text{compile}(' + args[0] + ')';
+				}
+				case 'complex': {
+					return '\\text{complex}(' + args[0] + ', ' + args[1] + ')'
+				}
+				case 'conj': {
+					return '\\text{conj}\\left(' + args[0] + '\\right)';
 				} // This is where I left off
 				case 'sin': {
 					return '\\sin\\left(' + args[0] + '\\right)';
@@ -123,12 +156,15 @@ function generateTeX(node) { // TODO: Make it respect paranthesis (currently the
 			var args = [];
 
 			$.each(node.args, function() {
-				args.push(generateTeX(this));
+				args.push(generateTeX(this, node));
 			});
 
 			switch(node.fn) {
 				case 'add': {
-					return args[0] + " + " + args[1];
+					if(parent !== null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
+						return '\\left(' + args[0] + " + " + args[1] + "\\right)";
+					else
+						return args[0] + " + " + args[1];
 				}
 				case 'divide': {
 					return '\\frac{' + args[0] + '}{' + args[1] + '}';
@@ -140,6 +176,12 @@ function generateTeX(node) { // TODO: Make it respect paranthesis (currently the
 						return args[0] + args[1];
 
 					return args[0] + ' \\cdot ' + args[1];
+				}
+				case 'subtract': {
+					if(parent !== null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
+						return '\\left(' + args[0] + " - " + args[1] + "\\right)";
+					else
+						return args[0] + " - " + args[1];
 				}
 				default: {
 					throw node.type + " " + node.fn + " has not been implemented";

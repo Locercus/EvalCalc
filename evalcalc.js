@@ -33,8 +33,7 @@ function inputHandle() {
 
 		
 		if(answer != "undefined") {
-			var tex = generateTeX(output);
-			console.log(tex);
+			var tex = generateTeX(output, null);
 
 			var infinite = answer.match(/^(\d*)\.(?:([1-4])\2+$|(5)5+6|(6)6+7)|(7)7+8|(8)8+9$/);
 			var fractionInfinite = answer.match(/^\d*\.(?:(\d)\1*(?!\1+)\d+|[0-4]+)$/);
