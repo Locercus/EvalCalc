@@ -122,7 +122,7 @@ $(document).ready(function(){
 				return;
 			}
 			var text = $(this).val();
-			if( text.substr(cursorPos,1) == ')' ) {
+			if( text.substr(cursorPos,1) == ')' && text.substr(cursorPos-1,1) == '(' ) {
 				e.preventDefault();
 				text = text.substring(0, cursorPos - 1) + text.substring(cursorPos + 1, text.length);
 				$(this).val(text);

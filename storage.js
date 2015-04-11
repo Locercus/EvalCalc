@@ -24,7 +24,7 @@ function initStorage() {
 		}
 	}
 	if( storage.type == 0 ) {
-		if( localStorage ) {
+		if( 'localStorage' in window ) {
 			console.log("localStorage found");
 			storage.type = 2;
 			storage.data = localStorage;
@@ -38,6 +38,9 @@ function initStorage() {
 				}
 			}
 		}
+	}
+	if( storage.type == 0 ) {
+		toast("Error: Could not initialise data storage");
 	}
 }
 
