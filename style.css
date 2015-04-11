@@ -134,7 +134,8 @@ body {
 		box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
 	}
 	#calculator {
-		height: 95%;
+		height: calc( 100% - 30px - 5% );
+		top: 5%;
 		right: 0;
 	}
 	#controls {
@@ -145,6 +146,11 @@ body {
 		-ms-transform-origin: 50% 100%;
 		-o-transform-origin: 50% 100%;
 		transform-origin: 50% 100%;
+		height: 150px;
+		-webkit-transform: scaleY(.2);
+		-ms-transform: scaleY(.2);
+		-o-transform: scaleY(.2);
+		transform: scaleY(.2);
 	}
 	#variables > * {
 		opacity: 0;
@@ -295,9 +301,28 @@ body {
 #output.error.empty {
 	font-size: 32px;
 }
-/* TODO: .empty */
 #output.error.empty::before {
 	content: "error";
+}
+@media (max-width: 700px) {
+	#output {
+		top: calc(50% * .1);
+		height: calc(100% - 50% * .1 );
+	}
+}
+@media (max-width: 500px) {
+	#output {
+		display: block;
+		padding-top: 20px;
+	}
+	#outputMath, #outputResult, #outputFraction, #outputExact {
+		display: block;
+		word-wrap: break-word;
+		max-width: 100%;
+		overflow-x: auto;
+		position: relative;
+		padding: 0 20px;
+	}
 }
 
 button {

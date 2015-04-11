@@ -53,6 +53,31 @@ $(document).ready(function(){
 		$(this).attr('value', value );
 	});
 	
+	function updateOutputOverflow(){
+		reqFrame(function(){
+			var elements = ['#outputMath', '#outputResult', '#outputFraction', '#outputExact'];
+			if( $(window).width() < 500 ) {
+				for( var i in elements ) {
+					var el = $(elements[i]);
+					if( ! '0' in el ) {
+						continue;
+					}
+					if( el[0].scrollWidth > el.width() && el.scrollLeft() <= 0 ) {
+						el.addClass('overflow');
+					} else {
+						el.removeClass('overflow');
+					}
+				}
+			} else {
+				for( var i in elements ) {
+					$(elements[i]).removeClass('overflow');
+				}
+			}
+		});
+	}
+	onInputHandle(updateOutputOverflow);
+	$(window).resize(updateOutputOverflow);
+	
 	var eventVariableRemoveClick = function(e) {
 		var variable = $(this).parent();
 		variable.css({
