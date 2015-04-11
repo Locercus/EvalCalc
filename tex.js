@@ -173,7 +173,10 @@ function generateTeX(node, parent) {
 				case 'sinh':
 				case 'tan':
 				case 'tanh': {
-					return '\\text{' + node.name + '}\\left(' + args.join(', ') + '\\right)';
+					if(degRadVal === 'deg')
+						return '\\text{' + node.name + '}_{_{_{_{_{\\llap{\\,360^{\\circ}}}}}}}\\!\\!\\left(' + args.join(',') + '\\right)';
+					else
+						return '\\text{' + node.name + '}_{_{_{_{_{\\llap{2\\pi\\enspace}}}}}}\\!\\!\\left(' + args.join(',') + '\\right)';
 				}
 
 
@@ -257,6 +260,17 @@ function generateTeX(node, parent) {
 					else
 						return args[0] + " - " + args[1];
 				}
+				case 'unaryPlus': {
+					return '+' + args[0];
+				}
+				case 'unaryMinus': {
+					return '-' + args[0];
+				}
+				case 'dotMultiply': {
+					return args[0] + ' \\circ ' + args[1];
+				}
+
+
 				default: {
 					throw node.type + " " + node.fn + " has not been implemented";
 				}
