@@ -132,6 +132,20 @@ function generateTeX(node, parent) {
 				}
 
 
+				// Complex
+				case 'arg': {
+					return '\\arg\\left(' + args[0] + '\\right)';
+				}
+				case 'conj': {
+					return '\\text{conj}\\left(' + args[0] + '\\right)';
+				}
+				case 'im': {
+					return '\\text{im}\\left(' + args.join(', ') + '\\right)';
+				}
+				case 're': {
+					return '\\text{re}\\left(' + args.join(', ') + '\\right)';
+				}
+
 
 				case 'acos': {
 					return '\\cos^{-1}\\left(' + args[0] + '\\right)';
@@ -155,9 +169,7 @@ function generateTeX(node, parent) {
 				case 'and': {
 					return args[0] + ' \\land ' + args[1];
 				}
-				case 'arg': {
-					return '\\arg\\left(' + args[0] + '\\right)';
-				}
+
 				case 'asec': {
 					return '\\sec^{-1}\\left(' + args[0] + '\\right)';
 				}
@@ -215,9 +227,7 @@ function generateTeX(node, parent) {
 				case 'complex': {
 					return '\\text{complex}(' + args[0] + ', ' + args[1] + ')'
 				}
-				case 'conj': {
-					return '\\text{conj}\\left(' + args[0] + '\\right)';
-				} // This is where I left off
+				 // This is where I left off
 				case 'sin': {
 					return '\\sin\\left(' + args[0] + '\\right)';
 				}
