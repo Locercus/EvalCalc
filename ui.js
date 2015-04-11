@@ -126,6 +126,30 @@ $(document).ready(function(){
 		});
 	});
 	
+	var kbdScrollTimeout = setTimeout(function(){})
+	$("#keyboard-sections").scroll(function(e){
+		clearTimeout(kbdScrollTimeout);
+		kbdScrollTimeout = setTimeout(function(){
+			var section = Math.floor(($("#keyboard-sections").scrollTop() + ($("#keyboard-sections").height()/2)) /
+				$("#keyboard-sections").height());
+			var start = Date.now();
+			var end = Date.now() + 300;
+			var kbst = $("#keyboard-sections").scrollTop();
+			var kben = $("#keyboard-sections").height() * section;
+			function loop() {
+				var prc = jQuery.easing.easeInOutExpo( 1 - ((end - Date.now()) / 300 ));
+				console.log(prc.toFixed(2), end, Date.now());
+				$("#keyboard-sections").scrollTop(kbst + (kben - kbst) * prc );
+				if( Date.now() >= end ) {
+					$("#keyboard-sections").scrollTop(kben);
+				} else {
+					reqFrame(loop);
+				}
+			}
+			loop();
+		},400);
+	});
+	
 	$("#input").on('touchend', function(e){
 		e.preventDefault();
 		$("#keyboard").removeClass('hidden');
