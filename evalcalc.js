@@ -51,6 +51,26 @@ $(document).ready(function(){
 		}
 	});
 });
+var onInputHandle = function(){};
+var callInputHandle = function(){};
+(function(){
+	var inputHandleListeners = [];
+	onInputHandle = function(f) {
+		if( typeof f != 'function' ) {
+			throw new Error("Argument 0 must be a function");
+		}
+		inputHandleListeners.push(f);
+	}
+	callInputHandle = function(){
+		for( var i in inputHandleListeners ) {
+			try {
+				inputHandleListeners[i]();
+			} catch(err) {
+				throw err;
+			}
+		}
+	}
+})();
 
 function inputHandle() {
 	var value = $('#input').val();
@@ -63,6 +83,7 @@ function inputHandle() {
 	} catch(e) {
 		valid = false;
 	}
+	callInputHandle();
 
 	if(valid) {
 		$('#output').removeClass('error');
