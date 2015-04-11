@@ -225,7 +225,10 @@ function generateTeX(node, parent) {
 						return args[0] + " + " + args[1];
 				}
 				case 'divide': {
-					return '\\frac{' + args[0] + '}{' + args[1] + '}';
+					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'pow')
+						return '\\left(\\frac{' + args[0] + '}{' + args[1] + '}\\right)';
+					else
+						return '\\frac{' + args[0] + '}{' + args[1] + '}';
 				}
 				case 'multiply': {
 					// Hotfix for degrees
