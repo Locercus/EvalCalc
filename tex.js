@@ -48,9 +48,91 @@ function generateTeX(node, parent) {
 			});
 
 			switch(node.name) {
+				// Arithmetic
 				case 'abs': {
 					return '|' + args[0] + '|';
 				}
+				case 'add': {
+					return '\\left(' + args[0] + ' + ' + args[1] + '\\right)';
+				}
+				case 'ceil': {
+					return '\\lceil' + args[0] + '\\rceil';
+				}
+				case 'cube': {
+					return args[0] + '^3';
+				}
+				case 'divide': {
+					return '\\frac{' + args[0] + '}{' + args[1] + '}';
+				}
+				case 'exp': {
+					return '\\exp\\left(' + args[0] + '\\right)';
+				}
+				case 'fix': {
+					return '\\text{fix}\\left(' + args[0] + '\\right)';
+				}
+				case 'floor': {
+					return '\\lfloor' + args[0] + '\\rfloor';
+				}
+				case 'gcd': {
+					return '\\gcd\\left(' + args.join(', ') + '\\right)';
+				}
+				case 'lcm': {
+					return '\\text{lcm}\\left(' + args.join(', ') + '\\right)';
+				}
+				case 'log': {
+					if(args.length === 1)
+						return '\\log\\left(' + args[0] + '\\right)';
+					else
+						return '\\log_{' +args[1] + '}\\left(' + args[0] + '\\right)';
+				}
+				case 'log10': {
+					return '\\log_{10}\\left(' + args[0] + '\\right)';
+				}
+				case 'mod': {
+					return args[0] + '\\ \\%\\ ' + args[1];
+				}
+				case 'multiply': {
+					return args[0] + ' \\cdot ' + args[1];
+				}
+				case 'norm': {
+					return '\\text{norm}\\left(' + args.join(', ') + '\\right)';
+				}
+				case 'nthRoot': {
+					// KaTeX doesn't support optional arguments to \sqrt, so this is a super dirty and broken fix - 11/4/2014
+					// This doesn't look nearly as good as it should, but it's the closest we'll get
+					// LaTeX is not very friendly to overlapping text, and the horribly broken KaTeX implementation doesn't make it any better
+					return '^{' + args[1] + '}\\enspace\\ \\llap{\\sqrt{' + args[0] + '}}';
+				}
+				case 'pow': {
+					return args[0] + '^{' + args[1] + '}';
+				}
+				case 'round': {
+					return '\\text{round}\\left(' + args.join(', ') + '\\right)';
+				}
+				case 'sign': {
+					return '\\text{sign}\\left(' + args.join(', ') + '\\right)';
+				}
+				case 'sqrt': {
+					return '\\sqrt{' + args[0] + '}';
+				}
+				case 'square': {
+					return args[0] + '^2';
+				}
+				case 'subtract': {
+					return '\\left(' + args[0] + ' - ' + args[1] + '\\right)';
+				}
+				case 'unaryMinus': {
+					return '\\left(-' + args[0] + '\\right)';
+				}
+				case 'unaryPlus': {
+					return args[0];
+				}
+				case 'xgcd': {
+					return '\\text{xgcd}\\left(' + args.join(', ') + '\\right)';
+				}
+
+
+
 				case 'acos': {
 					return '\\cos^{-1}\\left(' + args[0] + '\\right)';
 				}
@@ -69,9 +151,7 @@ function generateTeX(node, parent) {
 				case 'acsch': {
 					return '\\text{csch}^{-1}\\left(' + args[0] + '\\right)';
 				}
-				case 'add': {
-					return args[0] + ' + ' + args[1];
-				}
+
 				case 'and': {
 					return args[0] + ' \\land ' + args[1];
 				}
@@ -117,9 +197,6 @@ function generateTeX(node, parent) {
 				case 'boolean': {
 					return '\\text{boolean}\\left(' + args[0] + '\\right)';
 				}
-				case 'ceil': {
-					return '\\lceil' + args[0] + '\\rceil';
-				}
 				case 'chain': {
 					return '\\text{chain}(' + args[0] + ')';
 				}
@@ -143,9 +220,6 @@ function generateTeX(node, parent) {
 				} // This is where I left off
 				case 'sin': {
 					return '\\sin\\left(' + args[0] + '\\right)';
-				}
-				case 'sqrt': {
-					return '\\sqrt{' + args[0] + '}';
 				}
 				default: {
 					throw node.type + " " + node.name + " has not been implemented";
