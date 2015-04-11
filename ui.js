@@ -113,10 +113,16 @@ $(document).ready(function(){
 		if( $(this).hasClass('switch')) {
 			value = $(this).find('.toggle-item:last-child').attr('value');
 		}
-		degRadVal = value;
-		inputHandle();
 		storage.data.degrad = value;
 		$(this).attr('value', value );
+	});
+	
+	$("#ctrl-degrad").click(function(){
+		var that = this;
+		reqFrame(function(){
+			degRadVal = $(that).attr('value');
+			inputHandle();
+		});
 	});
 	
 	function updateCanvasSizes() {
@@ -129,11 +135,15 @@ $(document).ready(function(){
 	updateCanvasSizes();
 	$(window).resize(updateCanvasSizes);
 	
-	$("#ctrl-calc").click(function(){
-		$("#outputs").addClass('calc').removeClass('graph');
-	});
-	$("#ctrl-graph").click(function(){
-		$("#outputs").addClass('graph').removeClass('calc');
+	$("#ctrl-disp").click(function(){
+		var that = this;
+		reqFrame(function(){
+			if( $(that).attr("value") == 'calc' ) {
+				$("#outputs").addClass('calc').removeClass('graph');
+			} else {
+				$("#outputs").addClass('graph').removeClass('calc');
+			}
+		});
 	});
 	
 	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
