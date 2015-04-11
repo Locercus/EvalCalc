@@ -185,7 +185,6 @@ function generateTeX(node, parent) {
 				case 'asin':
 				case 'asinh':
 				case 'atan':
-				case 'atan2':
 				case 'atanh':
 				case 'cos':
 				case 'cosh':

@@ -55,7 +55,7 @@ var replacements = {};
 		return fn(x);
 	};
 });
-['acos', 'acosh', 'acot', 'acoth', 'acsc', 'acsh', 'asec', 'asech', 'asin', 'asinh', 'atan', 'atan2', 'atanh'].forEach(function(name) {
+['acos', 'acosh', 'acot', 'acoth', 'acsc', 'acsh', 'asec', 'asech', 'asin', 'asinh', 'atan', 'atanh'].forEach(function(name) {
 	var fn = math[name]; // The original function
 
 	replacements[name] = function replacement(x) {
