@@ -147,49 +147,41 @@ function generateTeX(node, parent) {
 				}
 
 
-				case 'acos': {
-					return '\\cos^{-1}\\left(' + args[0] + '\\right)';
+				// Trigonometry
+				case 'acos':
+				case 'acosh':
+				case 'acot':
+				case 'acoth':
+				case 'acsc':
+				case 'acsch':
+				case 'asec':
+				case 'asech':
+				case 'asin':
+				case 'asinh':
+				case 'atan':
+				case 'atan2':
+				case 'atanh':
+				case 'cos':
+				case 'cosh':
+				case 'cot':
+				case 'coth':
+				case 'csc':
+				case 'csch':
+				case 'sec':
+				case 'sech':
+				case 'sin':
+				case 'sinh':
+				case 'tan':
+				case 'tanh': {
+					return '\\text{' + node.name + '}\\left(' + args.join(', ') + '\\right)';
 				}
-				case 'acosh': {
-					return '\\cosh^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'acot': {
-					return '\\cot^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'acoth': {
-					return '\\coth^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'acsc': {
-					return '\\csc^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'acsch': {
-					return '\\text{csch}^{-1}\\left(' + args[0] + '\\right)';
-				}
+
+
+
+
 
 				case 'and': {
 					return args[0] + ' \\land ' + args[1];
-				}
-
-				case 'asec': {
-					return '\\sec^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'asech': {
-					return '\\text{sech}^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'asin': {
-					return '\\sin^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'asinh': {
-					return '\\sinh^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'atan': {
-					return '\\tan^{-1}\\left(' + args[0] + '\\right)';
-				}
-				case 'atan2': {
-					return '\\text{atan2}\\left(' + args[0] + ", " + args[1] + '\\right)';
-				}
-				case 'atanh': {
-					return '\\tanh^{-1}\\left(' + args[0] + '\\right)';
 				}
 				case 'bignumber': {
 					return '\\text{bignumber}\\left(' + args[0] + '\\right)';
@@ -227,10 +219,8 @@ function generateTeX(node, parent) {
 				case 'complex': {
 					return '\\text{complex}(' + args[0] + ', ' + args[1] + ')'
 				}
-				 // This is where I left off
-				case 'sin': {
-					return '\\sin\\left(' + args[0] + '\\right)';
-				}
+
+
 				default: {
 					throw node.type + " " + node.name + " has not been implemented";
 				}
