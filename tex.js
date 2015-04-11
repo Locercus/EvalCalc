@@ -219,7 +219,9 @@ function generateTeX(node, parent) {
 
 			switch(node.fn) {
 				case 'add': {
-					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
+					if(parent != null && parent.type === 'OperatorNode' && (
+						parent.fn === 'multiply' || parent.fn === 'pow'
+						))
 						return '\\left(' + args[0] + " + " + args[1] + "\\right)";
 					else
 						return args[0] + " + " + args[1];
@@ -236,10 +238,15 @@ function generateTeX(node, parent) {
 					if(secondArgument.type === 'SymbolNode' && secondArgument.name === 'deg')
 						return args[0] + args[1];
 
-					return args[0] + ' \\cdot ' + args[1];
+					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'pow')
+						return '\\left(' +  args[0] + ' \\cdot ' + args[1] + '\\right)';
+					else
+						return args[0] + ' \\cdot ' + args[1];
 				}
 				case 'subtract': {
-					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'multiply')
+					if(parent != null && parent.type === 'OperatorNode' && (
+						parent.fn === 'multiply' || parent.fn === 'pow'
+						))
 						return '\\left(' + args[0] + " - " + args[1] + "\\right)";
 					else
 						return args[0] + " - " + args[1];
@@ -251,7 +258,10 @@ function generateTeX(node, parent) {
 					return '-' + args[0];
 				}
 				case 'dotMultiply': {
-					return args[0] + ' \\circ ' + args[1];
+					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'pow')
+						return '\\left(' + args[0] + ' \\circ ' + args[1] + '\\right)';
+					else
+						return args[0] + ' \\circ ' + args[1];
 				}
 				case 'factorial': {
 					return args[0] + "!";
