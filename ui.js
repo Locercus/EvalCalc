@@ -78,6 +78,60 @@ $(document).ready(function(){
 	onInputHandle(updateOutputOverflow);
 	$(window).resize(updateOutputOverflow);
 	
+	$("#input").on('keypress', function(e){
+		if( e.which == 40 ) {
+			var cursorPos = $(this)[0].selectionStart;
+			var cursorEnd = $(this)[0].selectionEnd;
+			if( cursorPos != cursorEnd ) {
+				return;
+			}
+			e.preventDefault();
+			var text = $(this).val();
+			text = text.substr(0,cursorPos) + "()" + text.substring(cursorPos, text.length);
+			$(this).val(text);
+			$(this)[0].selectionStart = cursorPos + 1;
+			$(this)[0].selectionEnd = cursorPos + 1;
+		} else if( e.which == 41 ) {
+			var cursorPos = $(this)[0].selectionStart;
+			var cursorEnd = $(this)[0].selectionEnd;
+			if( cursorPos != cursorEnd ) {
+				return;
+			}
+			var text = $(this).val();
+			var openBrackets = 0;
+			for( var i in text ) {
+				if( text[i] == '(' ) {
+					openBrackets++;
+				} else if( text[i] == ')' ) {
+					openBrackets--;
+				}
+			}
+			if( !openBrackets ) {
+				if( text.substr(cursorPos,1) == ')' ) {
+					e.preventDefault();
+					$(this)[0].selectionEnd++;
+					$(this)[0].selectionStart++;
+				}
+			}
+		}
+	}).on('keydown', function(e){
+		if( e.which == 8 ) {
+			var cursorPos = $(this)[0].selectionStart;
+			var cursorEnd = $(this)[0].selectionEnd;
+			if( cursorPos != cursorEnd ) {
+				return;
+			}
+			var text = $(this).val();
+			if( text.substr(cursorPos,1) == ')' ) {
+				e.preventDefault();
+				text = text.substring(0, cursorPos - 1) + text.substring(cursorPos + 1, text.length);
+				$(this).val(text);
+				$(this)[0].selectionStart = cursorPos - 1;
+				$(this)[0].selectionEnd = cursorPos - 1;
+			}
+		}
+	});
+	
 	var eventVariableRemoveClick = function(e) {
 		var variable = $(this).parent();
 		variable.css({
