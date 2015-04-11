@@ -78,7 +78,20 @@ $(document).ready(function(){
 				if( val == 'enter' ) {
 					$("#input").input({which:13});
 				} else if( val == 'bcksp' ) {
-					$("#input").val($("#input").val().substr(0,$("#input").val().length - 1));
+					var text = $("#input").val();
+					var cursorPos = $("#input")[0].selectionStart;
+					var cursorEnd = $("#input")[0].selectionEnd;
+					var newCursorPos;
+					if( cursorPos != cursorEnd ) {
+						text = text.substr(0,cursorPos) + text.substr(cursorEnd);
+						newCursorPos = cursorPos;
+					} else {
+						text = text.substr(0,cursorPos - 1) + text.substr(cursorPos);
+						newCursorPos = cursorPos - 1;
+					}
+					$("#input").val(text);
+					$("#input")[0].selectionEnd = newCursorPos;
+					$("#input")[0].selectionStart = newCursorPos;
 					inputHandle();
 				} else if( val == 'close' ) {
 					$("#keyboard").addClass('hidden');
@@ -115,6 +128,10 @@ $(document).ready(function(){
 	}
 	updateCanvasSizes();
 	$(window).resize(updateCanvasSizes);
+	
+	$("#ctrl-calc").click(function(){
+		$("#outputs").addClass('calc').removeClass('graph');
+	});
 	
 	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
 		$("#input").on('keypress', function(e){
