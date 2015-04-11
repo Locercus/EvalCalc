@@ -113,7 +113,7 @@
 	overflow: hidden;
 	background: inherit;
 }
-#keyboard .key {
+#keyboard .key, #keyboard .spacer {
 	background: inherit;
 	width: 100%;
 	display: inline-flex;
@@ -130,6 +130,13 @@
 #keyboard .key img {
 	width: 24px;
 	height: 24px;
+}
+
+#keyboard .spacer {
+	width: 50%;
+}
+#keyboard .spacer::before {
+	content: ' ';
 }
 
 #keyboard .key.space .inner {

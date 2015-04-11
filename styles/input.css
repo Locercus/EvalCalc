@@ -64,3 +64,44 @@
 #tidy-btn:focus {
 	outline: none;
 }
+#caret {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 1px;
+	height: 33px;
+	background: rgba(255,255,255,0.9);
+	-webkit-animation: caret-blink .9s infinite;
+	-o-animation: caret-blink .9s infinite;
+	animation: caret-blink .9s infinite;
+	z-index: 1;
+}
+#caret.hidden {
+	display: none;
+}
+@-webkit-keyframes caret-blink {
+	0% {opacity: 1}
+	49% {opacity: 1}
+	50% {opacity: 0}
+	99% {opacity: 0}
+	100% {opacity: 1}
+}
+@-o-keyframes caret-blink {
+	0% {opacity: 1}
+	40% {opacity: 0}
+	50% {opacity: 1}
+	90% {opacity: 0}
+	100% {opacity: 1}
+}
+@keyframes caret-blink {
+	0% {opacity: 1}
+	40% {opacity: 0}
+	50% {opacity: 1}
+	90% {opacity: 0}
+	100% {opacity: 1}
+}
+#caret.na {
+	-webkit-animation: none;
+	-o-animation: none;
+	animation: none;
+}

@@ -26,6 +26,7 @@
 var addedVariable = function(){};
 var onVariableRemove = function(){};
 var callRemoveVariable = function(){};
+var updateInputCaret = function(){};
 
 var degRadVal = "nul";
 (function(){
@@ -69,6 +70,7 @@ $(document).ready(function(){
 		if( $("#keyboard").hasClass('hidden') ) {	
 			$("#calculator").addClass('keyboard');
 			$("#keyboard").removeClass('hidden');
+			updateInputCaret();
 		} else {
 			$("#calculator").removeClass('keyboard');
 			$("#keyboard").addClass('hidden');
@@ -80,6 +82,18 @@ $(document).ready(function(){
 	} catch(err){
 		console.log(err);
 	}
+	$("#input").focus(function(){
+		$("#caret").addClass('hidden')
+	}).keydown(function(){
+		$("#caret").addClass('hidden');
+	});
+	updateInputCaret = function() {
+		var ppos = getCaretCoordinates($("#input")[0], $("#input")[0].selectionStart);
+		var offs = { top: $("#input").offset().top, left: $("#input").offset().left };
+		$("#caret").css('top', offs.top + ppos.top).css('left', offs.left + ppos.left);
+		$("#caret").addClass('na').removeClass('na').removeClass('hidden');
+	}
+	$(window).resize(updateInputCaret);
 	$("#keyboard .key").each(function(){
 		$(this).click(function(){
 			var val = $(this).attr('value');
@@ -99,6 +113,7 @@ $(document).ready(function(){
 				$("#input")[0].selectionEnd = newCursorPos;
 				$("#input")[0].selectionStart = newCursorPos;
 				inputHandle();
+				updateInputCaret();
 			} else {
 				if( val == 'enter' ) {
 					$("#input").input({which:13});
@@ -118,6 +133,17 @@ $(document).ready(function(){
 					$("#input")[0].selectionEnd = newCursorPos;
 					$("#input")[0].selectionStart = newCursorPos;
 					inputHandle();
+					updateInputCaret();
+				} else if( val == 'left' ) {
+					if( $("#input")[0].selectionStart > 0 ) {
+						$("#input")[0].selectionStart--;
+						$("#input")[0].selectionEnd--;
+					}
+					updateInputCaret();
+				} else if( val == 'right' ) {
+					$("#input")[0].selectionEnd++;
+					$("#input")[0].selectionStart++;
+					updateInputCaret();
 				} else if( val == 'close' ) {
 					$("#keyboard").addClass('hidden');
 					$("#calculator").removeClass('keyboard');
@@ -153,6 +179,8 @@ $(document).ready(function(){
 		e.preventDefault();
 		$("#keyboard").removeClass('hidden');
 		$("#calculator").addClass('keyboard');
+		$("#input").blur();
+		updateInputCaret();
 	});
 	
 	$(".toggle-button").click(function(){

@@ -46,6 +46,7 @@
 		<script src="libraries/katex/katex.min.js"></script>
 		<script src="libraries/katex/contrib/auto-render.min.js"></script>
 		<script src="libraries/fraction.js"></script>
+		<script src="libraries/caretpos.js"></script>
 		<script src="storage.js"></script>
 		<script src="units.js"></script>
 		<script src="toast.js"></script>
@@ -69,6 +70,7 @@
 				</div>
 			</button>
 		</div>
+		<div id='caret' class='hidden'></div>
 		<div id="calculator" class="center-box">
 			<div id="outputs" class='calc'>
 				<div id="output-calc">
@@ -91,7 +93,9 @@
 		<div id="keyboard" class='hidden'>
 			<div id="keyboard-fixed">
 				<div class="key" value="__close"><img src='assets/kbd-down.png'></div>
+				<div class="key" value="__left">$$&lt;|$$</div>
 				<div class="key space" value=" "><div class="inner"></div></div>
+				<div class="key" value="__right">$$|&gt;$$</div>
 				<div class="key" value="__enter">$$\hookleftarrow$$</div>
 				<div class="key" value="__bcksp">$$\leftarrow$$</div>
 			</div>
@@ -129,6 +133,64 @@
 				</div>
 				<div class="kbd-section">
 					<div class="kbd-row">
+						<div class="key" value="[">$$[$$</div>
+						<div class="key" value="]">$$]$$</div>
+						<div class="key" value="{">$$\{$$</div>
+						<div class="key" value="}">$$\}$$</div>
+						<div class="key" value="&quot;">$$''$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="1">$$1$$</div>
+						<div class="key" value="2">$$2$$</div>
+						<div class="key" value="3">$$3$$</div>
+						<div class="key" value="4">$$4$$</div>
+						<div class="key" value="5">$$5$$</div>
+						<div class="key" value="6">$$6$$</div>
+						<div class="key" value="7">$$7$$</div>
+						<div class="key" value="8">$$8$$</div>
+						<div class="key" value="9">$$9$$</div>
+						<div class="key" value="0">$$0$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="q">$$q$$</div>
+						<div class="key" value="w">$$w$$</div>
+						<div class="key" value="e">$$e$$</div>
+						<div class="key" value="r">$$r$$</div>
+						<div class="key" value="t">$$t$$</div>
+						<div class="key" value="y">$$y$$</div>
+						<div class="key" value="u">$$u$$</div>
+						<div class="key" value="i">$$i$$</div>
+						<div class="key" value="o">$$o$$</div>
+						<div class="key" value="p">$$p$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="spacer"></div>
+						<div class="key" value="a">$$a$$</div>
+						<div class="key" value="s">$$s$$</div>
+						<div class="key" value="d">$$d$$</div>
+						<div class="key" value="f">$$f$$</div>
+						<div class="key" value="g">$$g$$</div>
+						<div class="key" value="h">$$h$$</div>
+						<div class="key" value="j">$$j$$</div>
+						<div class="key" value="k">$$k$$</div>
+						<div class="key" value="l">$$l$$</div>
+						<div class="spacer"></div>
+					</div>
+					<div class="kbd-row">
+						<div class="spacer"></div>
+						<div class="key" value="z">$$z$$</div>
+						<div class="key" value="x">$$x$$</div>
+						<div class="key" value="c">$$c$$</div>
+						<div class="key" value="v">$$v$$</div>
+						<div class="key" value="b">$$b$$</div>
+						<div class="key" value="n">$$n$$</div>
+						<div class="key" value="m">$$m$$</div>
+						<div class="key" value=".">$$.$$</div>
+						<div class="key" value="=">$$=$$</div>
+					</div>
+				</div>
+				<div class="kbd-section">
+					<div class="kbd-row">
 						<div class="key" value="sin()" caret="-1">$$\text{sin}(x)$$</div>
 						<div class="key" value="sinh()" caret="-1">$$\text{sinh}(x)$$</div>
 						<div class="key" value="asin()" caret="-1">$$\text{asin}(x)$$</div>
@@ -161,6 +223,32 @@
 						<div class="key" value="csch()" caret="-1">$$\text{csch}(x)$$</div>
 						<div class="key" value="acsc()" caret="-1">$$\text{acsc}(x)$$</div>
 						<div class="key" value="acsch()" caret="-1">$$\text{acsch}(x)$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="[">$$[$$</div>
+						<div class="key" value="]">$$]$$</div>
+						<div class="key" value=":">$$:$$</div>
+						<div class="key" value=";">$$;$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="{">$$\{$$</div>
+						<div class="key" value="}">$$\}$$</div>
+						<div class="key" value=",">$$,$$</div>
+						<div class="key" value="'">$$'$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="1">$$1$$</div>
+						<div class="key" value="2">$$2$$</div>
+						<div class="key" value="3">$$3$$</div>
+						<div class="key" value="4">$$4$$</div>
+						<div class="key" value="5">$$5$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="6">$$6$$</div>
+						<div class="key" value="7">$$7$$</div>
+						<div class="key" value="8">$$8$$</div>
+						<div class="key" value="9">$$9$$</div>
+						<div class="key" value="0">$$0$$</div>
 					</div>
 				</div>
 			</div>
