@@ -154,7 +154,7 @@
 #variables::before,
 #controls::before {
 	content: '';
-	background-image: url(assets/arrow-up.png);
+	background-image: url(../assets/arrow-up.png);
 	background-size: contain;
 	position: absolute;
 	top: 25%;
