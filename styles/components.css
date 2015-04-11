@@ -1,0 +1,200 @@
+/**
+ * Copyright 2015 Jonatan Nordentoft, Creeper32605
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+#calculator {
+	right: 30px;
+}
+#variables, #controls {
+	left: 0;
+	background: #59A9FF;
+	color: #fff;
+	width: 20vw;
+	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
+	transition: transform .3s cubic-bezier(.2,.3,0,1);
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#controls {
+	left: auto;
+	right: 0;
+	padding: 7.5px;
+	box-sizing: border-box;
+	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
+	transition: transform .3s cubic-bezier(.2,.3,0,1);
+	-webkit-transform-origin: 100% 50%;
+	-moz-transform-origin: 100% 50%;
+	-ms-transform-origin: 100% 50%;
+	-o-transform-origin: 100% 50%;
+	transform-origin: 100% 50%;
+	-webkit-transform: translate(calc( 3em + 10px ), -50%);
+	-ms-transform: translate(calc( 3em + 10px ), -50%);
+	-o-transform: translate(calc( 3em + 10px ), -50%);
+	transform: translate(calc( 3em + 10px ), -50%);
+	z-index: 5;
+	width: calc(3em + 40px);
+}
+#controls > * {
+	opacity: 0;
+}
+#controls:hover {
+	-webkit-transform: translate(0, -50%);
+	-ms-transform: translate(0, -50%);
+	-o-transform: translate(0, -50%);
+	transform: translate(0, -50%);
+}
+#controls:hover > * {
+	opacity: 1;
+}
+#controls:hover.pending > * {
+	opacity: .5;
+	pointer-events: none;
+}
+#variables.hidden {
+	-webkit-transform: translateX(20vw) translateY(-50%);
+	-ms-transform: translateX(20vw) translateY(-50%);
+	-o-transform: translateX(20vw) translateY(-50%);
+	transform: translateX(20vw) translateY(-50%);
+	pointer-events: none;
+}
+#controls.hidden {
+	-webkit-transform: translateX(-20vw) translateY(-50%);
+	-ms-transform: translateX(-20vw) translateY(-50%);
+	-o-transform: translateX(-20vw) translateY(-50%);
+	transform: translateX(-20vw) translateY(-50%);
+	pointer-events: none;
+}
+#variables > *, #controls > * {
+	-webkit-transition: opacity .3s;
+	-o-transition: opacity .3s;
+	transition: opacity .3s;
+}
+#variables.hidden > *, #controls.hidden > * {
+	opacity: 0;
+}
+@media (max-width: 700px) {
+	#variables, #controls {
+		width: 100%;
+		height: 50%;
+		opacity: 1;
+		z-index: 10;
+		-webkit-transform-origin: 50% 0;
+		-moz-transform-origin: 50% 0;
+		-ms-transform-origin: 50% 0;
+		-o-transform-origin: 50% 0;
+		transform-origin: 50% 0;
+		-webkit-transform: scaleY( .1 );
+		-ms-transform: scaleY( .1 );
+		-o-transform: scaleY( .1 );
+		transform: scaleY( .1 );
+		-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+		-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
+		transition: transform .3s cubic-bezier(.2,.3,0,1);
+		-webkit-box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
+		box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
+	}
+	#calculator {
+		height: calc( 95% - 30px );
+		top: 5%;
+		right: 0;
+	}
+	#controls {
+		top: auto;
+		bottom: 0;
+		-webkit-transform-origin: 50% 100%;
+		-moz-transform-origin: 50% 100%;
+		-ms-transform-origin: 50% 100%;
+		-o-transform-origin: 50% 100%;
+		transform-origin: 50% 100%;
+		height: 150px;
+		-webkit-transform: scaleY(.2);
+		-ms-transform: scaleY(.2);
+		-o-transform: scaleY(.2);
+		transform: scaleY(.2);
+	}
+	#variables > * {
+		opacity: 0;
+	}
+	#variables:hover, #controls:hover {
+		-webkit-transform: scale(1);
+		-ms-transform: scale(1);
+		-o-transform: scale(1);
+		transform: scale(1);
+	}
+	#variables:hover > *, #controls:hover > * {
+		opacity: 1;
+	}
+	#variables.hidden, #controls.hidden {
+		opacity: 0;
+		pointer-events: none;
+	}
+}
+#variables::before,
+#controls::before {
+	content: '';
+	background-image: url(assets/arrow-up.png);
+	background-size: contain;
+	position: absolute;
+	top: 25%;
+	left: 5px;
+	width: 14px;
+	height: 14px;
+	-webkit-transition: opacity .3s cubic-bezier(.2,.3,0,1), -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: opacity .3s cubic-bezier(.2,.3,0,1), -o-transform .3s cubic-bezier(.2,.3,0,1);
+	transition: opacity .3s cubic-bezier(.2,.3,0,1), transform .3s cubic-bezier(.2,.3,0,1);
+	-webkit-transform: scaleY(5);
+	-ms-transform: scaleY(5);
+	-o-transform: scaleY(5);
+	transform: scaleY(5);
+}
+#variables::before {
+	top: auto;
+	bottom: 25%;
+	-webkit-transform: rotate(180deg) scaleY(10);
+	-ms-transform: rotate(180deg) scaleY(10);
+	-o-transform: rotate(180deg) scaleY(10);
+	transform: rotate(180deg) scaleY(10);
+}
+#variables:hover::before {
+	opacity: 0;
+}
+#controls:hover::before {
+	opacity: 0;
+}
+@media(min-width:700px) {
+	#variables::before {
+		display: none;
+	}
+	#controls::before {
+		top: 5px;
+		-webkit-transform: rotate(-90deg);
+		-ms-transform: rotate(-90deg);
+		-o-transform: rotate(-90deg);
+		transform: rotate(-90deg);
+	}
+	#controls:hover::before {
+		opacity: 0;
+	}
+}
