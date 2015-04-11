@@ -116,46 +116,31 @@ $(document).ready(function(){
 		}).on('touchend', function(e){
 			if( touching ) {
 				touching = false;
-				if( touchX < 0 || touchX < $("#variables").width() / 2 ) {
-					variable.css({
-						'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1)',
-						'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1)',
-						'transition': 'transform .3s cubic-bezier(.2,.3,0,1)'
-					});
-					reqFrame(function(){
-						function tEnd() {
-							variable.off('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
+				variable.css({
+					'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1)',
+					'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1)',
+					'transition': 'transform .3s cubic-bezier(.2,.3,0,1)'
+				});
+				reqFrame(function(){
+					function tEnd() {
+						variable.off('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
+						if( touchX < 0 || touchX < $("#variables").width() / 2 ) {
 							variable.css({
 								'-webkit-transition': '',
 								'-o-transition': '',
 								'transition': ''
 							});
-						}
-						variable.css({
-							'-webkit-transform': '',
-							'-o-transform': '',
-							'transform': ''
-						}).on('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
-					});
-				} else {
-					variable.css({
-						'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1)',
-						'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1)',
-						'transition': 'transform .3s cubic-bezier(.2,.3,0,1)'
-					});
-					reqFrame(function(){
-						function tEnd() {
-							variable.off('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
-							variable.remove();
+						} else {
 							callRemoveVariable(variable.data('key'));
+							variable.remove();
 						}
-						variable.css({
-							'-webkit-transform': 'translateX(100%)',
-							'-o-transform': 'translateX(100%)',
-							'transform': 'translateX(100%)'
-						}).on('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
-					});
-				}
+					}
+					variable.css({
+						'-webkit-transform': '',
+						'-o-transform': '',
+						'transform': ''
+					}).on('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
+				});
 			}
 		});
 	}
