@@ -269,6 +269,9 @@ function generateTeX(node, parent) {
 				case 'dotMultiply': {
 					return args[0] + ' \\circ ' + args[1];
 				}
+				case 'factorial': {
+					return args[0] + "!";
+				}
 
 
 				default: {
