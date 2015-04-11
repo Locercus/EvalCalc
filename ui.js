@@ -138,7 +138,6 @@ $(document).ready(function(){
 			var kben = $("#keyboard-sections").height() * section;
 			function loop() {
 				var prc = jQuery.easing.easeInOutExpo( 1 - ((end - Date.now()) / 300 ));
-				console.log(prc.toFixed(2), end, Date.now());
 				$("#keyboard-sections").scrollTop(kbst + (kben - kbst) * prc );
 				if( Date.now() >= end ) {
 					$("#keyboard-sections").scrollTop(kben);
