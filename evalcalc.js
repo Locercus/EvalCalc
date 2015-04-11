@@ -90,7 +90,7 @@ function inputHandle() {
 		callInputHandle();
 
 		if(valid) {
-			$('#output').removeClass('error');
+			$('#output-calc').removeClass('error');
 
 			// We "fix" floating point errors by using rounding
 			var answer = math.format(eval, {precision: 14});
@@ -175,7 +175,7 @@ function inputHandle() {
 			}
 		}
 		else {
-			$('#output').addClass('error');
+			$('#output-calc').addClass('error');
 		}
 
 		var isEmpty = false;
@@ -184,7 +184,7 @@ function inputHandle() {
 			if($('#outputResult>div').is(':empty'))
 				isEmpty = true;
 
-		$('#output').toggleClass('empty', isEmpty);
+		$('#output-calc').toggleClass('empty', isEmpty);
 	}
 }
 

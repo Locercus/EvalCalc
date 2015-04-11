@@ -40,6 +40,16 @@ $(document).ready(function(){
 	});
 	initStorage();
 	
+	$("#keyboard-open-btn").click(function(){
+		if( $("#keyboard").hasClass('hidden') ) {	
+			$("#calculator").addClass('keyboard');
+			$("#keyboard").removeClass('hidden');
+		} else {
+			$("#calculator").removeClass('keyboard');
+			$("#keyboard").addClass('hidden');
+		}
+	});
+	
 	try {
 		renderMathInElement($("#keyboard")[0]);
 	} catch(err){
@@ -95,6 +105,16 @@ $(document).ready(function(){
 		storage.data.degrad = value;
 		$(this).attr('value', value );
 	});
+	
+	function updateCanvasSizes() {
+		$("canvas").each(function(){
+			var pxr = window.devicePixelRatio || 1;
+			$(this).attr('width', $(this).width() * pxr);
+			$(this).attr('height', $(this).height() * pxr);
+		});
+	}
+	updateCanvasSizes();
+	$(window).resize(updateCanvasSizes);
 	
 	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
 		$("#input").on('keypress', function(e){

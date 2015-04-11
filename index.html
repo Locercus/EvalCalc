@@ -29,14 +29,20 @@
 					<div class="toggle-item" value="deg">Deg</div>
 				</div>
 			</button>
+			<button id="keyboard-open-btn">Keyboard</button>
 		</div>
 		<div id="calculator" class="center-box">
-			<div id="output">
-				<div id="outputMath"></div>
-				<div id="outputResult">
-					<div id="outputFraction"></div>
-					<div id="outputExact"></div>
-					<div id="outputApprox"></div>
+			<div id="outputs">
+				<div id="output-calc" class='active'>
+					<div id="outputMath"></div>
+					<div id="outputResult">
+						<div id="outputFraction"></div>
+						<div id="outputExact"></div>
+						<div id="outputApprox"></div>
+					</div>
+				</div>
+				<div id="output-graph">
+					<canvas></canvas>
 				</div>
 			</div>
 			<div id="inputBox">
