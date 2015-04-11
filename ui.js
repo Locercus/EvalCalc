@@ -204,7 +204,19 @@ $(document).ready(function(){
 				}
 				e.preventDefault();
 				var text = $(this).val();
-				text = text.substr(0,cursorPos) + bracketOpen + bracketClose + text.substring(cursorPos, text.length);
+				var closeBrackets = 0;
+				for( var i in text ) {
+					if( text[i] == bracketClose ) {
+						closeBrackets++;
+					} else if( text[i] == bracketOpen ) {
+						closeBrackets--;
+					}
+				}
+				var ftext = bracketOpen + bracketClose;
+				if( closeBrackets != 0 ) {
+					ftext = bracketOpen;
+				}
+				text = text.substr(0,cursorPos) + ftext + text.substring(cursorPos, text.length);
 				$(this).val(text);
 				$(this)[0].selectionStart = cursorPos + 1;
 				$(this)[0].selectionEnd = cursorPos + 1;
