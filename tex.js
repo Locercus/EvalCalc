@@ -263,6 +263,12 @@ function generateTeX(node, parent) {
 					else
 						return args[0] + ' \\circ ' + args[1];
 				}
+				case 'dotDivide': {
+					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'pow')
+						return '\\left(' + args[0] + ' \\oslash ' + args[1] + '\\right)';
+					else
+						return args[0] + ' \\oslash ' + args[1];
+				}
 				case 'factorial': {
 					return args[0] + "!";
 				}
