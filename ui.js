@@ -220,6 +220,7 @@ $(document).ready(function(){
 				$(this).val(text);
 				$(this)[0].selectionStart = cursorPos + 1;
 				$(this)[0].selectionEnd = cursorPos + 1;
+				inputHandle();
 			} else if( e.which == keyCodeClose ) {
 				var cursorPos = $(this)[0].selectionStart;
 				var cursorEnd = $(this)[0].selectionEnd;
@@ -242,6 +243,7 @@ $(document).ready(function(){
 						$(this)[0].selectionStart++;
 					}
 				}
+				inputHandle();
 			}
 		}).on('keydown', function(e){
 			if( e.which == 8 ) {
@@ -258,6 +260,7 @@ $(document).ready(function(){
 					$(this)[0].selectionStart = cursorPos - 1;
 					$(this)[0].selectionEnd = cursorPos - 1;
 				}
+				inputHandle();
 			}
 		});
 	}
