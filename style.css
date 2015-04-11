@@ -19,6 +19,7 @@ body {
 	margin: 0;
 	font-family: 'Maven Pro', 'Helvetica', 'Roboto', 'Segoe UI', 'Segoe', 'Arial', sans-serif;
 	background: #3934B9;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .center-box {
 	position: fixed;
@@ -134,7 +135,7 @@ body {
 		box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
 	}
 	#calculator {
-		height: calc( 100% - 30px - 5% );
+		height: calc( 95% - 30px );
 		top: 5%;
 		right: 0;
 	}
@@ -171,6 +172,10 @@ body {
 }
 .variable {
 	position: relative;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 	border-bottom: 1px solid rgba(255,255,255,0.3);
 	padding-left: 20px;
@@ -276,6 +281,10 @@ body {
 	height: calc(100% - 38px);
 	width: 100%;
 	font-size: 24px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -286,6 +295,10 @@ body {
 	margin-right: 5px;
 }
 #outputResult {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 	align-items: center;
 }
@@ -365,4 +378,123 @@ button {
 	-ms-transform: translateY(-50%);
 	-o-transform: translateY(-50%);
 	transform: translateY(-50%);
+}
+
+#calculator.keyboard {
+	height: 300px;
+}
+@media(max-width:700px) {
+	#calculator.keyboard {
+		height: calc(95% - 320px);
+	}
+}
+@media(max-width:700px) and (max-height: 534px) {
+	#calculator.keyboard {
+		height: 35%;
+	}
+}
+
+#keyboard {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 320px;
+	max-height: 60%;
+	background: #fff;
+	z-index: 20;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-direction: column;
+	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
+	transition: transform .3s cubic-bezier(.2,.3,0,1);
+}
+#keyboard.hidden {
+	pointer-events: none;
+	-webkit-transform: translateY(100%);
+	-ms-transform: translateY(100%);
+	-o-transform: translateY(100%);
+	transform: translateY(100%);
+}
+#keyboard #keyboard-fixed {
+	height: 54px;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	overflow: hidden;
+	z-index: 10;
+	background: #fff;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+}
+#keyboard #keyboard-sections {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: calc(100% - 54px);
+	position: absolute;
+}
+#keyboard .kbd-section {
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+#keyboard .kbd-row {
+	width: 100%;
+	height: calc( 100% / 5 );
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	overflow: hidden;
+	background: inherit;
+}
+#keyboard .key {
+	background: inherit;
+	width: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	overflow: hidden;
+	position: relative;
+}
+#keyboard .key:active {
+	background: rgba(0,0,0,0.1);
+}
+
+#keyboard .key img {
+	width: 24px;
+	height: 24px;
+}
+
+#keyboard .key.space .inner {
+	position: absolute;
+	background: rgba(55,176,216,0.36);
+	width: 90%;
+	left: 5%;
+	top: 50%;
+	height: 90%;
+	max-height: 20px;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+	border-radius: 5px;
 }

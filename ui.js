@@ -40,6 +40,49 @@ $(document).ready(function(){
 	});
 	initStorage();
 	
+	try {
+		renderMathInElement($("#keyboard")[0]);
+	} catch(err){
+		console.log(err);
+	}
+	$("#keyboard .key").each(function(){
+		$(this).click(function(){
+			var val = $(this).attr('value');
+			var car = parseInt($(this).attr('caret')) || 0;
+			var cmd = false;
+			if( val.substr(0,2) == '__' ) {
+				cmd = true;
+				val = val.substr(2);
+			}
+			if( !cmd ) {
+				var cursorPos = $("#input")[0].selectionStart;
+				var cursorEnd = $("#input")[0].selectionEnd;
+				var text = $("#input").val();
+				text = text.substr(0,cursorPos) + val + text.substr(cursorEnd);
+				var newCursorPos = cursorPos + val.length + car;
+				$("#input").val(text);
+				$("#input")[0].selectionEnd = newCursorPos;
+				$("#input")[0].selectionStart = newCursorPos;
+				inputHandle();
+			} else {
+				if( val == 'enter' ) {
+					$("#input").input({which:13});
+				} else if( val == 'bcksp' ) {
+					$("#input").val($("#input").val().substr(0,$("#input").val().length - 1));
+					inputHandle();
+				} else if( val == 'close' ) {
+					$("#keyboard").addClass('hidden');
+					$("#calculator").removeClass('keyboard');
+				}
+			}
+		});
+	});
+	
+	$("#input").on('touchend', function(e){
+		e.preventDefault();
+		$("#keyboard").removeClass('hidden');
+		$("#calculator").addClass('keyboard');
+	});
 	
 	$(".toggle-button").click(function(){
 		$(this).toggleClass("switch");
@@ -53,59 +96,64 @@ $(document).ready(function(){
 		$(this).attr('value', value );
 	});
 	
-	$("#input").on('keypress', function(e){
-		if( e.which == 40 ) {
-			var cursorPos = $(this)[0].selectionStart;
-			var cursorEnd = $(this)[0].selectionEnd;
-			if( cursorPos != cursorEnd ) {
-				return;
-			}
-			e.preventDefault();
-			var text = $(this).val();
-			text = text.substr(0,cursorPos) + "()" + text.substring(cursorPos, text.length);
-			$(this).val(text);
-			$(this)[0].selectionStart = cursorPos + 1;
-			$(this)[0].selectionEnd = cursorPos + 1;
-		} else if( e.which == 41 ) {
-			var cursorPos = $(this)[0].selectionStart;
-			var cursorEnd = $(this)[0].selectionEnd;
-			if( cursorPos != cursorEnd ) {
-				return;
-			}
-			var text = $(this).val();
-			var openBrackets = 0;
-			for( var i in text ) {
-				if( text[i] == '(' ) {
-					openBrackets++;
-				} else if( text[i] == ')' ) {
-					openBrackets--;
+	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
+		$("#input").on('keypress', function(e){
+			if( e.which == keyCodeOpen ) {
+				var cursorPos = $(this)[0].selectionStart;
+				var cursorEnd = $(this)[0].selectionEnd;
+				if( cursorPos != cursorEnd ) {
+					return;
 				}
-			}
-			if( !openBrackets ) {
-				if( text.substr(cursorPos,1) == ')' ) {
-					e.preventDefault();
-					$(this)[0].selectionEnd++;
-					$(this)[0].selectionStart++;
-				}
-			}
-		}
-	}).on('keydown', function(e){
-		if( e.which == 8 ) {
-			var cursorPos = $(this)[0].selectionStart;
-			var cursorEnd = $(this)[0].selectionEnd;
-			if( cursorPos != cursorEnd ) {
-				return;
-			}
-			var text = $(this).val();
-			if( text.substr(cursorPos,1) == ')' && text.substr(cursorPos-1,1) == '(' ) {
 				e.preventDefault();
-				text = text.substring(0, cursorPos - 1) + text.substring(cursorPos + 1, text.length);
+				var text = $(this).val();
+				text = text.substr(0,cursorPos) + bracketOpen + bracketClose + text.substring(cursorPos, text.length);
 				$(this).val(text);
-				$(this)[0].selectionStart = cursorPos - 1;
-				$(this)[0].selectionEnd = cursorPos - 1;
+				$(this)[0].selectionStart = cursorPos + 1;
+				$(this)[0].selectionEnd = cursorPos + 1;
+			} else if( e.which == keyCodeClose ) {
+				var cursorPos = $(this)[0].selectionStart;
+				var cursorEnd = $(this)[0].selectionEnd;
+				if( cursorPos != cursorEnd ) {
+					return;
+				}
+				var text = $(this).val();
+				var openBrackets = 0;
+				for( var i in text ) {
+					if( text[i] == bracketOpen ) {
+						openBrackets++;
+					} else if( text[i] == bracketClose ) {
+						openBrackets--;
+					}
+				}
+				if( !openBrackets ) {
+					if( text.substr(cursorPos,1) == bracketClose ) {
+						e.preventDefault();
+						$(this)[0].selectionEnd++;
+						$(this)[0].selectionStart++;
+					}
+				}
 			}
-		}
-	});
+		}).on('keydown', function(e){
+			if( e.which == 8 ) {
+				var cursorPos = $(this)[0].selectionStart;
+				var cursorEnd = $(this)[0].selectionEnd;
+				if( cursorPos != cursorEnd ) {
+					return;
+				}
+				var text = $(this).val();
+				if( text.substr(cursorPos,1) == bracketClose && text.substr(cursorPos-1,1) == bracketOpen ) {
+					e.preventDefault();
+					text = text.substring(0, cursorPos - 1) + text.substring(cursorPos + 1, text.length);
+					$(this).val(text);
+					$(this)[0].selectionStart = cursorPos - 1;
+					$(this)[0].selectionEnd = cursorPos - 1;
+				}
+			}
+		});
+	}
+	addBracketCompletion('(',')',40,41);
+	addBracketCompletion('[',']',91,93);
+	addBracketCompletion('{','}',123,125);
 	
 	var eventVariableRemoveClick = function(e) {
 		var variable = $(this).parent();

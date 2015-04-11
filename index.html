@@ -5,13 +5,14 @@
 		<link rel="stylesheet" href="style.css">
 		
 		<title>EvalCalc</title>
-		<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 		<meta name="theme-color" content="#59A9FF">
 		<link rel="icon" sizes="192x192" href="assets/icon192.png">
 
 		<script src="libraries/jquery.js"></script>
 		<script src="libraries/math.js"></script>
 		<script src="libraries/katex/katex.min.js"></script>
+		<script src="libraries/katex/contrib/auto-render.min.js"></script>
 		<script src="libraries/fraction.js"></script>
 		<script src="storage.js"></script>
 		<script src="units.js"></script>
@@ -41,6 +42,47 @@
 			<div id="inputBox">
 				<input id="input" autofocus />
 				<button id='tidy-btn'>Tidy</button>
+			</div>
+		</div>
+		<div id="keyboard" class='hidden'>
+			<div id="keyboard-fixed">
+				<div class="key" value="__close"><img src='assets/kbd-down.png'></div>
+				<div class="key space" value=" "><div class="inner"></div></div>
+				<div class="key" value="__enter">$$\hookleftarrow$$</div>
+				<div class="key" value="__bcksp">$$\leftarrow$$</div>
+			</div>
+			<div id="keyboard-sections">
+				<div class="kbd-section">
+					<div class="kbd-row">
+						<div class="key" value="(">$$($$</div>
+						<div class="key" value=")">$$)$$</div>
+						<div class="key" value="sqrt()" caret="-1">$$\sqrt{x}$$</div>
+						<div class="key" value="^">$$x^y$$</div>
+					</div><div class="kbd-row">
+						<div class="key" value="1">$$1$$</div>
+						<div class="key" value="2">$$2$$</div>
+						<div class="key" value="3">$$3$$</div>
+						<div class="key" value="^2">$$x^2$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="4">$$4$$</div>
+						<div class="key" value="5">$$5$$</div>
+						<div class="key" value="6">$$6$$</div>
+						<div class="key" value=" / ">$$\div$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="7">$$7$$</div>
+						<div class="key" value="8">$$8$$</div>
+						<div class="key" value="9">$$9$$</div>
+						<div class="key" value=" * ">$$\cdot$$</div>
+					</div>
+					<div class="kbd-row">
+						<div class="key" value="0">$$0$$</div>
+						<div class="key" value=".">$$.$$</div>
+						<div class="key" value=" + ">$$+$$</div>
+						<div class="key" value=" - ">$$-$$</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
