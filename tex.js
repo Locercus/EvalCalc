@@ -206,50 +206,6 @@ function generateTeX(node, parent) {
 				}
 
 
-
-
-
-				case 'and': {
-					return args[0] + ' \\land ' + args[1];
-				}
-				case 'bignumber': {
-					return '\\text{bignumber}\\left(' + args[0] + '\\right)';
-				}
-				case 'bitAnd': {
-					return args[0] + "\\ \\&\\ " + args[1];
-				}
-				case 'bitNot': {
-					return '\\neg\\left(' + args[0] + '\\right)';
-				}
-				case 'bitOr': {
-					return args[0] + '\\ \\vee\\ ' + args[1];
-				}
-				case 'bitXor': {
-					return args[0] + "\\ \\oplus\\ " + args[1];
-				}
-				case 'boolean': {
-					return '\\text{boolean}\\left(' + args[0] + '\\right)';
-				}
-				case 'chain': {
-					return '\\text{chain}(' + args[0] + ')';
-				}
-				case 'clone': {
-					return '\\text{clone}(' + args[0] + ')';
-				}
-				case 'combinations': {
-					return '\\frac{' + args[0] + '!}{' + args[1] + '!( ' + args[0] + ' - ' + args[1] + ' )!' + '}';
-				}
-				case 'compare': {
-					return '\\text{compare}(' + args[0] + ', ' + args[1] + ')'
-				}
-				case 'compile': {
-					return '\\text{compile}(' + args[0] + ')';
-				}
-				case 'complex': {
-					return '\\text{complex}(' + args[0] + ', ' + args[1] + ')'
-				}
-
-
 				default: {
 					throw node.type + " " + node.name + " has not been implemented";
 				}
