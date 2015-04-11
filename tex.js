@@ -272,6 +272,37 @@ function generateTeX(node, parent) {
 				case 'deg': {
 					return '^{\\circ}';
 				}
+				case 'Infinity': {
+					return '\\infty';
+				}
+				case 'pi':
+				case 'PI': {
+					return '\\pi';
+				}
+				case 'LN2': {
+					return '\\ln(2)';
+				}
+				case 'LN10': {
+					return '\\ln(10)';
+				}
+				case 'LOG2E': {
+					return '\\log(E, 10)';
+				}
+				case 'LOG10E': {
+					return '\\ln(E)';
+				}
+				case 'phi': {
+					return '\\phi';
+				}
+				case 'SQRT1_2': {
+					return '\\sqrt{\\frac{1}{2}}';
+				}
+				case 'SQRT2': {
+					return '\\sqrt{2}';
+				}
+				case 'tau': {
+					return '\\tau';
+				}
 				default: {
 					throw node.type + " " + node.name + " has not been implemented";
 				}
