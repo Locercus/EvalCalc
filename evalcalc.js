@@ -77,110 +77,115 @@ function inputHandle() {
 	var output, eval;
 	var valid = true;
 
-	try {
-		output = math.parse(value);
-		eval = output.compile(math).eval(scope);
-	} catch(e) {
-		valid = false;
-	}
-	callInputHandle();
-
-	if(valid) {
-		$('#output').removeClass('error');
-
-		// We "fix" floating point errors by using rounding
-		var answer = math.format(eval, {precision: 14});
-
-		var base = Math.floor(answer).toString();
-		var baseLength = base.length;
-		var baseLengthLiteral = baseLength;
-		var decimalLength = answer.substr(baseLengthLiteral + 1).length;
-
-		if(base === "0")
-			baseLength = 0;
-
-		
-		if(answer != "undefined") {
-			var tex = generateTeX(output, null);
-
-			var infinite = answer.match(/^(\d*)\.(?:([1-4])\2+$|(5)5+6|(6)6+7)|(7)7+8|(8)8+9$/);
-			var fractionInfinite = answer.match(/^\d*\.(?:(\d)\1*(?!\1+)\d+|[0-4]+)$/);
-
-			var exact, approx, fraction, fractionArr, fractionLookForward, fractionInput;
-
-			if(decimalLength >= 3 && fractionInfinite) {
-				if(infinite)
-					fractionInput = parseFloat(answer.substr(0, answer.toString().length - 1));
-				else
-					fractionInput = answer;
-
-				if(infinite)
-					fractionLookForward = decimalLength - 2;
-				else
-					fractionLookForward = decimalLength + 1;
-
-				fractionArr = dec2frac(fractionInput, fractionLookForward);
-
-				if(fractionArr[0] < 50 && fractionArr[1] < 50)
-					fraction = "= \\frac{" + fractionArr[1] + "}{" + fractionArr[2] + "}";
-			}
-
-			var isAssignments = false;
-			output.traverse(function(node) {
-				if(node.type === 'FunctionAssignmentNode' || node.type === 'AssignmentNode') {
-					isAssignments = true;
-					return false;
-				}
-			});
-
-			if(!isAssignments) {
-				if(!infinite)
-					exact = "= " + answer;
-				else
-					exact = "= " + answer.substr(0, baseLengthLiteral + 1) + "\\bar{" + answer.substr(baseLengthLiteral + 1, 1) + "}";
-			}
-
-
-			var rounded = math.format(eval, {precision: Math.min(3 + baseLength, 13)});
-			if(rounded !== answer && !infinite) {
-				approx = " \\approx " + rounded;
-			}
-
-
-			katex.render(tex, $('#outputMath')[0], {displayMode: true});
-
-			if(fraction !== undefined)
-				katex.render(fraction, $('#outputFraction')[0], {displayMode: true});
-			else
-				$('#outputFraction').html('');
-
-			if(exact !== undefined)
-				katex.render(exact, $('#outputExact')[0], {displayMode: true});
-			else
-				$('#outputExact').html('');
-
-			if(approx !== undefined)
-				katex.render(approx, $('#outputApprox')[0], {displayMode: true});
-			else
-				$('#outputApprox').html('');
-
-
-
-			// Reset variables to how it was before
-			scope = $.extend({}, oldScope); // Clone, JavaScript is silly
-		}
+	if(value === '') {
+		$('#outputMath,#outputResult>div').html('');
 	}
 	else {
-		$('#output').addClass('error');
+		try {
+			output = math.parse(value);
+			eval = output.compile(math).eval(scope);
+		} catch(e) {
+			valid = false;
+		}
+		callInputHandle();
+
+		if(valid) {
+			$('#output').removeClass('error');
+
+			// We "fix" floating point errors by using rounding
+			var answer = math.format(eval, {precision: 14});
+
+			var base = Math.floor(answer).toString();
+			var baseLength = base.length;
+			var baseLengthLiteral = baseLength;
+			var decimalLength = answer.substr(baseLengthLiteral + 1).length;
+
+			if(base === "0")
+				baseLength = 0;
+
+
+			if(answer != "undefined") {
+				var tex = generateTeX(output, null);
+
+				var infinite = answer.match(/^(\d*)\.(?:([1-4])\2+$|(5)5+6|(6)6+7)|(7)7+8|(8)8+9$/);
+				var fractionInfinite = answer.match(/^\d*\.(?:(\d)\1*(?!\1+)\d+|[0-4]+)$/);
+
+				var exact, approx, fraction, fractionArr, fractionLookForward, fractionInput;
+
+				if(decimalLength >= 3 && fractionInfinite) {
+					if(infinite)
+						fractionInput = parseFloat(answer.substr(0, answer.toString().length - 1));
+					else
+						fractionInput = answer;
+
+					if(infinite)
+						fractionLookForward = decimalLength - 2;
+					else
+						fractionLookForward = decimalLength + 1;
+
+					fractionArr = dec2frac(fractionInput, fractionLookForward);
+
+					if(fractionArr[0] < 50 && fractionArr[1] < 50)
+						fraction = "= \\frac{" + fractionArr[1] + "}{" + fractionArr[2] + "}";
+				}
+
+				var isAssignments = false;
+				output.traverse(function(node) {
+					if(node.type === 'FunctionAssignmentNode' || node.type === 'AssignmentNode') {
+						isAssignments = true;
+						return false;
+					}
+				});
+
+				if(!isAssignments) {
+					if(!infinite)
+						exact = "= " + answer;
+					else
+						exact = "= " + answer.substr(0, baseLengthLiteral + 1) + "\\bar{" + answer.substr(baseLengthLiteral + 1, 1) + "}";
+				}
+
+
+				var rounded = math.format(eval, {precision: Math.min(3 + baseLength, 13)});
+				if(rounded !== answer && !infinite) {
+					approx = " \\approx " + rounded;
+				}
+
+
+				katex.render(tex, $('#outputMath')[0], {displayMode: true});
+
+				if(fraction !== undefined)
+					katex.render(fraction, $('#outputFraction')[0], {displayMode: true});
+				else
+					$('#outputFraction').html('');
+
+				if(exact !== undefined)
+					katex.render(exact, $('#outputExact')[0], {displayMode: true});
+				else
+					$('#outputExact').html('');
+
+				if(approx !== undefined)
+					katex.render(approx, $('#outputApprox')[0], {displayMode: true});
+				else
+					$('#outputApprox').html('');
+
+
+
+				// Reset variables to how it was before
+				scope = $.extend({}, oldScope); // Clone, JavaScript is silly
+			}
+		}
+		else {
+			$('#output').addClass('error');
+		}
+
+		var isEmpty = false;
+
+		if($('#outputMath').is(':empty'))
+			if($('#outputResult>div').is(':empty'))
+				isEmpty = true;
+
+		$('#output').toggleClass('empty', isEmpty);
 	}
-
-	var isEmpty = false;
-
-	if($('#outputMath').is(':empty'))
-		if($('#outputResult>div').is(':empty'))
-			isEmpty = true;
-
-	$('#output').toggleClass('empty', isEmpty);
 }
 
 function updateVariables(scope, oldScope, stringScope, parse) {
