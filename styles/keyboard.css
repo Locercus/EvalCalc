@@ -92,6 +92,8 @@
 	width: 100%;
 	height: calc(100% - 54px);
 	position: absolute;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 #keyboard .kbd-section {
 	height: 100%;
