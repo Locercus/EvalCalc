@@ -132,6 +132,9 @@ $(document).ready(function(){
 	$("#ctrl-calc").click(function(){
 		$("#outputs").addClass('calc').removeClass('graph');
 	});
+	$("#ctrl-graph").click(function(){
+		$("#outputs").addClass('graph').removeClass('calc');
+	});
 	
 	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
 		$("#input").on('keypress', function(e){
