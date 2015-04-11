@@ -254,6 +254,9 @@ function generateTeX(node, parent) {
 				case 'factorial': {
 					return args[0] + "!";
 				}
+				case 'pow': {
+					return args[0] + '^{' + args[1] + '}';
+				}
 
 
 				default: {
