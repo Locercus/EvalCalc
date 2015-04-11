@@ -48,6 +48,14 @@ $(document).ready(function(){
 			}
 
 			if(valid) {
+				// Only allow latin letters to be assigned a value. Excluding e and i.
+				$.each(scope, function(key) {
+					if(!key.match(/^[a-z]$/i)) {
+						delete scope[key];
+						delete stringScope[key];
+					}
+				});
+
 				updateVariables(scope, oldScope, stringScope, output);
 
 				oldScope = $.extend({}, scope);
