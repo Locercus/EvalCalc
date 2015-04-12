@@ -37,16 +37,20 @@ gridHalfColor
 gridColor
 	Color picker -> hex color
 
-xaxis
+xAxis
 	Checkbox -> boolean
-xaxisColor
+xAxisColor
 	Color picker -> hex color
-xaxisArrow
+xAxisThickness
+	Slider with input -> number
+xAxisArrow
 	Dropdown -> string: "left", "right", "none", "both"
 
-yaxis
+yAxis
 	Checkbox -> boolean
-yaxisColor
+yAxisColor
 	Color picker -> hex color
-yaxisArrow
+yAxisThickness
+	Slider with input -> number
+yAxisArrow
 	Dropdown -> string: "top", "bottom", "none", "both"
