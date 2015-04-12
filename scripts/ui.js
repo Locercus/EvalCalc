@@ -232,6 +232,8 @@ $(document).ready(function(){
 	function updateCanvasSizes() {
 		$("canvas").each(function(){
 			var pxr = window.devicePixelRatio || 1;
+			$(this).css('width', $(this).width());
+			$(this).css('height', $(this).height());
 			$(this).attr('width', $(this).width() * pxr);
 			$(this).attr('height', $(this).height() * pxr);
 		});
