@@ -255,7 +255,7 @@ function generateTeX(node, parent) {
 					return '+' + args[0];
 				}
 				case 'unaryMinus': {
-					return '-' + args[0];
+					return '\\left(-' + args[0] + '\\right)';
 				}
 				case 'dotMultiply': {
 					if(parent != null && parent.type === 'OperatorNode' && parent.fn === 'pow')
