@@ -68,6 +68,7 @@
 /* hide anything inside when not hovering */
 #controls > * {
 	opacity: 0;
+	pointer-events: none;
 }
 #controls:hover {
 	-webkit-transform: translate(0, -50%);
@@ -77,6 +78,7 @@
 }
 #controls:hover > * {
 	opacity: 1;
+	pointer-events: all;
 }
 /* this is for when the JavaScript hasn't loaded the values from storage yet */
 #controls:hover.pending > * {
@@ -144,6 +146,7 @@
 	}
 	#variables > * {
 		opacity: 0;
+		pointer-events: none;
 	}
 	#variables:hover, #controls:hover {
 		-webkit-transform: scale(1);
@@ -159,6 +162,7 @@
 	}
 	#variables:hover > *, #controls:hover > * {
 		opacity: 1;
+		pointer-events: all;
 	}
 	#variables.hidden, #controls.hidden {
 		opacity: 0;
