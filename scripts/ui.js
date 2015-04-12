@@ -177,7 +177,6 @@ $(document).ready(function(){
 	$("#keyboard").on('mousewheel wheel', function(e){
 		var dx = e.originalEvent.wheelDeltaX;
 		var dy = e.originalEvent.wheelDeltaY;
-		console.log(dy);
 		if( dy > 100 || dy < -100 ) {
 			e.preventDefault();
 			var section = Math.floor(($("#keyboard-sections").scrollTop() + ($("#keyboard-sections").height()/2)) /
