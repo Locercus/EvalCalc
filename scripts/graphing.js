@@ -28,3 +28,34 @@ var graphing = {};
 graphing.dpr = function(i) {
 	return i * (window.devicePixelRatio || 1);
 };
+
+/**
+ * @usage new graphing.Graph(options)
+ * */
+graphing.Graph = function(options) {
+	if(typeof options !== 'object')
+		options = {};
+
+	this.options = options;
+};
+graphing.Graph.prototype.setOptions = function(options) {
+	if(!(options instanceof Object && !(options instanceof Array)))
+		throw "options must be an object";
+
+	for(var key in options)
+		this.options = options[key];
+
+	this.updateGraph();
+};
+graphing.Graph.prototype.removeOptions = function(options) {
+	if(!(options instanceof Array))
+		throw "options must be an array"
+
+	for(var key in options)
+		delete options[key];
+
+	this.updateGraph();
+};
+graphing.Graph.prototype.updateGraph = function() {
+	// TODO
+};

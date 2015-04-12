@@ -1,0 +1,52 @@
+xmin
+	Slider with input -> number
+xmax
+	Slider with input -> number
+xtick
+	Slider with input -> number
+xlog
+	Slider with input (0 to disable) -> number
+xlabel
+	Radio (KaTeX compatible LaTeX or Plaintext) and input -> string
+
+ymin
+	Slider with input -> number
+ymax
+	Slider with input -> number
+ytick
+	Slider with input -> number
+ylog
+	Slider with input (0 to disable) -> number
+ylabel
+	Radio (KaTeX compatible LaTeX or Plaintext) and input -> string
+
+backgroundColor
+	Color picker -> hex color
+lineColor
+	Color picker -> hex color
+lineThickness
+	Slider with input -> number
+gridTick
+	Slider with input (0 to disable) -> number
+gridThickness
+	Slider with input -> number
+gridHalf
+	Checkbox -> boolean
+gridHalfColor
+	Color picker -> hex color
+gridColor
+	Color picker -> hex color
+
+xaxis
+	Checkbox -> boolean
+xaxisColor
+	Color picker -> hex color
+xaxisArrow
+	Dropdown -> string: "left", "right", "none", "both"
+
+yaxis
+	Checkbox -> boolean
+yaxisColor
+	Color picker -> hex color
+yaxisArrow
+	Dropdown -> string: "top", "bottom", "none", "both"
