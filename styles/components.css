@@ -22,9 +22,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/* add right space for #controls */
 #calculator {
 	right: 30px;
 }
+/* align to left, width: 20% of full viewport size */
 #variables, #controls {
 	left: 0;
 	background: #59A9FF;
@@ -36,6 +39,12 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+#variables > *, #controls > * {
+	-webkit-transition: opacity .3s;
+	-o-transition: opacity .3s;
+	transition: opacity .3s;
+}
+/* align to right and make it slide out on hover */
 #controls {
 	left: auto;
 	right: 0;
@@ -56,6 +65,7 @@
 	z-index: 5;
 	width: calc(3em + 40px);
 }
+/* hide anything inside when not hovering */
 #controls > * {
 	opacity: 0;
 }
@@ -68,10 +78,13 @@
 #controls:hover > * {
 	opacity: 1;
 }
+/* this is for when the JavaScript hasn't loaded the values from storage yet */
 #controls:hover.pending > * {
 	opacity: .5;
 	pointer-events: none;
 }
+
+/* unused .hidden classes */
 #variables.hidden {
 	-webkit-transform: translateX(20vw) translateY(-50%);
 	-ms-transform: translateX(20vw) translateY(-50%);
@@ -84,17 +97,13 @@
 	-ms-transform: translateX(-20vw) translateY(-50%);
 	-o-transform: translateX(-20vw) translateY(-50%);
 	transform: translateX(-20vw) translateY(-50%);
-	pointer-events: none;
-}
-#variables > *, #controls > * {
-	-webkit-transition: opacity .3s;
-	-o-transition: opacity .3s;
-	transition: opacity .3s;
 }
 #variables.hidden > *, #controls.hidden > * {
 	opacity: 0;
 }
+
 @media (max-width: 700px) {
+	/* position is now top/bottom instead of left/right */
 	#variables, #controls {
 		width: 100%;
 		height: 50%;
@@ -105,17 +114,18 @@
 		-ms-transform-origin: 50% 0;
 		-o-transform-origin: 50% 0;
 		transform-origin: 50% 0;
-		-webkit-transform: translateY(-90%);
-		-ms-transform: translateY(-90%);
-		-o-transform: translateY(-90%);
-		transform: translateY(-90%);
+		-webkit-transform: translateY(calc(-100% + 30px));
+		-ms-transform: translateY(calc(-100% + 30px));
+		-o-transform: translateY(calc(-100% + 30px));
+		transform: translateY(calc(-100% + 30px));
 		-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
 		-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
 		transition: transform .3s cubic-bezier(.2,.3,0,1);
 	}
+	/* make sure the calculator isn't obstructed */
 	#calculator {
-		height: calc( 95% - 30px );
-		top: 5%;
+		height: calc( 100% - 60px );
+		top: 30px;
 		right: 0;
 	}
 	#controls {
@@ -155,6 +165,8 @@
 		pointer-events: none;
 	}
 }
+
+/* Arrows */
 #variables::before,
 #controls::before {
 	content: '';
@@ -181,13 +193,15 @@
 	-o-transform: rotate(180deg) translateX(50%) translateY(-50%);
 	transform: rotate(180deg) translateX(50%) translateY(-50%);
 }
-#variables:hover::before {
-	opacity: 0;
-}
+/* hide arrows on hover */
+#variables:hover::before,
 #controls:hover::before {
 	opacity: 0;
 }
+
+/* desktop */
 @media(min-width:700px) {
+	/* only show arrows on #controls */
 	#variables::before {
 		display: none;
 	}
@@ -199,7 +213,8 @@
 		-o-transform: rotate(-90deg) translate(-50%,-50%);
 		transform: rotate(-90deg) translate(-50%,-50%);
 	}
-	#controls:hover::before {
-		opacity: 0;
-	}
+}
+
+#controls button {
+	margin-bottom: 5px;
 }

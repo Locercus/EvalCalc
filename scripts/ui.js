@@ -116,7 +116,7 @@ $(document).ready(function(){
 				updateInputCaret();
 			} else {
 				if( val == 'enter' ) {
-					$("#input").input({which:13});
+					tryAssignVariable();
 				} else if( val == 'bcksp' ) {
 					var text = $("#input").val();
 					var cursorPos = $("#input")[0].selectionStart;
@@ -173,6 +173,34 @@ $(document).ready(function(){
 			}
 			loop();
 		},400);
+	});
+	$("#keyboard").on('mousewheel wheel', function(e){
+		var dx = e.originalEvent.wheelDeltaX;
+		var dy = e.originalEvent.wheelDeltaY;
+		console.log(dy);
+		if( dy > 100 || dy < -100 ) {
+			e.preventDefault();
+			var section = Math.floor(($("#keyboard-sections").scrollTop() + ($("#keyboard-sections").height()/2)) /
+				$("#keyboard-sections").height());
+			section -= Math.sign(dy);
+			if( !$("#keyboard-sections .kbd-section:nth-child(" + (section + 1) + ")").length ) {
+				return;
+			}
+			var start = Date.now();
+			var end = Date.now() + 300;
+			var kbst = $("#keyboard-sections").scrollTop();
+			var kben = $("#keyboard-sections").height() * section;
+			function loop() {
+				var prc = jQuery.easing.easeInOutExpo( 1 - ((end - Date.now()) / 300 ));
+				$("#keyboard-sections").scrollTop(kbst + (kben - kbst) * prc );
+				if( Date.now() >= end ) {
+					$("#keyboard-sections").scrollTop(kben);
+				} else {
+					reqFrame(loop);
+				}
+			}
+			loop();
+		}
 	});
 	
 	$("#input").on('touchend', function(e){
@@ -326,6 +354,10 @@ $(document).ready(function(){
 		if( typeof obj != 'object' ) {
 			throw new Error("Argument 0 must be an object");
 		}
+		$("#variables").addClass('bounce');
+		setTimeout(function(){
+			$("#variables").removeClass('bounce');
+		},500);
 		var variable = $(obj);
 		variable.find(".variable-remove").on('click', eventVariableRemoveClick);
 		

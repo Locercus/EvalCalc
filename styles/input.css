@@ -71,9 +71,9 @@
 	width: 1px;
 	height: 33px;
 	background: rgba(255,255,255,0.9);
-	-webkit-animation: caret-blink .9s infinite;
-	-o-animation: caret-blink .9s infinite;
-	animation: caret-blink .9s infinite;
+	-webkit-animation: caret-blink .9s infinite linear;
+	-o-animation: caret-blink .9s infinite linear;
+	animation: caret-blink .9s infinite linear;
 	z-index: 1;
 }
 #caret.hidden {

@@ -53,6 +53,7 @@
 	-o-transform: translateY(100%);
 	transform: translateY(100%);
 }
+/* don't make the keyboard full width on >500px screen size */
 @media(min-width: 500px) {
 	#keyboard {
 		width: 500px;
@@ -71,6 +72,7 @@
 		transform: translate(-50%,100%);
 	}
 }
+/* bottom bar */
 #keyboard #keyboard-fixed {
 	height: 54px;
 	width: 100%;

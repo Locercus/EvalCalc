@@ -36,30 +36,7 @@ $(document).ready(function(){
 
 	$('#input').keydown(function(e) {
 		if(e.which === 13) {
-			var value = $('#input').val();
-			var output, eval;
-			var valid = true;
-
-			try {
-				output = math.parse(value);
-				eval = output.compile(math).eval(scope);
-			} catch(e) {
-				valid = false;
-			}
-
-			if(valid) {
-				// Only allow latin letters to be assigned a value. Excluding e and i.
-				$.each(scope, function(key) {
-					if(!key.match(/^[a-z]$/i)) {
-						delete scope[key];
-						delete stringScope[key];
-					}
-				});
-
-				updateVariables(scope, oldScope, stringScope, output);
-
-				oldScope = $.extend({}, scope);
-			}
+			tryAssignVariable();
 		}
 	});
 
@@ -84,6 +61,32 @@ $(document).ready(function(){
 		}
 	});
 });
+var tryAssignVariable = function() {
+	var value = $('#input').val();
+	var output, eval;
+	var valid = true;
+
+	try {
+		output = math.parse(value);
+		eval = output.compile(math).eval(scope);
+	} catch(e) {
+		valid = false;
+	}
+
+	if(valid) {
+		// Only allow latin letters to be assigned a value. Excluding e and i.
+		$.each(scope, function(key) {
+			if(!key.match(/^[a-z]$/i)) {
+				delete scope[key];
+				delete stringScope[key];
+			}
+		});
+
+		updateVariables(scope, oldScope, stringScope, output);
+
+		oldScope = $.extend({}, scope);
+	}
+}
 var onInputHandle = function(){};
 var callInputHandle = function(){};
 (function(){
