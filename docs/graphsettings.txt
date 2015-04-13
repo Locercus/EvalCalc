@@ -26,15 +26,13 @@ backgroundColor
 	Color picker -> hex color
 grid
 	Dropdown -> string: "none", "both", "horizontal", "vertical"
-gridTick
-	Slider with input -> number
 gridThickness
 	Slider with input -> number
+gridColor
+	Color picker -> hex color
 gridHalf
 	Checkbox -> boolean
 gridHalfColor
-	Color picker -> hex color
-gridColor
 	Color picker -> hex color
 
 legend
