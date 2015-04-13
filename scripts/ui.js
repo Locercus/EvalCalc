@@ -63,6 +63,12 @@ $(document).ready(function(){
 		} else {
 			degRadVal = "rad";
 		}
+		if( storage.data.outputState ) {
+			if( storage.data.outputState == "graph" ) {
+				$("#outputs").removeClass('calc').addClass('graph');
+				$("#variables").addClass('chkb');
+			}
+		}
 	});
 	initStorage();
 	
@@ -304,9 +310,11 @@ $(document).ready(function(){
 			if( $(that).attr("value") == 'calc' ) {
 				$("#outputs").addClass('calc').removeClass('graph');
 				$("#variables").removeClass('chkb');
+				storage.data.outputState = "calc";
 			} else {
 				$("#outputs").addClass('graph').removeClass('calc');
 				$("#variables").addClass('chkb');
+				storage.data.outputState = "graph";
 			}
 		});
 	});

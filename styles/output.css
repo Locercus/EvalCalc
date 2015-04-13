@@ -83,6 +83,12 @@
 	width: 100%;
 	height: 100%;
 }
+#output-graph {
+	position: relative;
+}
+#output-graph > *:not(canvas) {
+	position: absolute;
+}
 
 #outputs.calc #output-calc {
 	-webkit-transform: translateX(0);

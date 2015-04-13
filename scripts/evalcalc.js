@@ -228,16 +228,18 @@ function inputHandle() {
 function updateVariables(scope, oldScope, stringScope, parse) {
 	scope = sortObjectByKey(scope);
 
-
-	// Find all FunctionAssignmentNodes in parse
-	parse.traverse(function(node) {
-		if(node.type === 'FunctionAssignmentNode') {
-			stringScope[node.name] = [
-				node.params.join(', '),
-				node.expr.toString()
-			];
-		}
-	});
+	
+	if( parse != null ) {
+		// Find all FunctionAssignmentNodes in parse
+		parse.traverse(function(node) {
+			if(node.type === 'FunctionAssignmentNode') {
+				stringScope[node.name] = [
+					node.params.join(', '),
+					node.expr.toString()
+				];
+			}
+		});
+	}
 
 
 	$.each(scope, function(variable, value) {
@@ -308,7 +310,6 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			
 			if( typeof scope[variable] == 'function' ) {
 				el.addClass('function');
-				updateGraphFunctions();
 			} else {
 				el.removeClass('function');
 			}
@@ -318,6 +319,49 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
 		}
 	});
+	saveVariables();
+	updateGraphFunctions();
+}
+
+onStorageReady(function(){
+	return; //throws errors; disabled for now
+	var pv = storage.data.variables;
+	if( !pv ) {
+		return;
+	}
+	pv = JSON.parse(pv);
+	for( var i in pv ) {
+		var d = pv[i];
+		if( d.type == 'value' ) {
+			scope[d.key] = d.value;
+		} else if( d.type == 'function' ) {
+			updateVariables(scope, oldScope, stringScope, d.value);
+		}
+	}
+	updateVariables(scope, oldScope, stringScope);
+});
+
+function saveVariables() {
+	if( storage.ready ) {
+		var vars = [];
+		for( var i in scope ) {
+			var v = scope[i];
+			var d = {
+				type: 'value',
+				key: i,
+				value: v
+			};
+			if( typeof v == 'function' ) {
+				d.value = stringScope[i];
+				d.type = 'function';
+			}
+			vars.push(d);
+		}
+		//must convert to JSON because localStorage refuses to store objects
+		storage.data.variables = JSON.stringify(vars);
+	} else {
+		console.error("Could not save variables!");
+	}
 }
 
 var mainGraph;
@@ -328,6 +372,9 @@ $(document).ready(function(){
 });
 
 function updateGraphFunctions() {
+	if( !mainGraph ) {
+		return;
+	}
 	var pfunctions = {};
 	$("#variables .variable.function").each(function(){
 		if( $(this).find('.variable-check').is(':checked') ) {
