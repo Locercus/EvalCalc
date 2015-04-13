@@ -2,8 +2,6 @@ xmin
 	Slider with input -> number
 xmax
 	Slider with input -> number
-xtick
-	Slider with input -> number
 xlog
 	Slider with input (0 to disable) -> number
 xlabel
@@ -12,8 +10,6 @@ xlabel
 ymin
 	Slider with input -> number
 ymax
-	Slider with input -> number
-ytick
 	Slider with input -> number
 ylog
 	Slider with input (0 to disable) -> number

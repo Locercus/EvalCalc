@@ -28,10 +28,10 @@ var graphing = {};
 graphing.dpr = function(i) {
 	return i * (window.devicePixelRatio || 1);
 };
+// The value of 1 pixel on a retina display
+graphing.pxdpr = 1 / (window.devicePixelRatio || 1);
 
-/**
- * @usage new graphing.Graph(options)
- * */
+
 graphing.Graph = function(options, f, canvas) {
 	if(!(options instanceof Object && !(options instanceof Array)))
 		throw "options must be an object";
@@ -84,25 +84,50 @@ graphing.Graph.prototype.updateGraph = function() {
 	cx.clearRect(0, 0, dpr(w), dpr(h));
 
 	// Set default values
-	o.xAxis          = (o.xAxis || false);
+	o.xAxis          = (o.xAxis || true);
 	o.xmin           = (o.xmin || -2);
 	o.xmax           = (o.xmax || 10);
 	o.xAxisArrow     = (o.xAxisArrow || 'both');
 	o.xAxisThickness = (o.xAxisThickness || 1);
 	o.xAxisColor     = (o.xAxisColor || 'gray');
 
-	o.yAxis          = (o.yAxis || false);
+	o.yAxis          = (o.yAxis || true);
 	o.ymin           = (o.ymin || -2);
 	o.ymax           = (o.ymax || 10);
 	o.yAxisArrow     = (o.yAxisArrow || 'both');
 	o.yAxisThickness = (o.yAxisThickness || 1);
 	o.yAxisColor     = (o.yAxisColor || 'gray');
 
+	o.lineThickness  = (o.lineThickness || 2);
+	o.lineColor      = (o.lineColor || 'blue');
+
+	// Calculate pixels/unit
+	var pixelsPerX = (w / (Math.abs(o.xmax) + Math.abs(o.xmin)));
+	var pixelsPerY = (h / (Math.abs(o.ymax) + Math.abs(o.ymin)));
+
+	// Calculate the y-coordinate of the x-axis
+	var xAxisY = pixelsPerY * Math.abs(o.ymax);
+
+	// Calculate the x-coordinate of the y-axis
+	var yAxisX = pixelsPerX * Math.abs(o.xmin);
+
+	// Create convenience functions for converting axis units to pixels
+	function px2x(px) {
+		return (px - yAxisX) / pixelsPerX;
+	}
+	function px2y(px) {
+		return (px + xAxisY) / pixelsPerY;
+	}
+	function x2px(x) {
+		return x * pixelsPerX + yAxisX;
+	}
+	function y2px(y) {
+		return h - (y * pixelsPerY) - (h - xAxisY);
+	}
+
+
 	// Draw the x-axis
 	if(o.xAxis) {
-		// Calculate the y-coordinate of the x-axis
-		var xAxisY = (h / (Math.abs(o.ymax) + Math.abs(o.ymin))) * Math.abs(o.ymax);
-
 		cx.beginPath();
 
 		// Calculate the x-axis arrow offset
@@ -133,9 +158,6 @@ graphing.Graph.prototype.updateGraph = function() {
 
 	// Draw the y-axis
 	if(o.yAxis) {
-		// Calculate the x-coordinate of the y-axis
-		var yAxisX = (w / (Math.abs(o.xmax) + Math.abs(o.xmin))) * Math.abs(o.xmin);
-
 		cx.beginPath();
 
 		// Calculate the y-axis arrow offset
@@ -162,6 +184,22 @@ graphing.Graph.prototype.updateGraph = function() {
 		cx.strokeStyle = o.yAxisColor;
 		cx.stroke();
 	}
+
+	// Draw the function
+	cx.beginPath();
+	cx.moveTo(dpr(x2px(o.xmin)), dpr(y2px(f(o.xmin))));
+
+	for(var x = o.xmin; x < o.xmax; x += 1 / pixelsPerX) {
+		var y = f(x);
+		cx.lineTo(
+			dpr(x2px(x)),
+			dpr(y2px(y))
+		);
+	}
+
+	cx.lineWidth = o.lineThickness;
+	cx.strokeStyle = o.lineColor;
+	cx.stroke();
 };
 
 /**
