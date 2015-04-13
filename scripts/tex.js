@@ -273,7 +273,7 @@ function generateTeX(node, parent) {
 					return args[0] + "!";
 				}
 				case 'pow': {
-					return args[0] + '^{' + args[1] + '}';
+					return '{' + args[0] + '}^{' + args[1] + '}';
 				}
 
 
