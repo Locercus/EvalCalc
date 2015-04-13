@@ -368,7 +368,7 @@ var mainGraph;
 $(document).ready(function(){
 	mainGraph = new graphing.Graph({
 		/* nothing */
-	},[], $("#graph-canvas"));
+	},[], $("#output-graph"));
 });
 
 function updateGraphFunctions() {
