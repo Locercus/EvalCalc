@@ -1,11 +1,15 @@
+Main object properties
+======================
 xmin
 	Slider with input -> number
 xmax
 	Slider with input -> number
 xlog
 	Slider with input (0 to disable) -> number
+xlabelType
+	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex"
 xlabel
-	Radio (KaTeX compatible LaTeX or Plaintext) and input -> string
+	Input -> string
 
 ymin
 	Slider with input -> number
@@ -13,15 +17,13 @@ ymax
 	Slider with input -> number
 ylog
 	Slider with input (0 to disable) -> number
+ylabelType
+	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex
 ylabel
-	Radio (KaTeX compatible LaTeX or Plaintext) and input -> string
+	Input -> string
 
 backgroundColor
 	Color picker -> hex color
-lineColor
-	Color picker -> hex color
-lineThickness
-	Slider with input -> number
 gridTick
 	Slider with input (0 to disable) -> number
 gridThickness
@@ -32,6 +34,11 @@ gridHalfColor
 	Color picker -> hex color
 gridColor
 	Color picker -> hex color
+
+legend
+	Checkbox -> boolean
+legendCoords
+	Two inputs -> array [x, y]
 
 xAxis
 	Checkbox -> boolean
@@ -50,3 +57,14 @@ yAxisThickness
 	Slider with input -> number
 yAxisArrow
 	Dropdown -> string: "top", "bottom", "none", "both"
+
+Function properties
+===================
+lineColor
+	Color picker -> hex color
+lineThickness
+	Slider with input -> number
+f
+	The function to graph
+legendType
+	Dropdown -> string: "function", "variable", "plaintext", "tex"

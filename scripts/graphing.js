@@ -36,8 +36,8 @@ graphing.Graph = function(options, f, canvas) {
 	if(!(options instanceof Object && !(options instanceof Array)))
 		throw "options must be an object";
 
-	if(typeof f !== 'function')
-		throw "f must be a function";
+	if(!(f instanceof  Array))
+		throw "f must be an array";
 
 	if(canvas instanceof HTMLElement)
 		canvas = $(canvas);
@@ -73,33 +73,30 @@ graphing.Graph.prototype.removeOptions = function(options) {
 	this.updateGraph();
 };
 graphing.Graph.prototype.updateGraph = function() {
-	var o   = this.options;
-	var f   = this.f;
-	var c   = this.canvas;
-	var cx  = c[0].getContext('2d');
-	var dpr = graphing.dpr;
-	var w   = c.width();
-	var h   = c.height();
+	var o           = this.options;
+	var functions   = this.f;
+	var c           = this.canvas;
+	var cx          = c[0].getContext('2d');
+	var dpr         = graphing.dpr;
+	var w           = c.width();
+	var h           = c.height();
 
 	cx.clearRect(0, 0, dpr(w), dpr(h));
 
 	// Set default values
-	o.xAxis          = (o.xAxis || true);
+	o.xAxis          = (o.xAxis != null ? o.xAxis : true);
 	o.xmin           = (o.xmin || -2);
 	o.xmax           = (o.xmax || 10);
 	o.xAxisArrow     = (o.xAxisArrow || 'both');
 	o.xAxisThickness = (o.xAxisThickness || 1);
 	o.xAxisColor     = (o.xAxisColor || 'gray');
 
-	o.yAxis          = (o.yAxis || true);
+	o.yAxis          = (o.yAxis != null ? o.yAxis : true);
 	o.ymin           = (o.ymin || -2);
 	o.ymax           = (o.ymax || 10);
 	o.yAxisArrow     = (o.yAxisArrow || 'both');
 	o.yAxisThickness = (o.yAxisThickness || 1);
 	o.yAxisColor     = (o.yAxisColor || 'gray');
-
-	o.lineThickness  = (o.lineThickness || 2);
-	o.lineColor      = (o.lineColor || 'blue');
 
 	// Calculate pixels/unit
 	var pixelsPerX = (w / (Math.abs(o.xmax) + Math.abs(o.xmin)));
@@ -185,21 +182,26 @@ graphing.Graph.prototype.updateGraph = function() {
 		cx.stroke();
 	}
 
-	// Draw the function
-	cx.beginPath();
-	cx.moveTo(dpr(x2px(o.xmin)), dpr(y2px(f(o.xmin))));
+	// Draw the functions
+	for(var id in functions) {
+		var fOpt = functions[id];
+		var f = fOpt.f;
 
-	for(var x = o.xmin; x < o.xmax; x += 1 / pixelsPerX) {
-		var y = f(x);
-		cx.lineTo(
-			dpr(x2px(x)),
-			dpr(y2px(y))
-		);
+		cx.beginPath();
+		cx.moveTo(dpr(x2px(o.xmin)), dpr(y2px(f(o.xmin))));
+
+		for(var x = o.xmin; x < o.xmax; x += 1 / pixelsPerX) {
+			var y = f(x);
+			cx.lineTo(
+				dpr(x2px(x)),
+				dpr(y2px(y))
+			);
+		}
+
+		cx.lineWidth = (fOpt.lineThickness || 2);
+		cx.strokeStyle = (fOpt.lineColor || 'blue');
+		cx.stroke();
 	}
-
-	cx.lineWidth = o.lineThickness;
-	cx.strokeStyle = o.lineColor;
-	cx.stroke();
 };
 
 /**
