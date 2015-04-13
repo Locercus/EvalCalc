@@ -66,6 +66,7 @@ $(document).ready(function(){
 		if( storage.data.outputState ) {
 			if( storage.data.outputState == "graph" ) {
 				$("#outputs").removeClass('calc').addClass('graph');
+				$("#ctrl-disp").addClass('switch').attr('value', 'graph');
 				$("#variables").addClass('chkb');
 			}
 		}
