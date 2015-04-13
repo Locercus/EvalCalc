@@ -24,8 +24,10 @@ ylabel
 
 backgroundColor
 	Color picker -> hex color
+grid
+	Dropdown -> string: "none", "both", "horizontal", "vertical"
 gridTick
-	Slider with input (0 to disable) -> number
+	Slider with input -> number
 gridThickness
 	Slider with input -> number
 gridHalf
