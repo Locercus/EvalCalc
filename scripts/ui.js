@@ -302,8 +302,10 @@ $(document).ready(function(){
 		reqFrame(function(){
 			if( $(that).attr("value") == 'calc' ) {
 				$("#outputs").addClass('calc').removeClass('graph');
+				$("#variables").removeClass('chkb');
 			} else {
 				$("#outputs").addClass('graph').removeClass('calc');
+				$("#variables").addClass('chkb');
 			}
 		});
 	});
@@ -444,6 +446,11 @@ $(document).ready(function(){
 					} else {
 						variable.removeClass('removePotential');
 					}
+					if( touchX < -40 && variable.hasClass('function') && $("#variables").hasClass('chkb') ) {
+						variable.addClass('checkPotential');
+					} else {
+						variable.removeClass('checkPotential');
+					}
 				}
 			}
 		}).on('touchend', function(e){
@@ -468,12 +475,16 @@ $(document).ready(function(){
 							variable.remove();
 						}
 					}
-					if( touchX < 0 || touchX < $("#variables").width() / 2 ) {
+					if( touchX < -40 || touchX < $("#variables").width() / 2 ) {
 						variable.css({
 							'-webkit-transform': '',
 							'-o-transform': '',
 							'transform': ''
-						});
+						}).removeClass('removePotential');
+						if( touchX < -40 && variable.hasClass('checkPotential') && $("#variables").hasClass('chkb') ) {
+							variable.find('.variable-check').prop('checked', !variable.find('.variable-check').prop('checked'));
+						}
+						variable.removeClass('checkPotential');
 					} else {
 						variable.css({
 							'-webkit-transform': 'translateX(100%)',

@@ -258,6 +258,7 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 
 			el.html(
 				'<div class="variable-remove"></div>' +
+				'<input class="variable-check" type="checkbox">' +
 				'<div class="variable-render"></div>'
 			);
 
@@ -285,6 +286,12 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			}
 
 			var el = $('#variables>div[data-key=' + variable + ']');
+			
+			if( typeof scope[variable] == 'function' ) {
+				el.addClass('function');
+			} else {
+				el.removeClass('function');
+			}
 
 			var tex = generateTeX(math.parse(fullString), null);
 
@@ -297,6 +304,12 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			var el = $('#variables>div[data-key=' + variable + ']');
 
 			el.attr('data-value', value);
+			
+			if( typeof scope[variable] == 'function' ) {
+				el.addClass('function');
+			} else {
+				el.removeClass('function');
+			}
 
 			var tex = generateTeX(math.parse(fullString), null);
 

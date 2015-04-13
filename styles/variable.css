@@ -61,7 +61,8 @@
 	display: flex;
 	border-bottom: 1px solid rgba(255,255,255,0.3);
 	padding-left: 20px;
-	overflow-x: auto;
+	padding-right: 20px;
+	min-height: 32px;
 }
 .variable.removePotential {
 	background: #ec385e;
@@ -69,7 +70,89 @@
 .variable .variable-render {
 	position: relative;
 	width: 100%;
+	overflow-x: auto;
 }
+.variable .variable-check {
+	position: absolute;
+	-webkit-appearance: none;
+	top: 50%;
+	right: 4px;
+	width: 16px;
+	height: 16px;
+	background: #fff;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-radius: 2px;
+	border: none;
+	z-index: 5;
+	-webkit-transform: translateY(-50%) scale(0);
+	-ms-transform: translateY(-50%) scale(0);
+	-o-transform: translateY(-50%) scale(0);
+	transform: translateY(-50%) scale(0);
+	margin: 0;
+	pointer-events: none;
+	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
+	transition: transform .3s cubic-bezier(.2,.3,0,1);
+}
+#variables.chkb .variable.function .variable-check {
+	-webkit-transform: translateY(-50%) scale(1);
+	-ms-transform: translateY(-50%) scale(1);
+	-o-transform: translateY(-50%) scale(1);
+	transform: translateY(-50%) scale(1);
+	pointer-events: all;
+}
+.variable .variable-check::before {
+	position: absolute;
+	content: '';
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	background-image: url(../assets/chkb.png);
+	background-size: contain;
+	background-repeat: none;
+	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1);
+	transition: transform .3s cubic-bezier(.2,.3,0,1);
+	-webkit-transform: scale(0);
+	-ms-transform: scale(0);
+	-o-transform: scale(0);
+	transform: scale(0);
+	pointer-events: none;
+	z-index: 1;
+}
+.variable .variable-check::after {
+	content: '';
+	pointer-events: none;
+	background: #346DE4;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 16px;
+	height: 16px;
+	opacity: 0;
+	-webkit-transition: opacity .3s cubic-bezier(.2,.3,0,1);
+	-o-transition: opacity .3s cubic-bezier(.2,.3,0,1);
+	transition: opacity .3s cubic-bezier(.2,.3,0,1);
+	border-radius: 2px;
+}
+.variable .variable-check:checked::after {
+	opacity: 1;
+}
+.variable.checkPotential .variable-check::after {
+	opacity: .5;
+}
+.variable .variable-check:checked::before {
+	-webkit-transform: scale(.75);
+	-ms-transform: scale(.75);
+	-o-transform: scale(.75);
+	transform: scale(.75);
+}
+.variable .variable-check:focus {
+	outline: none;
+}
+
 .variable .variable-remove {
 	position: absolute;
 	top: 50%;
