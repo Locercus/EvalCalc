@@ -243,6 +243,9 @@ $(document).ready(function(){
 			$(this).attr('width', $(this).width() * pxr);
 			$(this).attr('height', $(this).height() * pxr);
 		});
+		if( mainGraph ) {
+			mainGraph.updateGraph();
+		}
 	}
 	updateCanvasSizes();
 	$(window).resize(updateCanvasSizes);
