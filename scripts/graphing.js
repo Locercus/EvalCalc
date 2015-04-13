@@ -67,8 +67,8 @@ graphing.Graph = function(options, f, canvas) {
 	if(canvas instanceof HTMLElement)
 		canvas = $(canvas);
 	if(canvas instanceof jQuery) {
-		if(!(canvas.is('canvas')))
-			throw "canvas must be a canvas";
+		if(!(canvas.is('div') && canvas.children('canvas').length))
+			throw "canvas must be a div containing a canvas";
 	}
 	else
 		throw "canvas must be a DOM or jQuery object";
@@ -100,18 +100,22 @@ graphing.Graph.prototype.removeOptions = function(options) {
 graphing.Graph.prototype.updateGraph = function() {
 	var o           = this.options;
 	var functions   = this.f;
-	var c           = this.canvas;
+	var c           = this.canvas.children('canvas');
+	var div         = this.canvas;
 	var cx          = c[0].getContext('2d');
 	var dpr         = graphing.dpr;
 	var w           = c.width();
 	var h           = c.height();
 
 	cx.clearRect(0, 0, dpr(w), dpr(h));
+	div.children(':not(canvas)').remove();
 
 	// Set default values
 	o.xAxis          = (o.xAxis != null ? o.xAxis : true);
 	o.xmin           = (o.xmin || -2);
 	o.xmax           = (o.xmax || 10);
+	o.xlabelType     = (o.xlabelType || 'plaintex');
+	o.xlabel         = (o.xlabel || '');
 	o.xAxisArrow     = (o.xAxisArrow || 'both');
 	o.xAxisThickness = (o.xAxisThickness || 1);
 	o.xAxisColor     = (o.xAxisColor || 'gray');
@@ -119,6 +123,8 @@ graphing.Graph.prototype.updateGraph = function() {
 	o.yAxis          = (o.yAxis != null ? o.yAxis : true);
 	o.ymin           = (o.ymin || -2);
 	o.ymax           = (o.ymax || 10);
+	o.ylabelType     = (o.ylabelType || 'plaintex');
+	o.ylabel         = (o.ylabel || '');
 	o.yAxisArrow     = (o.yAxisArrow || 'both');
 	o.yAxisThickness = (o.yAxisThickness || 1);
 	o.yAxisColor     = (o.yAxisColor || 'gray');
@@ -281,6 +287,52 @@ graphing.Graph.prototype.updateGraph = function() {
 		cx.strokeStyle = (fOpt.lineColor || 'blue');
 		cx.stroke();
 	}
+
+	/**
+	 * Based on https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas
+	 * */
+	// Draw the axis labels
+	// x
+	var xlabelText;
+	if(o.xlabelType === 'tex')
+		xlabelText = generateTeX(math.parse(o.xlabel));
+	else if(o.xlabelType === 'plaintext')
+		xlabelText = '\\text{' + escapeTeX(o.xlabel) + '}';
+	else
+		xlabelText = o.xlabel;
+
+	var xlabelElement = $('<div></div>')[0];
+	katex.render(xlabelText, xlabelElement, {displayMode: true});
+
+	var xlabelCSS = {
+		top: xAxisY + "px",
+		right: (xAxisArrowRightOffset + 15) + "px"
+	};
+	$(xlabelElement).css(xlabelCSS);
+
+	div.prepend(xlabelElement);
+
+	// y
+	var ylabelText;
+	if(o.ylabelType === 'tex')
+		ylabelText = generateTeX(math.parse(o.ylabel));
+	else if(o.ylabelType === 'plaintext')
+		ylabelText = '\\text{' + escapeTeX(o.ylabel) + '}';
+	else
+		ylabelText = o.ylabel;
+
+	var ylabelElement = $('<div></div>')[0];
+	katex.render(ylabelText, ylabelElement, {displayMode: true});
+
+	// We position the element after prepending it to the DOM, as .height() doesn't work beforehand
+
+	div.prepend(ylabelElement);
+
+	var ylabelCSS = {
+		left: (yAxisX - $(ylabelElement).height()) + "px",
+		top: (yAxisArrowTopOffset + 30) + "px"
+	};
+	$(ylabelElement).css(ylabelCSS).addClass('y-rotate');
 };
 
 /**

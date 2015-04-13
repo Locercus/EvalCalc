@@ -79,17 +79,29 @@
 #outputs > div.error.empty::before {
 	content: "error";
 }
-#output-graph canvas {
+#graph-div {
+	position: relative;
 	width: 100%;
 	height: 100%;
 }
-#output-graph {
-	position: relative;
+#graph-div canvas {
+	width: 100%;
+	height: 100%;
 }
-#output-graph > *:not(canvas) {
+#graph-div > *:not(canvas) {
 	position: absolute;
 }
-
+#graph-div > div {
+	text-shadow: 0 0 5px #000;
+	color: #fff;
+}
+#graph-div > div.y-rotate {
+	transform: rotate(270deg) ;
+	-webkit-transform: rotate(270deg) ;
+	-moz-transform: rotate(270deg) ;
+	-o-transform: rotate(270deg) ;
+	-ms-transform: rotate(270deg) ;
+}
 #outputs.calc #output-calc {
 	-webkit-transform: translateX(0);
 	-ms-transform: translateX(0);

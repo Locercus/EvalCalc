@@ -7,7 +7,7 @@ xmax
 xlog
 	Slider with input (0 to disable) -> number
 xlabelType
-	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex"
+	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex", "mathtex"
 xlabel
 	Input -> string
 
@@ -18,7 +18,7 @@ ymax
 ylog
 	Slider with input (0 to disable) -> number
 ylabelType
-	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex
+	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex", "mathtex"
 ylabel
 	Input -> string
 
@@ -67,4 +67,4 @@ lineThickness
 f
 	The function to graph
 legendType
-	Dropdown -> string: "function", "variable", "plaintext", "tex"
+	Dropdown -> string: "function", "variable", "plaintext", "tex", "mathtex"

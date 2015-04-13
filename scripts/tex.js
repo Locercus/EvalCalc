@@ -24,6 +24,20 @@
 */
 
 
+function escapeTeX(tex) {
+	return tex.
+		replace('#', '\\#').
+		replace('$', '\\$').
+		replace('%', '\\%').
+		replace('^', '\\^{}').
+		replace('&', '\\&').
+		replace('_', '\\_').
+		replace('{', '\\{').
+		replace('}', '\\}').
+		replace('~', '\\~{}').
+		replace('\\', '\\textbackslash{}');
+}
+
 // I'm not using .toTex() function, as it oftentimes generates invalid LaTeX.
 
 // s = (3 * 4) / (sqrt(2) * sin(30deg)) + 5
