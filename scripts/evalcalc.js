@@ -27,6 +27,7 @@ var inputLastPress;
 var scope = {}; // Stored variables
 var oldScope = {}; // We reset the scope unless the user clicks enter
 var stringScope = {}; // Sometimes the data types math.js provides just aren't good enough. This is the case for functions for example.
+var graphFunctions = {}; // All active functions displayed on the graph section in the output
 
 $(document).ready(function(){
 	$('#input').on('input', function() {
@@ -307,6 +308,7 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			
 			if( typeof scope[variable] == 'function' ) {
 				el.addClass('function');
+				updateGraphFunctions();
 			} else {
 				el.removeClass('function');
 			}
@@ -316,6 +318,32 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
 		}
 	});
+}
+
+var mainGraph;
+$(document).ready(function(){
+	mainGraph = new graphing.Graph({
+		/* nothing */
+	},[], $("#graph-canvas"));
+});
+
+function updateGraphFunctions() {
+	var pfunctions = {};
+	$("#variables .variable.function").each(function(){
+		if( $(this).find('.variable-check').is(':checked') ) {
+			graphFunctions[$(this).data('key')] = scope[$(this).data('key')];
+		} else {
+			delete graphFunctions[$(this).data('key')];
+		}
+	});
+	var gf = [];
+	for( var i in graphFunctions ) {
+		gf.push({
+			f: graphFunctions[i]
+		});
+	}
+	mainGraph.f = gf;
+	mainGraph.updateGraph();
 }
 
 onVariableRemove(function(key){

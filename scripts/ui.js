@@ -225,6 +225,7 @@ $(document).ready(function(){
 		reqFrame(function(){
 			degRadVal = $(that).attr('value');
 			inputHandle();
+			updateGraphFunctions();
 		});
 	});
 	
@@ -483,6 +484,7 @@ $(document).ready(function(){
 						}).removeClass('removePotential');
 						if( touchX < -40 && variable.hasClass('checkPotential') && $("#variables").hasClass('chkb') ) {
 							variable.find('.variable-check').prop('checked', !variable.find('.variable-check').prop('checked'));
+							updateGraphFunctions();
 						}
 						variable.removeClass('checkPotential');
 					} else {
@@ -494,6 +496,11 @@ $(document).ready(function(){
 					}
 					variable.on('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
 				});
+			}
+		});
+		variable.find('.variable-check').change(function(){
+			if( variable.hasClass('function') ) {
+				updateGraphFunctions();
 			}
 		});
 	}
