@@ -301,7 +301,10 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
 
 			// Call the UI equivalent of this function, that updates event listeners
-			addedVariable(el)
+			//delay by one animation frame to make sure the DOM has updated
+			reqFrame(function(){
+				addedVariable(el);
+			});
 		}
 		else { // Updating old variable
 			var el = $('#variables>div[data-key=' + variable + ']');
@@ -345,7 +348,7 @@ onStorageReady(function(){
 		if( d.type == 'value' ) {
 			vScope[d.key] = d.value;
 		} else if( d.type == 'function' ) {
-			continue;
+			// continue;
 			iSScope[d.key] = d.value;
 			var cc = d.key + "(" + iSScope[d.key][0] + ") = " + iSScope[d.key][1];
 			var ops;
@@ -353,7 +356,11 @@ onStorageReady(function(){
 				ops = math.parse(cc);
 			} catch(err){ console.error(err) }
 			if( ops ) {
-				updateVariables(scope, {}, iSScope, ops);
+				try {
+					scope[d.key] = ops.compile(math).eval(scope);
+					stringScope[d.key] = iSScope[d.key];
+					updateVariables(scope, {}, iSScope, ops);
+				} catch(err){ console.error(err) }
 			}
 		}
 	}
