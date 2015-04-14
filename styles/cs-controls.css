@@ -1,0 +1,21 @@
+#cs-controls .ct-section {
+	margin-bottom: 10px;
+	padding: 5px;
+	border: 1px solid rgba(0,0,0,0.2);
+	border-radius: 5px;
+}
+#cs-controls h1 {
+	margin: 0;
+	margin-bottom: 10px;
+	font-size: 1.3em;
+	font-weight: inherit;
+}
+#cs-controls h3 {
+	margin: 0;
+	font-size: 1em;
+	font-weight: inherit;
+}
+#cs-controls input[type=radio] + span::after {
+	content: '';
+	display: block;
+}

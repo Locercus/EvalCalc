@@ -323,6 +323,13 @@ $(document).ready(function(){
 		});
 	});
 	
+	$("#cs-controls-btn").click(function(){
+		$("#cs-controls").toggleClass('hidden');
+	});
+	$("#cs-controls-close").click(function(){
+		$("#cs-controls").addClass('hidden');
+	});
+	
 	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
 		$("#input").on('keypress', function(e){
 			if( e.which == keyCodeOpen ) {

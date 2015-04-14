@@ -5,7 +5,7 @@ xmin
 xmax
 	Slider with input -> number
 xlog
-	Slider with input (0 to disable) -> number
+	Slider with input (1 to disable) -> number
 xlabelType
 	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex", "mathtex"
 xlabel
@@ -16,7 +16,7 @@ ymin
 ymax
 	Slider with input -> number
 ylog
-	Slider with input (0 to disable) -> number
+	Slider with input (1 to disable) -> number
 ylabelType
 	Radio (KaTeX compatible LaTeX or Plaintext) -> string "plaintext", "tex", "mathtex"
 ylabel

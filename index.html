@@ -30,6 +30,7 @@
 		<link rel="stylesheet" href="styles/base.css">
 		<link rel="stylesheet" href="styles/components.css">
 		<link rel="stylesheet" href="styles/variable.css">
+		<link rel="stylesheet" href="styles/cs-controls.css">
 		<link rel="stylesheet" href="styles/input.css">
 		<link rel="stylesheet" href="styles/calculator.css">
 		<link rel="stylesheet" href="styles/output.css">
@@ -70,6 +71,80 @@
 					<div class="toggle-item" value="graph">Grapher</div>
 				</div>
 			</button>
+			<button id="cs-controls-btn">Controls</button>
+		</div>
+		<div id="cs-controls" class="center-box hidden">
+			<div id="cs-controls-close"></div>
+			<div id="cs-controls-graph">
+				<h1>Window</h1>
+				<div class="ct-section">
+					<h3>xmin</h3> <input id="ct-xmin" type="number" value="-2" min="-2147483648" max="2147483647" step=".5">
+					<h3>xmax</h3> <input id="ct-xmax" type="number" value="10" min="-2147483648" max="2147483647" step=".5">
+					<h3>xlog</h3> <input id="ct-xlog" type="number" value="0" min="1" max="2147483647">
+					<h3>xlabeltype</h3>
+					<input type="radio" name="xlabeltype" checked><span>plaintext</span>
+					<input type="radio" name="xlabeltype"><span>tex</span>
+					<input type="radio" name="xlabeltype"><span>mathtex</span>
+					<h3>xlabel</h3> <input type="text" id="ct-xlabel">
+				</div>
+				<div class="ct-section">
+					<h3>ymin</h3> <input id="ct-ymin" type="number" value="-2" min="-2147483648" max="2147483647" step=".5">
+					<h3>ymax</h3> <input id="ct-ymax" type="number" value="10" min="-2147483648" max="2147483647" step=".5">
+					<h3>ylog</h3> <input id="ct-ylog" type="number" value="0" min="1" max="2147483647">
+					<h3>ylabeltype</h3>
+					<input type="radio" name="ylabeltype" checked><span>plaintext</span>
+					<input type="radio" name="ylabeltype"><span>tex</span>
+					<input type="radio" name="ylabeltype"><span>mathtex</span>
+					<h3>ylabel</h3> <input type="text" id="ct-ylabel">
+				</div>
+				<div class="ct-section">
+					<h3>background colour</h3> <input type="color" value="#ffffff" id="ct-bgcolor">
+				</div>
+				<h1>Grid</h1>
+				<div class="ct-section">
+					<h3>grid</h3>
+					<select id="ct-grid">
+						<option value="n">none</option>
+						<option value="b" selected>both</option>
+						<option value="h">horizontal</option>
+						<option value="v">vertical</option>
+					</select>
+					<h3>grid thickness</h3> <input id="ct-grid-thickness" type="number" min="0" max="10" value=".5" step=".5">
+					<h3>grid colour</h3> <input id="ct-grid-color" type="color" value="#d4d4d4">
+					<h3>grid half</h3> <input id="ct-grid-half" type="checkbox" checked>
+					<h3>grid half colour</h3> <input type="color" value="#d4d4d4" id="ct-grid-half-color">
+				</div>
+				<h1>Legend</h1>
+				<div class="ct-section">
+					<h3>legend</h3> <input id="ct-legend" type="checkbox" checked>
+					<h3>legend coordinates</h3>
+					<h3>x</h3> <input id="ct-legend-coord-x" type="number" value="0" min="-2147483648" max="2147483647">
+					<h3>y</h3> <input id="ct-legend-coord-y" type="number" value="0" min="-2147483648" max="2147483647">
+				</div>
+				<h1>Axes</h1>
+				<div class="ct-section">
+					<h3>x axis</h3> <input id="ct-xaxis" type="checkbox" checked>
+					<h3>x axis colour</h3> <input id="ct-xaxis-color" type="color" value="#808080">
+					<h3>x axis thickness</h3> <input id="ct-xaxis-thickness" type="number" value="1" step=".5" max="10" min="0">
+					<h3>x axis arrow</h3> <select id="ct-xaxis-arrow">
+						<option value="n">none</option>
+						<option value="b" selected>both</option>
+						<option value="l">left</option>
+						<option value="r">right</option>
+					</select>
+				</div>
+				<div class="ct-section">
+					<h3>y axis</h3> <input id="ct-yaxis" type="checkbox" checked>
+					<h3>y axis colour</h3> <input id="ct-yaxis-color" type="color" value="#808080">
+					<h3>y axis thickness</h3> <input id="ct-yaxis-thickness" type="number" value="1" step=".5" max="10" min="0">
+					<h3>y axis arrow</h3> <select id="ct-yaxis-arrow">
+						<option value="n">none</option>
+						<option value="b" selected>both</option>
+						<option value="l">left</option>
+						<option value="r">right</option>
+					</select>
+				</div>
+			</div>
 		</div>
 		<div id='caret' class='hidden'></div>
 		<div id="calculator" class="center-box">
