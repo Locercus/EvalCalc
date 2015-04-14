@@ -397,6 +397,8 @@ onVariableRemove(function(key){
 	delete scope[key];
 	delete oldScope[key];
 	delete stringScope[key];
+	delete graphFunctions[key];
+	mainGraph.updateGraph();
 });
 
 /**
