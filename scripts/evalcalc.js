@@ -225,6 +225,7 @@ function inputHandle() {
 	}
 }
 
+var variablesReady = false;
 function updateVariables(scope, oldScope, stringScope, parse) {
 	scope = sortObjectByKey(scope);
 
@@ -250,7 +251,6 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			fullString = variable + "(" + stringScope[variable][0] + ") = " + stringScope[variable][1];
 			value = stringScope[variable][1];
 		}
-
 		if(oldScope[variable] === undefined) { // Adding new variable
 			var el = $('<div></div>');
 
@@ -313,32 +313,58 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			} else {
 				el.removeClass('function');
 			}
-
 			var tex = generateTeX(math.parse(fullString), null);
-
-			katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
+			if( el.length ) {
+				katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
+			}
 		}
 	});
-	saveVariables();
+	if( variablesReady ) {
+		saveVariables();
+	}
 	updateGraphFunctions();
 }
 
 onStorageReady(function(){
-	return; //throws errors; disabled for now
 	var pv = storage.data.variables;
 	if( !pv ) {
 		return;
 	}
-	pv = JSON.parse(pv);
+	try {
+		pv = JSON.parse(pv);
+	} catch(err){
+		console.log(err);
+	}
+	if( typeof pv != 'object' ) {
+		return;
+	}
+	var vScope = {};
+	var iSScope = {};
 	for( var i in pv ) {
 		var d = pv[i];
 		if( d.type == 'value' ) {
-			scope[d.key] = d.value;
+			vScope[d.key] = d.value;
 		} else if( d.type == 'function' ) {
-			updateVariables(scope, oldScope, stringScope, d.value);
+			continue;
+			iSScope[d.key] = d.value;
+			var cc = d.key + "(" + iSScope[d.key][0] + ") = " + iSScope[d.key][1];
+			var ops;
+			try {
+				ops = math.parse(cc);
+			} catch(err){ console.error(err) }
+			if( ops ) {
+				updateVariables(scope, {}, iSScope, ops);
+			}
 		}
 	}
-	updateVariables(scope, oldScope, stringScope);
+	updateVariables(vScope, {}, {}, null);
+	for( var i in vScope ) {
+		scope[i] = vScope[i];
+	}
+	oldScope = $.extend({}, scope);
+	
+	console.log("Loaded variables from storage");
+	variablesReady = true;
 });
 
 function saveVariables() {
@@ -359,8 +385,9 @@ function saveVariables() {
 		}
 		//must convert to JSON because localStorage refuses to store objects
 		storage.data.variables = JSON.stringify(vars);
+		console.log("Saved variables");
 	} else {
-		console.error("Could not save variables!");
+		console.error("Could not save variables // Storage not ready");
 	}
 }
 
