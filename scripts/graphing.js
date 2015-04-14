@@ -114,7 +114,7 @@ graphing.Graph.prototype.updateGraph = function() {
 	o.xAxis          = (o.xAxis != null ? o.xAxis : true);
 	o.xmin           = (o.xmin || -2);
 	o.xmax           = (o.xmax || 10);
-	o.xlabelType     = (o.xlabelType || 'plaintex');
+	o.xlabelType     = (o.xlabelType || 'plaintext');
 	o.xlabel         = (o.xlabel || '');
 	o.xAxisArrow     = (o.xAxisArrow || 'both');
 	o.xAxisThickness = (o.xAxisThickness || 1);
@@ -123,7 +123,7 @@ graphing.Graph.prototype.updateGraph = function() {
 	o.yAxis          = (o.yAxis != null ? o.yAxis : true);
 	o.ymin           = (o.ymin || -2);
 	o.ymax           = (o.ymax || 10);
-	o.ylabelType     = (o.ylabelType || 'plaintex');
+	o.ylabelType     = (o.ylabelType || 'plaintext');
 	o.ylabel         = (o.ylabel || '');
 	o.yAxisArrow     = (o.yAxisArrow || 'both');
 	o.yAxisThickness = (o.yAxisThickness || 1);
