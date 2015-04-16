@@ -91,7 +91,26 @@
 #graph-div > *:not(canvas) {
 	position: absolute;
 }
-#graph-div > div {
+#graphLegend {
+	border: 1px solid #000;
+	background-color: #fff;
+	border-radius: 4px;
+}
+.legendItem {
+	padding: 8px;
+	font-size: 20px;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+}
+.legendItemColor {
+	width: 20px;
+	height: 20px;
+	margin-right: 8px;
+	border-radius: 2px;
+}
+#xlabel, #ylabel {
 	text-shadow: 0 0 5px #000;
 	color: #fff;
 }

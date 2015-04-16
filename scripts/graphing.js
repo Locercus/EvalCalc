@@ -135,6 +135,9 @@ graphing.Graph.prototype.updateGraph = function() {
 	o.gridHalf       = (o.gridHalf != null ? o.gridHalf : true);
 	o.gridHalfColor  = (o.gridHalfColor || '#d4d4d4');
 
+	o.legend         = (o.legend != null ? o.legend : true);
+	o.legendCoords   = (o.legendCoords || [32, 32]);
+
 	// Calculate pixels/unit
 	var pixelsPerX = (w / (Math.abs(o.xmax) + Math.abs(o.xmin)));
 	var pixelsPerY = (h / (Math.abs(o.ymax) + Math.abs(o.ymin)));
@@ -288,9 +291,49 @@ graphing.Graph.prototype.updateGraph = function() {
 		cx.stroke();
 	}
 
-	/**
-	 * Based on https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas
-	 * */
+	// Draw the legend
+	if(o.legend) {
+		var el = $('<div id="graphLegend"></div>');
+
+		for(id in functions) {
+			fOpt = functions[id];
+
+			var legendLabelText = function() {
+				switch(fOpt.legendType || 'function') {
+					case 'function':
+						return generateTeX(math.parse(fOpt.fName + ' = ' + fOpt.fMath), null);
+					case 'variable':
+						return fOpt.fName;
+					case 'plaintext':
+						return '\\text{' + escapeTeX(fOpt.legendValue) + '}';
+					case 'tex':
+						return '\\text{' + fOpt.legendValue + '}';
+					case 'mathtex':
+						return fOpt.legendValue;
+				}
+			}();
+
+			var legendLabelEl = $('<div></div>');
+			katex.render(legendLabelText, legendLabelEl[0]);
+			var legendLabel = legendLabelEl.html();
+
+			var innerEl = $('<div class="legendItem"></div>');
+			innerEl.html(
+				'<div style="background-color: ' + (fOpt.lineColor || 'blue') + ';" class="legendItemColor"></div>' +
+				'<div class="legendItemLabel">' + legendLabel + '</div>'
+			);
+
+
+			el.append(innerEl);
+		}
+
+		div.prepend(el);
+		$('#graphLegend').css({
+			right: o.legendCoords[0] + "px",
+			top: o.legendCoords[1] + "px"
+		});
+	}
+
 	// Draw the axis labels
 	// x
 	var xlabelText;
@@ -301,7 +344,7 @@ graphing.Graph.prototype.updateGraph = function() {
 	else
 		xlabelText = o.xlabel;
 
-	var xlabelElement = $('<div></div>')[0];
+	var xlabelElement = $('<div id="xlabel"></div>')[0];
 	katex.render(xlabelText, xlabelElement, {displayMode: true});
 
 	var xlabelCSS = {
@@ -321,7 +364,7 @@ graphing.Graph.prototype.updateGraph = function() {
 	else
 		ylabelText = o.ylabel;
 
-	var ylabelElement = $('<div></div>')[0];
+	var ylabelElement = $('<div id="ylabel"></div>')[0];
 	katex.render(ylabelText, ylabelElement, {displayMode: true});
 
 	// We position the element after prepending it to the DOM, as .height() doesn't work beforehand
