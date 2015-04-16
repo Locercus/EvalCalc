@@ -65,6 +65,10 @@ lineColor
 lineThickness
 	Slider with input -> number
 f
-	The function to graph
+	The function to graph -> function
+fName
+	The name of the function -> string
+fMath
+	The math of the function -> string
 legendType
 	Dropdown -> string: "function", "variable", "plaintext", "tex", "mathtex"
