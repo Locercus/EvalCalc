@@ -72,3 +72,5 @@ fMath
 	The math of the function -> string
 legendType
 	Dropdown -> string: "function", "variable", "plaintext", "tex", "mathtex"
+legendValue
+	The text for the legend for plaintext, tex and mathtex
