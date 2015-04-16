@@ -303,7 +303,7 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 		else { // Updating old variable
 			var el = $('#variables>div[data-key=' + variable + ']');
 
-			el.attr('data-value', value);
+			el.attr('data-value', value).attr('data-type', type);
 			
 			var tex = generateTeX(math.parse(fullString), null);
 			if( el.length ) {
