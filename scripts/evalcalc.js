@@ -289,12 +289,6 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 			}
 
 			var el = $('#variables>div[data-key=' + variable + ']');
-			
-			if( typeof scope[variable] == 'function' ) {
-				el.addClass('function');
-			} else {
-				el.removeClass('function');
-			}
 
 			var tex = generateTeX(math.parse(fullString), null);
 
@@ -311,11 +305,6 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 
 			el.attr('data-value', value);
 			
-			if( typeof scope[variable] == 'function' ) {
-				el.addClass('function');
-			} else {
-				el.removeClass('function');
-			}
 			var tex = generateTeX(math.parse(fullString), null);
 			if( el.length ) {
 				katex.render(tex, el.children('.variable-render')[0], {displayMode: true});
@@ -443,7 +432,7 @@ function updateGraphFunctions() {
 		return;
 	}
 	var pfunctions = {};
-	$("#variables .variable.function").each(function(){
+	$("#variables .variable[data-type=function]").each(function(){
 		if( $(this).find('.variable-check').is(':checked') ) {
 			graphFunctions[$(this).data('key')] = {
 				f: scope[$(this).data('key')],
