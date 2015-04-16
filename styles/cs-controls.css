@@ -19,3 +19,6 @@
 	content: '';
 	display: block;
 }
+#cs-controls .ct-i3 {
+	width: 3em;
+}

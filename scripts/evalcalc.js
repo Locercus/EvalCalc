@@ -348,7 +348,6 @@ onStorageReady(function(){
 		if( d.type == 'value' ) {
 			vScope[d.key] = d.value;
 		} else if( d.type == 'function' ) {
-			// continue;
 			iSScope[d.key] = d.value;
 			var cc = d.key + "(" + iSScope[d.key][0] + ") = " + iSScope[d.key][1];
 			var ops;
@@ -405,6 +404,40 @@ $(document).ready(function(){
 	},[], $("#graph-div"));
 });
 
+var graphOptions = {
+	xAxis:          true,
+	xmin:           -2,
+	xmax:           10,
+	xlabelType:     'plaintext',
+	xlabel:         '',
+	xAxisArrow:     'both',
+	xAxisThickness: 1,
+	xAxisColor:     'gray',
+	
+	yAxis:          true,
+	ymin:           -2,
+	ymax:           10,
+	ylabelType:     'plaintext',
+	ylabel:         '',
+	yAxisArrow:     'both',
+	yAxisThickness: 1,
+	yAxisColor:     'gray',
+	
+	grid:           'both',
+	gridThickness:  .5,
+	gridColor:      '#d4d4d4',
+	gridHalf:       true,
+	gridHalfColor:  '#d4d4d4'
+};
+function updateGraphOptions() {
+	if( !mainGraph ) {
+		return;
+	}
+	graphOptions = reloadGraphOptions();
+	mainGraph.options = graphOptions;
+	mainGraph.updateGraph();
+}
+
 function updateGraphFunctions() {
 	if( !mainGraph ) {
 		return;
@@ -412,7 +445,10 @@ function updateGraphFunctions() {
 	var pfunctions = {};
 	$("#variables .variable.function").each(function(){
 		if( $(this).find('.variable-check').is(':checked') ) {
-			graphFunctions[$(this).data('key')] = scope[$(this).data('key')];
+			graphFunctions[$(this).data('key')] = {
+				f: scope[$(this).data('key')],
+				s: stringScope[$(this).data('key')] //TODO: ????
+			}
 		} else {
 			delete graphFunctions[$(this).data('key')];
 		}
@@ -420,7 +456,8 @@ function updateGraphFunctions() {
 	var gf = [];
 	for( var i in graphFunctions ) {
 		gf.push({
-			f: graphFunctions[i]
+			f: graphFunctions[i].f,
+			string: graphFunctions[i].s
 		});
 	}
 	mainGraph.f = gf;

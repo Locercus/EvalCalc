@@ -27,6 +27,7 @@ var addedVariable = function(){};
 var onVariableRemove = function(){};
 var callRemoveVariable = function(){};
 var updateInputCaret = function(){};
+var reloadGraphOptions = function(){};
 
 var degRadVal = "nul";
 (function(){
@@ -86,6 +87,11 @@ $(document).ready(function(){
 	
 	try {
 		renderMathInElement($("#keyboard")[0]);
+	} catch(err){
+		console.log(err);
+	}
+	try {
+		renderMathInElement($("#cs-controls")[0],{display: false});
 	} catch(err){
 		console.log(err);
 	}
@@ -403,6 +409,48 @@ $(document).ready(function(){
 	addBracketCompletion('(',')',40,41);
 	addBracketCompletion('[',']',91,93);
 	addBracketCompletion('{','}',123,125);
+	
+	function parseLabelType(i) {
+		if( i == 'p' ) {
+			return 'plaintext';
+		} else if( i == 't' ) {
+			return 'tex';
+		} else if( i == 'm' ) {
+			return 'mathtex';
+		} else {
+			return '';
+		}
+	}
+	
+	reloadGraphOptions = function() {
+		var o = {};
+		o.xAxis = $("#cs-controls-graph #ct-xaxis").is(":checked");
+		o.xmin = parseFloat($("#cs-controls-graph #ct-xmin").val()) || -2;
+		o.xmax = parseFloat($("#cs-controls-graph #ct-xmax").val()) || 10;
+		o.xlabelType = parseLabelType($("#cs-controls-graph input[name=xlabeltype]:checked").val());
+		o.xlabel = $("#cs-controls-graph #ct-xlabel").val();
+		o.xAxisArrow = $("#cs-controls-graph #ct-xaxis-arrow").val();
+		o.xAxisThickness = parseFloat($("#cs-controls-graph #ct-xaxis-thickness").val()) || 1;
+		//o.xAxisColor = null;
+		o.yAxis = $("#cs-controls-graph #ct-yaxis").is(":checked");
+		o.ymin = parseFloat($("#cs-controls-graph #ct-ymin").val()) || -2;
+		o.ymax = parseFloat($("#cs-controls-graph #ct-ymax").val()) || 10;
+		o.ylabelType = parseLabelType($("#cs-controls-graph input[name=ylabeltype]:checked").val());
+		o.ylabel = $("#cs-controls-graph #ct-ylabel").val();
+		o.yAxisArrow = $("#cs-controls-graph #ct-yaxis-arrow").val();
+		o.yAxisThickness = parseFloat($("#cs-controls-graph #ct-yaxis-thickness").val()) || 1;
+		//o.yAxisColor = null;
+		o.grid = $("#cs-controls-graph #ct-grid").val();
+		o.gridThickness = parseFloat($("#cs-controls-graph #ct-grid-thickness").val()) || .5;
+		//o.gridColor = null;
+		o.gridHalf = $("#cs-controls-graph #ct-grid-half").is(":checked");
+		//o.gridHalfColor = null;
+		return o;
+	}
+	
+	$("#cs-controls-graph > *").on('change keydown keypress keyup mouseup mousedown', function(){
+		updateGraphOptions();
+	});
 	
 	var eventVariableRemoveClick = function(e) {
 		var variable = $(this).parent();

@@ -107,7 +107,7 @@
 #cs-controls {
 	right: 30px;
 	width: 100%;
-	max-width: 175px;
+	max-width: 275px;
 	box-sizing: border-box;
 	z-index: 2;
 	-webkit-transition: -webkit-transform .3s cubic-bezier(.2,.3,0,1);

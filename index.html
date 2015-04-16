@@ -78,70 +78,78 @@
 			<div id="cs-controls-graph">
 				<h1>Window</h1>
 				<div class="ct-section">
-					<h3>xmin</h3> <input id="ct-xmin" type="number" value="-2" min="-2147483648" max="2147483647" step=".5">
-					<h3>xmax</h3> <input id="ct-xmax" type="number" value="10" min="-2147483648" max="2147483647" step=".5">
-					<h3>xlog</h3> <input id="ct-xlog" type="number" value="0" min="1" max="2147483647">
-					<h3>xlabeltype</h3>
-					<input type="radio" name="xlabeltype" checked><span>plaintext</span>
-					<input type="radio" name="xlabeltype"><span>tex</span>
-					<input type="radio" name="xlabeltype"><span>mathtex</span>
-					<h3>xlabel</h3> <input type="text" id="ct-xlabel">
+					\(x \in [\)
+					<input class="ct-i3" id="ct-xmin" type="number" value="-2" min="-2147483648" max="2147483647" step=".5">
+					\(; \)
+					<input class="ct-i3" id="ct-xmax" type="number" value="10" min="-2147483648" max="2147483647" step=".5">
+					\(] \)<br>
+					\(x\ \text{log}\ \) <input class="ct-i3" id="ct-xlog" type="number" value="0" min="1" max="2147483647"><br>
+					\(x\ \text{label type}\)<br>
+					<input type="radio" value="p" name="xlabeltype" checked><span>\(\text{Plaintext}\)</span>
+					<input type="radio" value="t" name="xlabeltype"><span>\(\text{TeX}\)</span>
+					<input type="radio" value="m" name="xlabeltype"><span>\(\text{TeX Math}\)</span><br>
+					\(x\ \text{label}\) <input type="text" id="ct-xlabel">
 				</div>
 				<div class="ct-section">
-					<h3>ymin</h3> <input id="ct-ymin" type="number" value="-2" min="-2147483648" max="2147483647" step=".5">
-					<h3>ymax</h3> <input id="ct-ymax" type="number" value="10" min="-2147483648" max="2147483647" step=".5">
-					<h3>ylog</h3> <input id="ct-ylog" type="number" value="0" min="1" max="2147483647">
-					<h3>ylabeltype</h3>
-					<input type="radio" name="ylabeltype" checked><span>plaintext</span>
-					<input type="radio" name="ylabeltype"><span>tex</span>
-					<input type="radio" name="ylabeltype"><span>mathtex</span>
-					<h3>ylabel</h3> <input type="text" id="ct-ylabel">
+					\(y \in [\)
+					<input class="ct-i3" id="ct-ymin" type="number" value="-2" min="-2147483648" max="2147483647" step=".5">
+					\(; \)
+					<input class="ct-i3" id="ct-ymax" type="number" value="10" min="-2147483648" max="2147483647" step=".5">
+					\(] \)<br>
+					\(y\ \text{log}\) <input class="ct-i3" id="ct-ylog" type="number" value="0" min="1" max="2147483647"><br>
+					\(y\ \text{label type}\)<br>
+					<input type="radio" value="p" name="ylabeltype" checked><span>\(\text{Plaintext}\)</span>
+					<input type="radio" value="t" name="ylabeltype"><span>\(\text{TeX}\)</span>
+					<input type="radio" value="m" name="ylabeltype"><span>\(\text{TeX Math}\)</span><br>
+					\(y\ \text{label}\) <input type="text" id="ct-ylabel">
 				</div>
 				<div class="ct-section">
-					<h3>background colour</h3> <input type="color" value="#ffffff" id="ct-bgcolor">
+					\(\text{background color}\) <input type="color" value="#ffffff" id="ct-bgcolor">
 				</div>
 				<h1>Grid</h1>
 				<div class="ct-section">
-					<h3>grid</h3>
+					\(\text{grid type}\)
 					<select id="ct-grid">
-						<option value="n">none</option>
-						<option value="b" selected>both</option>
-						<option value="h">horizontal</option>
-						<option value="v">vertical</option>
-					</select>
-					<h3>grid thickness</h3> <input id="ct-grid-thickness" type="number" min="0" max="10" value=".5" step=".5">
-					<h3>grid colour</h3> <input id="ct-grid-color" type="color" value="#d4d4d4">
-					<h3>grid half</h3> <input id="ct-grid-half" type="checkbox" checked>
-					<h3>grid half colour</h3> <input type="color" value="#d4d4d4" id="ct-grid-half-color">
+						<option value="none">none</option>
+						<option value="both" selected>both</option>
+						<option value="horizontal">horizontal</option>
+						<option value="vertical">vertical</option>
+					</select><br>
+					\(\text{grid thickness}\) <input id="ct-grid-thickness" type="number" min="0" max="10" value=".5" step=".5"><br>
+					\(\text{grid color}\) <input id="ct-grid-color" type="color" value="#d4d4d4"><br>
+					\(\text{half unit grid}\) <input id="ct-grid-half" type="checkbox" checked><br>
+					\(\text{half unit grid color}\) <input type="color" value="#d4d4d4" id="ct-grid-half-color">
 				</div>
 				<h1>Legend</h1>
 				<div class="ct-section">
-					<h3>legend</h3> <input id="ct-legend" type="checkbox" checked>
-					<h3>legend coordinates</h3>
-					<h3>x</h3> <input id="ct-legend-coord-x" type="number" value="0" min="-2147483648" max="2147483647">
-					<h3>y</h3> <input id="ct-legend-coord-y" type="number" value="0" min="-2147483648" max="2147483647">
+					\(\text{legend}\) <input id="ct-legend" type="checkbox" checked><br>
+					\(\text{legend coordinates} =\)<br>
+					\([\)
+					<input class="ct-i3" id="ct-legend-coord-x" type="number" value="0" min="-2147483648" max="2147483647">
+					\(; \) <input class="ct-i3" id="ct-legend-coord-y" type="number" value="0" min="-2147483648" max="2147483647">
+					\(] \)
 				</div>
 				<h1>Axes</h1>
 				<div class="ct-section">
-					<h3>x axis</h3> <input id="ct-xaxis" type="checkbox" checked>
-					<h3>x axis colour</h3> <input id="ct-xaxis-color" type="color" value="#808080">
-					<h3>x axis thickness</h3> <input id="ct-xaxis-thickness" type="number" value="1" step=".5" max="10" min="0">
-					<h3>x axis arrow</h3> <select id="ct-xaxis-arrow">
-						<option value="n">none</option>
-						<option value="b" selected>both</option>
-						<option value="l">left</option>
-						<option value="r">right</option>
+					\(x\ \text{axis}\) <input id="ct-xaxis" type="checkbox" checked><br>
+					\(x\ \text{axis color}\) <input id="ct-xaxis-color" type="color" value="#808080"><br>
+					\(x\ \text{axis thickness}\) <input class="ct-i3" id="ct-xaxis-thickness" type="number" value="1" step=".5" max="10" min="0"><br>
+					\(x\ \text{axis arrow}\) <select id="ct-xaxis-arrow">
+						<option value="none">none</option>
+						<option value="both" selected>both</option>
+						<option value="left">left</option>
+						<option value="right">right</option>
 					</select>
 				</div>
 				<div class="ct-section">
-					<h3>y axis</h3> <input id="ct-yaxis" type="checkbox" checked>
-					<h3>y axis colour</h3> <input id="ct-yaxis-color" type="color" value="#808080">
-					<h3>y axis thickness</h3> <input id="ct-yaxis-thickness" type="number" value="1" step=".5" max="10" min="0">
-					<h3>y axis arrow</h3> <select id="ct-yaxis-arrow">
-						<option value="n">none</option>
-						<option value="b" selected>both</option>
-						<option value="l">left</option>
-						<option value="r">right</option>
+					\(y\ \text{axis}\) <input id="ct-yaxis" type="checkbox" checked><br>
+					\(y\ \text{axis color}\) <input id="ct-yaxis-color" type="color" value="#808080"><br>
+					\(y\ \text{axis thickness}\) <input class="ct-i3" id="ct-yaxis-thickness" type="number" value="1" step=".5" max="10" min="0"><br>
+					\(y\ \text{axis arrow}\) <select id="ct-yaxis-arrow">
+						<option value="none">none</option>
+						<option value="both" selected>both</option>
+						<option value="left">left</option>
+						<option value="right">right</option>
 					</select>
 				</div>
 			</div>
