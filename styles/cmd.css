@@ -1,0 +1,57 @@
+#cmd-line {
+	position: fixed;
+	top: 10%;
+	height: 75%;
+	max-height: 500px;
+	width: 100%;
+	max-width: 600px;
+	background: #fff;
+	border-radius: 5px;
+	left: calc( (100% - 600px ) / 2);
+	-webkit-box-shadow: 0 6px 16px 0 rgba(0,0,0,0.2);
+	box-shadow: 0 6px 16px 0 rgba(0,0,0,0.2);
+}
+@media(max-width: 600px) {
+	#cmd-line {
+		left: 0;
+	}
+}
+#cmd-line.hidden {
+	display: none;
+}
+#cmd-line #cmd-input-wrap {
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+#cmd-line #cmd-input-wrap #cmd-input {
+	border: none;
+	width: 100%;
+	font: inherit;
+	font-size: 28px;
+	background: none;
+	padding: 10px 20px;
+	margin: 0;
+	box-sizing: border-box;
+	height: 54px;
+}
+#cmd-line #cmd-input-wrap #cmd-input:focus {
+	outline: none;
+}
+#cmd-line #cmd-output {
+	height: calc( 100% - 54px );
+	display: flex;
+}
+#cmd-line #cmd-autocomplete {
+	width: 100%;
+	height: 100%;
+	border-right: 1px solid rgba(0,0,0,0.2);
+	flex-shrink: 5;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#cmd-line #cmd-results {
+	width: 100%;
+	height: 100%;
+	flex-shrink: 4;
+	overflow-x: hidden;
+	overflow-y: auto;
+}

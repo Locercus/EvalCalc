@@ -335,6 +335,9 @@ $(document).ready(function(){
 	$("#cs-controls-close").click(function(){
 		$("#cs-controls").addClass('hidden');
 	});
+	$("#settings-btn").click(function(){
+		$("#settings").toggleClass('hidden');
+	});
 	
 	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
 		$("#input").on('keypress', function(e){
@@ -566,7 +569,7 @@ $(document).ready(function(){
 			}
 		});
 		variable.find('.variable-check').change(function(){
-			if( variable.hasClass('function') ) {
+			if( variable.data('type') == 'function' ) {
 				updateGraphFunctions();
 			}
 		});

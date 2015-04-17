@@ -35,6 +35,8 @@
 		<link rel="stylesheet" href="styles/calculator.css">
 		<link rel="stylesheet" href="styles/output.css">
 		<link rel="stylesheet" href="styles/keyboard.css">
+		<link rel="stylesheet" href="styles/cmd.css">
+		<link rel="stylesheet" href="styles/settings.css">
 		
 		<title>EvalCalc</title>
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -53,6 +55,7 @@
 		<script src="scripts/graphing.js"></script>
 		<script src="scripts/toast.js"></script>
 		<script src="scripts/tex.js"></script>
+		<script src="scripts/settings.js"></script>
 		<script src="scripts/ui.js"></script>
 	</head>
 	<body>
@@ -72,6 +75,7 @@
 				</div>
 			</button>
 			<button id="cs-controls-btn">Controls</button>
+			<button id="settings-btn">Settings</button>
 		</div>
 		<div id="cs-controls" class="center-box hidden">
 			<div id="cs-controls-close"></div>
@@ -365,6 +369,70 @@
 						<div class="key" value="9">$$9$$</div>
 						<div class="key" value="0">$$0$$</div>
 					</div>
+				</div>
+			</div>
+		</div>
+		<div id="settings" class="hidden">
+			<div id="settings-close"></div>
+			<div id="settings-list">
+				<h1>Settings</h1>
+				<div class="setting selected" data-value="general">General</div>
+				<div class="setting" data-value="about">About</div>
+			</div>
+			<div id="settings-content">
+				<section data-content="general" class="active">
+					<h3>General</h3>
+				</section>
+				<section data-content="about">
+					<h3>About</h3>
+					<strong>Made by Jonatan Nordentoft and Creeper32605</strong>
+					<div class="retl" data-name="View License">
+						<div>
+							<p>Copyright 2015 Jonatan Nordentoft, Creeper32605</p>
+							<p>	
+								Redistribution and use in source and binary forms, with or without
+								modification, are permitted provided that the following conditions
+								are met:
+							</p>
+							<ul style="list-style: decimal">
+								<li>Redistributions of source code must retain the above copyright
+								   notice, this list of conditions and the following disclaimer.</li>
+								<li>Redistributions in binary form must reproduce the above copyright
+								   notice, this list of conditions and the following disclaimer in the
+								   documentation and/or other materials provided with the distribution.</li>
+							</ul>
+							<p>
+								Licensed under the Apache License, Version 2.0 (the &ldquo;License&rdquo;);
+								you may not use this file except in compliance with the License.
+								You may obtain a copy of the License at
+							</p>
+							<p>
+								<a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">
+									http://www.apache.org/licenses/LICENSE-2.0
+								</a>
+							</p>
+							<p>
+								Unless required by applicable law or agreed to in writing, software
+								distributed under the License is distributed on an &ldquo;AS IS&rdquo; BASIS,
+								WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+								See the License for the specific language governing permissions and
+								limitations under the License.
+							</p>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<div id="cmd-line" class="hidden">
+			<div id="cmd-input-wrap">
+				<input id="cmd-input">
+			</div>
+			<div id="cmd-output">
+				<div id="cmd-autocomplete">
+				
+				</div>
+				<div id="cmd-results">
+				
 				</div>
 			</div>
 		</div>

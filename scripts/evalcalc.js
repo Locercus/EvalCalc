@@ -360,6 +360,14 @@ onStorageReady(function(){
 	
 	console.log("Loaded variables from storage");
 	variablesReady = true;
+	reqFrame(function(){
+		for( var i in pv ) {
+			if( pv[i].enabled ) {
+				$(".variable[data-key=" + pv[i].key + "] .variable-check").prop('checked', true);
+			}
+		}
+		updateGraphFunctions();
+	});
 });
 
 function saveVariables() {
@@ -370,11 +378,15 @@ function saveVariables() {
 			var d = {
 				type: 'value',
 				key: i,
-				value: v
+				value: v,
+				enabled: false
 			};
 			if( typeof v == 'function' ) {
 				d.value = stringScope[i];
 				d.type = 'function';
+				if( i in graphFunctions ) {
+					d.enabled = true;
+				}
 			}
 			vars.push(d);
 		}
@@ -449,6 +461,7 @@ function updateGraphFunctions() {
 			string: graphFunctions[i].s
 		});
 	}
+	saveVariables();
 	mainGraph.f = gf;
 	mainGraph.updateGraph();
 }
@@ -458,6 +471,7 @@ onVariableRemove(function(key){
 	delete oldScope[key];
 	delete stringScope[key];
 	delete graphFunctions[key];
+	saveVariables();
 	updateGraphFunctions();
 });
 
