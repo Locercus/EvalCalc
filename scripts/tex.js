@@ -87,6 +87,9 @@ function generateTeX(node, parent) {
 				args.push(generateTeX(this, node));
 			});
 
+			if(node.name.match(/[a-z]/i))
+				return node.name + "\\left(" + args.join(', ') + '\\right)';
+
 			switch(node.name) {
 				// Arithmetic
 				case 'abs': {
