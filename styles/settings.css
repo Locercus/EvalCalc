@@ -171,6 +171,9 @@
 	-o-animation: sssi 1s;
 	animation: sssi 1s;
 }
+#settings.hidden section.active {
+	pointer-events: none;
+}
 @-webkit-keyframes sssi {
 	0% {
 		-webkit-transform: translateY(-10%);
