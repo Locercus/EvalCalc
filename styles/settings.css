@@ -134,9 +134,9 @@
 	pointer-events: none;
 	padding: 20px;
 	box-sizing: border-box;
-	-webkit-animation: ssso 1s;
-	-o-animation: ssso 1s;
-	animation: ssso 1s;
+	-webkit-animation: ssso .3s;
+	-o-animation: ssso .3s;
+	animation: ssso .3s;
 }
 @-webkit-keyframes ssso {
 	0% {
@@ -167,9 +167,9 @@
 	display: block;
 	opacity: 1;
 	pointer-events: all;
-	-webkit-animation: sssi 1s;
-	-o-animation: sssi 1s;
-	animation: sssi 1s;
+	-webkit-animation: sssi .3s;
+	-o-animation: sssi .3s;
+	animation: sssi .3s;
 }
 #settings.hidden section.active {
 	pointer-events: none;
