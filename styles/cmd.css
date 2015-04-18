@@ -38,6 +38,10 @@
 }
 #cmd-line #cmd-output {
 	height: calc( 100% - 54px );
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 }
 #cmd-line #cmd-autocomplete {

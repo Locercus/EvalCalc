@@ -15,6 +15,10 @@
 	border-radius: 5px;
 	-webkit-box-shadow: 0 6px 16px 0 rgba(0,0,0,0.2);
 	box-shadow: 0 6px 16px 0 rgba(0,0,0,0.2);
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
 	-webkit-transition: -webkit-transform .3s, opacity .3s;
 	-o-transition: -o-transform .3s, opacity .3s;
