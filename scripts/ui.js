@@ -51,6 +51,7 @@ var degRadVal = "nul";
 $(document).ready(function(){
 	var reqFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(f){setTimeout(f,17)};
 	
+	//initialise anything here reliant on storage data
 	onStorageReady(function(){
 		$("#controls").removeClass("pending");
 		
@@ -257,62 +258,13 @@ $(document).ready(function(){
 	updateCanvasSizes();
 	$(window).resize(updateCanvasSizes);
 	
-	/*(function(){
-		var touchStartY = 0, touchStartX = 0, touchY = 0, touchX = 0, touching = false;
-		var ctrlHeight = 150;
-		$("#controls").on('touchstart', function(e){
-			if( $("#controls").attr('style') ) {
-				return;
-			}
-			touchStartX = e.originalEvent.touches[0].pageX;
-			touchStartY = e.originalEvent.touches[0].pageY;
-			touching = true;
-			$("#controls").css({
-				'-webkit-transition': 'all 0s',
-				'-o-transition': 'all 0s',
-				'transition': 'all 0s'
-			}).addClass('touching');
+	(function(){
+		$("#controls, #variables").mouseenter(function(){
+			$(this).addClass('hover');
+		}).mouseleave(function(){
+			$(this).removeClass('hover');
 		});
-		$(document).on('touchmove', function(e){
-			if( touching ) {
-				var ex = e.originalEvent.touches[0].pageX;
-				var ey = e.originalEvent.touches[0].pageY;
-				if( $(window).width() < 500 ) {
-					var touchY = ( ey - $(window).height() - (touchStartY-($(window).height()-30)) ) / 150;
-					console.log(touchY.toFixed(2));
-					$("#controls").css({
-						'-webkit-transform': 'translateY(' + (120 - (-120 * touchY)) + 'px)',
-						'-o-transform': 'translateY(' + (120 - (-120 * touchY)) + 'px)',
-						'transform': 'translateY(' + (120 - (-120 * touchY)) + 'px)'
-					});
-				}
-			}
-		}).on('touchend touchcancel touchstop', function(e){
-			if( touching ) {
-				touching = false;
-				$("#controls").removeClass('touching').css({
-					'-webkit-transition': '',
-					'-o-transition': '',
-					'transition': ''
-				});
-				reqFrame(function(){
-					if( touchY < -1 || true ) {
-						$("#controls").css({
-							'-webkit-transform': '',
-							'-o-transform': '',
-							'transform': ''
-						});
-						$("#controls").css({
-							'-webkit-transform': 'translateY(0)',
-							'-o-transform': 'translateY(0)',
-							'transform': 'translateY(0)'
-						});
-					} else {
-					}
-				});
-			}
-		})
-	})();*/
+	})();
 	
 	$("#ctrl-disp").click(function(){
 		var that = this;
@@ -517,7 +469,7 @@ $(document).ready(function(){
 					} else {
 						variable.removeClass('removePotential');
 					}
-					if( touchX < -40 && variable.hasClass('function') && $("#variables").hasClass('chkb') ) {
+					if( touchX < -40 && variable.data('type') == 'function' && $("#variables").hasClass('chkb') ) {
 						variable.addClass('checkPotential');
 					} else {
 						variable.removeClass('checkPotential');
@@ -527,11 +479,12 @@ $(document).ready(function(){
 		}).on('touchend', function(e){
 			if( touching ) {
 				touching = false;
+				var wasChecked = variable.hasClass('checkPotential');
 				variable.css({
 					'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1)',
 					'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1)',
 					'transition': 'transform .3s cubic-bezier(.2,.3,0,1)'
-				});
+				}).removeClass('checkPotential');
 				reqFrame(function(){
 					function tEnd() {
 						variable.off('transitionend webkitTransitionEnd oTransitionEnd', tEnd);
@@ -551,12 +504,11 @@ $(document).ready(function(){
 							'-webkit-transform': '',
 							'-o-transform': '',
 							'transform': ''
-						}).removeClass('removePotential');
-						if( touchX < -40 && variable.hasClass('checkPotential') && $("#variables").hasClass('chkb') ) {
+						});
+						if( touchX < -40 && wasChecked && $("#variables").hasClass('chkb') ) {
 							variable.find('.variable-check').prop('checked', !variable.find('.variable-check').prop('checked'));
 							updateGraphFunctions();
 						}
-						variable.removeClass('checkPotential');
 					} else {
 						variable.css({
 							'-webkit-transform': 'translateX(100%)',

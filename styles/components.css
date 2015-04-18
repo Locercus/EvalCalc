@@ -70,18 +70,18 @@
 	opacity: 0;
 	pointer-events: none;
 }
-#controls:not(.touching):hover {
+#controls:not(.touching).hover {
 	-webkit-transform: translate(0, -50%);
 	-ms-transform: translate(0, -50%);
 	-o-transform: translate(0, -50%);
 	transform: translate(0, -50%);
 }
-#controls:not(.touching):hover > * {
+#controls:not(.touching).hover > * {
 	opacity: 1;
 	pointer-events: all;
 }
 /* this is for when the JavaScript hasn't loaded the values from storage yet */
-#controls:hover.pending > * {
+#controls.hover.pending > * {
 	opacity: .5;
 	pointer-events: none;
 }
@@ -186,7 +186,7 @@
 		opacity: 0;
 		pointer-events: none;
 	}
-	#variables:hover, #controls:not(.touching):hover {
+	#variables.hover, #controls:not(.touching).hover {
 		-webkit-transform: scale(1);
 		-ms-transform: scale(1);
 		-o-transform: scale(1);
@@ -194,11 +194,11 @@
 		-webkit-box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
 		box-shadow: 0 4px 10px 0 rgba(0,0,0,0.3);
 	}
-	#controls:not(.touching):hover {
+	#controls:not(.touching).hover {
 		-webkit-box-shadow: 0 -4px 10px 0 rgba(0,0,0,0.3);
 		box-shadow: 0 -4px 10px 0 rgba(0,0,0,0.3);
 	}
-	#variables:hover > *, #controls:not(.touching):hover > * {
+	#variables.hover > *, #controls:not(.touching).hover > * {
 		opacity: 1;
 		pointer-events: all;
 		-webkit-transform: none;
@@ -258,8 +258,8 @@
 	transform: rotate(180deg) translateX(50%) translateY(-50%);
 }
 /* hide arrows on hover */
-#variables:hover::before,
-#controls:hover::before {
+#variables.hover::before,
+#controls.hover::before {
 	opacity: 0;
 }
 
