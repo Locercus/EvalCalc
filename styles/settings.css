@@ -29,6 +29,12 @@
 		border-radius: 0;
 	}
 }
+@media(max-width: 700px) {
+	#settings {
+		display: block;
+		max-height: 100%;
+	}
+}
 #settings.hidden {
 	-webkit-transform: translate(-50%,-50%) scale(1.2);
 	-ms-transform: translate(-50%,-50%) scale(1.2);
@@ -106,6 +112,14 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 }
+@media(max-width:700px) {
+	#settings-list {
+		max-width: none;
+		height: 100px;
+		overflow-y: hidden;
+		overflow-x: auto;
+	}
+}
 #settings-list h1 {
 	padding: 0 15px;
 	margin-top: 45px;
@@ -118,6 +132,20 @@
 }
 #settings .setting.selected {
 	background: rgba(0,0,0,0.2);
+}
+@media(max-width:700px) {
+	#settings-list h1 {
+		height: 50px;
+		margin: 0;
+		text-align: center;
+		box-sizing: border-box;
+		padding-top: 10px;
+	}
+	#settings .setting {
+		display: inline-block;
+		width: auto;
+		margin: 0;
+	}
 }
 #settings-content {
 	width: 100%;
