@@ -161,6 +161,7 @@ $(document).ready(function(){
 				} else if( val == 'close' ) {
 					$("#keyboard").addClass('hidden');
 					$("#calculator").removeClass('keyboard');
+					$("#caret").addClass('hidden');
 				}
 			}
 		});
@@ -216,12 +217,18 @@ $(document).ready(function(){
 		}
 	});
 	
+	var inputTouchKeyboardDisabled = false;
 	$("#input").on('touchend', function(e){
 		e.preventDefault();
-		$("#keyboard").removeClass('hidden');
-		$("#calculator").addClass('keyboard');
-		$("#input").blur();
-		updateInputCaret();
+		reqFrame(function(){
+			if( inputTouchKeyboardDisabled ) {
+				return;
+			}
+			$("#keyboard").removeClass('hidden');
+			$("#calculator").addClass('keyboard');
+			$("#input").blur();
+			updateInputCaret();
+		});
 	});
 	
 	$(".toggle-button").click(function(){
@@ -364,6 +371,79 @@ $(document).ready(function(){
 	addBracketCompletion('(',')',40,41);
 	addBracketCompletion('[',']',91,93);
 	addBracketCompletion('{','}',123,125);
+	
+	//clear input by dragging to the right
+	(function(){
+		var touching = false, tcf = false, touchX = 0, touchStartX = 0;
+		var inputPosLeft = 0, caretWasEnabled = false;
+		$("#input").on('touchstart', function(e){
+			touching = true;
+			touchStartX = e.originalEvent.touches[0].pageX;
+			inputPosLeft = $("#input").offset().left;
+			caretWasEnabled = !$("#caret").hasClass('hidden');
+		});
+		$(document).on('touchmove', function(e){
+			var x = e.originalEvent.touches[0].pageX;
+			if( touching && !tcf ) {
+				if( x < touchStartX - 10 || x > touchStartX + 10 ) {
+					tcf = true;
+				}
+			}
+			if( tcf ) {
+				$("#caret").addClass('hidden');
+				touchX = x - touchStartX - inputPosLeft;
+				if( touchX < 0 ) {
+					touchX = Math.pow(Math.abs(touchX), 1/1.2) * -1;
+				}
+				$("#input").css({
+					'-webkit-transform': 'translateX(' + touchX + 'px)'
+				});
+				if( touchX > $(window).width() / 3 ) {
+					$("#input").addClass('clearPotential');
+				} else {
+					$("#input").removeClass('clearPotential');	
+				}
+			}
+		}).on('touchend', function(e){
+			touching = false;
+			if( tcf ) {
+				inputTouchKeyboardDisabled = true;
+				e.stopPropagation();
+				e.preventDefault();
+				tcf = false;
+				var wasCleared = $("#input").hasClass('clearPotential');
+				$("#input").removeClass('clearPotential');
+				$("#input").css({
+					'-webkit-transition': '-webkit-transform .3s cubic-bezier(.2,.3,0,1)',
+					'-o-transition': '-o-transform .3s cubic-bezier(.2,.3,0,1)',
+					'transition': 'transform .3s cubic-bezier(.2,.3,0,1)'
+				});
+				reqFrame(function(){
+					if( wasCleared ) {
+						$("#input").val("");
+						reqFrame(inputHandle);
+					}
+					var onEnd = function(){
+						$("#input").off('transitionend webkitTransitionEnd oTransitionEnd', onEnd);
+						$("#input").css({
+							'-webkit-transition': '',
+							'-o-transition': '',
+							'transition': ''
+						});
+						inputTouchKeyboardDisabled = false;
+						if( caretWasEnabled ) {
+							updateInputCaret();
+						}
+					}
+					$("#input").css({
+						'-webkit-transform': '',
+						'-o-transform': '',
+						'transform': ''
+					}).on('transitionend webkitTransitionEnd oTransitionEnd', onEnd);
+				});
+			}
+		});
+	})();
 	
 	function parseLabelType(i) {
 		if( i == 'p' ) {
