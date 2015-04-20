@@ -33,6 +33,9 @@ var tablecfg = {
 //data stored for the functions
 var tabled = {};
 var updateTable = function(){
+	try {
+		updateGraphFunctions();
+	} catch(err){}
 	var t = $("#output-graph #table-disp");
 	var functionKeys = {};
 	for( var i in graphFunctions ) {
@@ -61,8 +64,13 @@ var updateTable = function(){
 		row.append("<td>$$" + i + "$$</td>");
 		for( var j in tabled ) {
 			var v = tabled[j][i];
+			if( Math.round(v) != v ) {
+				v = v.toFixed(2);
+			}
 			if( typeof v == 'undefined' ) {
 				v = '?';
+			} else if( v == Infinity ) {
+				v = '\\infty';
 			}
 			row.append("<td>$$" + v + "$$</td>");
 		}
