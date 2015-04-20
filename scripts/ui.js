@@ -83,10 +83,12 @@ $(document).ready(function(){
 				$("#outputs").addClass('calc').removeClass('graph');
 				$("#variables").removeClass('chkb');
 				storage.data.outputState = "calc";
+				$("#controls .exc-graph").addClass('hidden');
 			} else {
 				$("#outputs").addClass('graph').removeClass('calc');
 				$("#variables").addClass('chkb');
 				storage.data.outputState = "graph";
+				$("#controls .exc-graph").removeClass('hidden');
 			}
 		});
 	});
@@ -106,6 +108,12 @@ $(document).ready(function(){
 	});
 	$("#cs-controls-close").click(function(){
 		$("#cs-controls").addClass('hidden');
+	});
+	$("#cs-table-btn").click(function(){
+		$("#output-graph").toggleClass('tbd');
+		if( $("#output-graph").hasClass('tbd') ) {
+			reqFrame(updateTable);
+		}
 	});
 	$("#settings-btn").click(function(){
 		$("#settings").toggleClass('hidden');

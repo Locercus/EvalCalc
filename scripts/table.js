@@ -72,5 +72,7 @@ var updateTable = function(){
 	try {
 		renderMathInElement(t[0]);
 	} catch(err){}
-	t.scrollTop(t.find("tr[index=" + tablecfg.scrollindex + "]").offset().top - t.offset().top);
+	reqFrame(function(){
+		t.scrollTop(t.find("tr[index=" + tablecfg.scrollindex + "]").offset().top - t.offset().top);
+	});
 }

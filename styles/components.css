@@ -80,6 +80,9 @@
 	opacity: 1;
 	pointer-events: all;
 }
+#controls > *.hidden {
+	display: none;
+}
 /* this is for when the JavaScript hasn't loaded the values from storage yet */
 #controls.hover.pending > * {
 	opacity: .5;
