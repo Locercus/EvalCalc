@@ -315,6 +315,7 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 		saveVariables();
 	}
 	updateGraphFunctions();
+	updateTable();
 }
 
 onStorageReady(function(){

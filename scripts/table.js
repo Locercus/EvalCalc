@@ -32,12 +32,14 @@ var tablecfg = {
 };
 //data stored for the functions
 var tabled = {};
+var tabletex = "";
 var updateTable = function(){
 	try {
 		updateGraphFunctions();
 	} catch(err){}
 	var t = $("#output-graph #table-disp");
 	var functionKeys = {};
+	tabled = {};
 	for( var i in graphFunctions ) {
 		tabled[i] = {};
 		functionKeys[i] = i;
@@ -54,25 +56,25 @@ var updateTable = function(){
 	var table = $("<table></table>");
 	var header = $("<tr></tr>");
 	header.append("<th>$$x$$</th>");
-	for( var i in functionKeys ) {
-		header.append("<th>$$" + functionKeys[i] + "$$</th>");
+	for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
+		header.append("<th>$$" + i + "$$</th>");
 	}
 	table.append(header);
-	for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
+	for( var j in tabled ) {
 		var row = $("<tr></tr>");
-		row.attr("index", i);
-		row.append("<td>$$" + i + "$$</td>");
-		for( var j in tabled ) {
-			var v = tabled[j][i];
+		row.attr("data-fn", j);
+		row.append("<td>$$" + j + "$$</td>");
+		for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
+			var v = parseFloat(tabled[j][i]);
 			if( Math.round(v) != v ) {
-				v = v.toFixed(2);
+				v = parseFloat(v.toFixed(2));
 			}
 			if( typeof v == 'undefined' ) {
 				v = '?';
 			} else if( v == Infinity ) {
 				v = '\\infty';
 			}
-			row.append("<td>$$" + v + "$$</td>");
+			row.append("<td index=" + i + ">$$" + v + "$$</td>");
 		}
 		table.append(row);
 	}
@@ -81,6 +83,12 @@ var updateTable = function(){
 		renderMathInElement(t[0]);
 	} catch(err){}
 	reqFrame(function(){
-		t.scrollTop(t.find("tr[index=" + tablecfg.scrollindex + "]").offset().top - t.offset().top);
+		t.scrollLeft(t.find("td[index=" + tablecfg.scrollindex + "]").offset().left - t.offset().left);
 	});
+	
+	tabletex = "\begin{tabular}{r|";
+	for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
+		"c";
+	}
+	tabletex += "}";
 }
