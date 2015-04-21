@@ -76,7 +76,6 @@ function generateTeX(node, parent) {
 		}
 		case 'FunctionAssignmentNode': {
 			var value = generateTeX(node.expr, node);
-			console.log(node.expr, value);
 			return node.name + "(" + node.params.join(", ") + ") = " + value;
 		}
 		case 'FunctionNode': {
