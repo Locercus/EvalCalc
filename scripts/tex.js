@@ -40,8 +40,6 @@ function escapeTeX(tex) {
 
 // I'm not using .toTex() function, as it oftentimes generates invalid LaTeX.
 
-// s = (3 * 4) / (sqrt(2) * sin(30deg)) + 5
-// 4 / 5 + 3
 function generateTeX(node, parent) {
 	switch(node.type) {
 		case 'ArrayNode': {
@@ -78,6 +76,7 @@ function generateTeX(node, parent) {
 		}
 		case 'FunctionAssignmentNode': {
 			var value = generateTeX(node.expr, node);
+			console.log(node.expr, value);
 			return node.name + "(" + node.params.join(", ") + ") = " + value;
 		}
 		case 'FunctionNode': {
@@ -87,7 +86,7 @@ function generateTeX(node, parent) {
 				args.push(generateTeX(this, node));
 			});
 
-			if(node.name.match(/[a-z]/i))
+			if(node.name.match(/^[a-z]$/i))
 				return node.name + "\\left(" + args.join(', ') + '\\right)';
 
 			switch(node.name) {
