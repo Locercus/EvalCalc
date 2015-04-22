@@ -38,57 +38,71 @@ var updateTable = function(){
 		updateGraphFunctions();
 	} catch(err){}
 	var t = $("#output-graph #table-disp");
-	var functionKeys = {};
 	tabled = {};
 	for( var i in graphFunctions ) {
-		tabled[i] = {};
-		functionKeys[i] = i;
 		var f = scope[i];
+		var k = stringScope[i][0];
+		tabled[k] = tabled[k] || {};
+		tabled[k][i] = {};
 		for( var j = tablecfg.lo; j < tablecfg.hi; j++ ) {
 			var val;
 			try {
 				val = f(j);
 			} catch(err){}
-			tabled[i][j] = val;
+			tabled[k][i][j] = val;
 		}
 	}
 	t.empty();
-	var table = $("<table></table>");
-	var header = $("<tr></tr>");
-	header.append("<th>$$x$$</th>");
-	for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
-		header.append("<th>$$" + i + "$$</th>");
-	}
-	table.append(header);
-	for( var j in tabled ) {
-		var row = $("<tr></tr>");
-		row.attr("data-fn", j);
-		row.append("<td>$$" + j + "$$</td>");
+	var table = $("<div class='tbl'></div>");
+	function createHeader(variable) {
+		var header = $("<div class='row header' v='" + variable + "'></div>");
+		header.append("<div class='cell head'>$$" + variable + "$$</div>");
 		for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
-			var v = parseFloat(tabled[j][i]);
-			if( Math.round(v) != v ) {
-				v = parseFloat(v.toFixed(2));
-			}
-			if( typeof v == 'undefined' ) {
-				v = '?';
-			} else if( v == Infinity ) {
-				v = '\\infty';
-			}
-			row.append("<td index=" + i + ">$$" + v + "$$</td>");
+			header.append("<div class='cell index'>$$" + i + "$$</div>");
 		}
-		table.append(row);
+		return header;
+	}
+	for( var k in tabled ) {
+		var n = tabled[k];
+		var obj = $("<div class='section'></div>");
+		obj.append(createHeader(k));
+		for( var j in n ) {
+			var row = $("<div class='row data'></div>");
+			row.attr("data-fn", j);
+			row.append("<div class='cell head'>$$" + j + "$$</div>");
+			for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
+				var v = parseFloat(n[j][i]);
+				if( Math.round(v) != v ) {
+					v = parseFloat(v.toFixed(2));
+				}
+				if( v == NaN ) {
+					v = '\\bigotimes';
+				} else if( v == Infinity ) {
+					v = '\\infty';
+				}
+				row.append("<div class='cell data' index='" + i + "'>$$" + v + "$$<div class='cb'>$$" + v + "$$</div></div>");
+			}
+			obj.append(row);
+		}
+		table.append(obj);
 	}
 	t.append(table);
 	try {
 		renderMathInElement(t[0]);
 	} catch(err){}
 	reqFrame(function(){
-		t.scrollLeft(t.find("td[index=" + tablecfg.scrollindex + "]").offset().left - t.offset().left);
+		// t.scrollLeft(t.find("td[index=" + tablecfg.scrollindex + "]").offset().left - t.offset().left);
+		t.find(".cell.data").each(function(){
+			$(this).find('.cb').css("width", $(this).find(".katex").outerWidth() );
+		});
 	});
 	
-	tabletex = "\begin{tabular}{r|";
+	tabletex = "\\begin{tabular}{r|";
 	for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {
 		"c";
+	}
+	for( var j in tabled ) {
+		tabletex += "x & 1 & 2 & 3 & 4 & 5 \\ \hline \\[-1em]";
 	}
 	tabletex += "}";
 }
