@@ -25,7 +25,7 @@
 
 $(document).ready(function(){
 	var inputTouchKeyboardDisabled = false;
-	$("#input").on('touchend', function(e){
+	/*$("#input").on('touchend', function(e){
 		e.preventDefault();
 		reqFrame(function(){
 			if( inputTouchKeyboardDisabled ) {
@@ -36,7 +36,7 @@ $(document).ready(function(){
 			$("#input").blur();
 			updateInputCaret();
 		});
-	});
+	});*/
 	
 	function addBracketCompletion(bracketOpen, bracketClose, keyCodeOpen, keyCodeClose) {
 		$("#input").on('keypress', function(e){
