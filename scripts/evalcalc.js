@@ -314,7 +314,6 @@ function updateVariables(scope, oldScope, stringScope, parse) {
 	if( variablesReady ) {
 		saveVariables();
 	}
-	updateGraphFunctions();
 	updateTable();
 }
 

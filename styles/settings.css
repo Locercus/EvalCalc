@@ -253,3 +253,11 @@
 	content: 'Close';
 	padding-top: 10px;
 }
+#settings-content li {
+	padding: 10px 0;
+	list-style: none;
+}
+#settings-content li .control {
+	display: inline-block;
+	float: right;
+}

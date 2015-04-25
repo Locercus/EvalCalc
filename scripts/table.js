@@ -33,7 +33,28 @@ var tablecfg = {
 //data stored for the functions
 var tabled = {};
 var tabletex = "";
+
+onStorageReady(function(){
+	if( storage.data.stUseVerticalTables == "true" ) {
+		$("#stUseVerticalTables").prop('checked', true);
+		$("#table-disp").addClass('vertical');
+	} else {
+		storage.data.stUseVerticalTables = "false";
+	}
+});
+$(document).ready(function(){
+	$("#stUseVerticalTables").change(function(){
+		storage.data.stUseVerticalTables = (storage.data.stUseVerticalTables == "true") ? "false" : "true";
+		if( storage.data.stUseVerticalTables == "true" ) {
+			$("#table-disp").addClass('vertical');
+		} else {
+			$("#table-disp").removeClass('vertical');
+		}
+	})
+});
 var updateTable = function(){
+	var startTime0 = Date.now();
+	console.log("Updating graph functions and table values... (" + startTime0 + ")");
 	try {
 		updateGraphFunctions();
 	} catch(err){}
@@ -52,6 +73,9 @@ var updateTable = function(){
 			tabled[k][i][j] = val;
 		}
 	}
+	console.log("Done (Task 0)! (" + (Date.now() - startTime0) + "ms)");
+	var startTime1 = Date.now();
+	console.log("Generating markup... (" + startTime1 + ")");
 	t.empty();
 	var table = $("<div class='tbl'></div>");
 	function createHeader(variable) {
@@ -86,16 +110,28 @@ var updateTable = function(){
 		}
 		table.append(obj);
 	}
+	console.log("Done (Task 1)! (" + (Date.now() - startTime1) + "ms)");
+	var startTime2 = Date.now();
+	console.log("Appending markup... (" + startTime2 + ")");
 	t.append(table);
-	try {
-		renderMathInElement(t[0]);
-	} catch(err){}
+	console.log("Done (Task 2)! (" + (Date.now() - startTime2) + "ms)");
+	var startTime3 = Date.now();
+	console.log("Fixing width on .cb for each data cell after one frame... (" + startTime3 + ")");
 	reqFrame(function(){
+		var frameTime0 = Date.now();
 		// t.scrollLeft(t.find("td[index=" + tablecfg.scrollindex + "]").offset().left - t.offset().left);
 		t.find(".cell.data").each(function(){
 			$(this).find('.cb').css("width", $(this).find(".katex").outerWidth() );
 		});
+		console.log("Done (Task 3)! (Task time: " + (Date.now() - frameTime0) + "ms; Frame time: " + (frameTime0 - startTime3)+ "ms)");
+		var startTime4 = Date.now();
+		reqFrame(function(){
+			try {
+				renderMathInElement(t[0]);
+			} catch(err){}
+		});
 	});
+	console.log("Done updating table!");
 	
 	tabletex = "\\begin{tabular}{r|";
 	for( var i = tablecfg.lo; i < tablecfg.hi; i++ ) {

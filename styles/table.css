@@ -26,6 +26,19 @@
 #table-disp .tbl {
 	position: relative;
 }
+#table-disp.vertical .tbl {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+#table-disp.vertical .tbl .section {
+	display: inline;
+	margin-left: 30px;
+}
+#table-disp.vertical .tbl .section:first-child {
+	margin-left: 0;
+}
+
 .tbl .row {
 	display: inline-block; /* removes maximum width of parent */
 	white-space: nowrap;
@@ -58,6 +71,12 @@
 	border-bottom: 1px solid #fff;
 	font-size: 16px;
 	position: relative;
+}
+#table-disp.vertical .tbl .row {
+	overflow: visible;
+}
+#table-disp.vertical .tbl .row .cell {
+	display: block;
 }
 .tbl .row .cell.head {
 	background: #fff;
@@ -102,10 +121,23 @@
 	-o-transition: -o-transform .3s cubic-bezier(.2,.3,0,1), opacity .3s cubic-bezier(.2,.3,0,1);
 	transition: transform .3s cubic-bezier(.2,.3,0,1), opacity .3s cubic-bezier(.2,.3,0,1);
 }
+#table-disp.vertical .tbl .row .cell.data .cb {
+	left: 0;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
 .tbl .row .cell.data:hover .cb {
 	-webkit-transform: translate(-50%,-50%) scale(1);
 	-ms-transform: translate(-50%,-50%) scale(1);
 	-o-transform: translate(-50%,-50%) scale(1);
 	transform: translate(-50%,-50%) scale(1);
 	opacity: 1;
+}
+#table-disp.vertical .tbl .row .cell.data:hover .cb {
+	-webkit-transform: translateY(-50%) scale(1);
+	-ms-transform: translateY(-50%) scale(1);
+	-o-transform: translateY(-50%) scale(1);
+	transform: translateY(-50%) scale(1);
 }

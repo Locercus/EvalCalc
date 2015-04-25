@@ -51,7 +51,9 @@ $(document).ready(function(){
 	}).keydown(function(){
 		$("#caret").addClass('hidden');
 	});
-	$(window).resize(updateInputCaret);
+	$(window).resize(function(){
+		$("#caret").addClass('hidden');
+	});
 	$("#keyboard .key").each(function(){
 		$(this).click(function(){
 			var val = $(this).attr('value');
