@@ -1,0 +1,253 @@
+/**
+ * Copyright 2015 Jonatan Nordentoft, Creeper32605
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.shadow(@intensity) {
+	@t-offset: (pow(1.8px, @intensity) * 1px);
+	@t-blur: (pow(1.8px, @intensity) * 4px);
+	@t-opacity: (.5 * ( @intensity / 100px ) + .12px);
+	@mt-shadow: 0 @t-offset @t-blur 0 rgba(0,0,0, @t-opacity);
+	@b-offset: (pow(1.5px, @intensity) * 1px);
+	@b-blur: ((1.3px * @intensity) * 4px);
+	@b-opacity: (.3 * ( @intensity / 100 ) + .24);
+	@mb-shadow: 0 @b-offset @b-blur 0 rgba(0,0,0, @b-opacity);
+	-webkit-box-shadow: @mt-shadow, @mb-shadow;
+	box-shadow: @mt-shadow, @mb-shadow;
+}
+.trfotrs(@time, @easing) {
+	-webkit-transition: -webkit-transform @time @easing 0s, opacity @time @easing 0s;
+	transition: transform @time @easing 0s, opacity @time @easing 0s;
+}
+.trfotcb(@time) {
+	.trfotrs(@time, cubic-bezier(.2,.3,0,1));
+}
+.transform(@t) {
+	-webkit-transform: @t;
+	-moz-transform: @t;
+	-ms-transform: @t;
+	-o-transform: @t;
+	transform: @t;
+}
+
+@background: #fff;
+@text: #000;
+@textlight: #fff;
+@accent: #387BFF;
+@base: #365363;
+
+button {
+	background: none;
+	border: none;
+	color: @accent;
+	.trfotcb(.3s);
+	font: inherit;
+	padding: .3em .7em;
+
+	&:focus {
+		outline: none;
+	}
+	&:active {
+		opacity: .5;
+	}
+}
+
+#app {
+	font-family: 'Lato', 'Roboto', 'Helvetica Neue', sans-serif;
+	font-weight: 300;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	background: @background;
+	color: @text;
+
+	#calculator {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+		background: @background;
+		.shadow(5);
+		.trfotcb(.3s);
+
+		max-width: 1000px;
+		max-height: 1000px;
+		overflow: hidden;
+
+		&.variablesOpen {
+			.transform(translateX(300px));
+		}
+
+		@media (min-width: 1000px) {
+			left: 50%;
+			.transform(translateX(-50%));
+
+			&.variablesOpen {
+				.transform(translateX(~"calc(-50% + 300px - (50vw - 500px))"));
+			}
+		}
+		@media (min-height: 1000px) {
+			top: 50%;
+			.transform(translateY(-50%));
+		}
+		@media (min-width: 1000px) and (min-height: 1000px) {
+			.transform(translate(-50%, -50%));
+			border-radius: 2px;
+		}
+
+		#outputs {
+			position: relative;
+			width: 100%;
+			height: ~"calc(100% - 56px)";
+			box-sizing: border-box;
+
+			.output {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+
+				&:before {
+					content: 'error';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					.transform(translate(-50%, calc(-50% + 20px)));
+					font-size: 2em;
+					color: @accent;
+					pointer-events: none;
+					opacity: 0;
+					.trfotcb(.3s);
+				}
+				&.error {
+					&:before {
+						opacity: 1;
+						.transform(translate(-50%, -50%));
+					}
+				}
+			}
+
+			#output-math {
+				font-size: 1.5em;
+			}
+		}
+		#input {
+			position: relative;
+			width: 100%;
+			height: 56px;
+			background: @base;
+			color: @textlight;
+			display: flex;
+
+			input {
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+				background: none;
+				border: none;
+				color: inherit;
+				font: inherit;
+				font-size: 1.5em;
+				padding: 0 10px;
+
+				&:focus {
+					outline: none;
+				}
+			}
+
+			#input-buttons {
+				position: relative;
+				height: 100%;
+				width: 128px;
+				display: flex;
+
+				button {
+					height: 100%;
+					width: 56px;
+					box-sizing: border-box;
+					padding: auto 10px;
+					color: lighten(@accent, 15%);
+					display: inline-block;
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+
+	#variables {
+		position: absolute;
+		width: 100%;
+		max-width: 300px;
+		height: 100%;
+		max-height: 1000px;
+		left: 0;
+		top: 50%;
+		background: @base;
+		.shadow(5);
+		.transform(translateY(-50%));
+		.trfotcb(.3s);
+		z-index: 11;
+
+		&.hidden {
+			@media (max-width: 1599px) {
+				.transform(translate(~"calc(-100% - 20px)", -50%));
+			}
+		}
+		@media (min-width: 1600px) {
+			z-index: 5;
+			.transform(translateY(-50%));
+			border-radius: 2px;
+			left: ~"calc(50vw - 800px)";
+		}
+
+		#variables-header {
+			position: relative;
+			background: rgba(0,0,0, 0.1);
+
+			#variables-search {
+				#vsearch-input {
+					width: 100%;
+					font: inherit;
+					-webkit-appearance: none;
+					box-sizing: border-box;
+					padding: 5px 10px;
+					border: none;
+
+					&:focus {
+						outline: none;
+					}
+				}
+			}
+			#variables-clear {
+				padding: 5px 10px;
+			}
+		}
+	}
+}

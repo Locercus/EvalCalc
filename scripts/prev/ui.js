@@ -22,9 +22,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-var reqFrame = window.requestAnimationFrame ||
-	window.webkitRequestAnimationFrame ||
-	function(f){setTimeout(f,17)};
 
 var reloadGraphOptions = function(){};
 
@@ -54,7 +51,6 @@ $(document).ready(function(){
 			}
 		}
 	});
-	initStorage();
 	
 	/* general UI */
 	$(".toggle-button").click(function(){

@@ -213,7 +213,7 @@ function generateTeX(node, parent) {
 				case 'sinh':
 				case 'tan':
 				case 'tanh': {
-					if(calc.degRad === 'deg')
+					if(degRadVal === 'deg')
 						return '\\text{' + node.name + '}_{_{_{_{_{\\llap{\\,360^{\\circ}}}}}}}\\!\\!\\left(' + args.join(',') + '\\right)';
 					else
 						return '\\text{' + node.name + '}_{_{_{_{_{\\llap{2\\pi\\enspace}}}}}}\\!\\!\\left(' + args.join(',') + '\\right)';
