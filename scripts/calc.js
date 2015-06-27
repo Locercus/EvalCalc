@@ -68,7 +68,7 @@ mod.add('calc', {
 		value = value.replace(/infty/g, 'Infinity');
 		value = value.replace(/infinity/g, 'Infinity');
 
-		$('#output-math').removeClass('error');	
+		$('#output-math').removeClass('error');
 		if (value === '') {
 			$('#calc-math, #calc-result > div').html('');
 		} else {
@@ -93,7 +93,7 @@ mod.add('calc', {
 
 				if (base === '0')
 					baseLength = 0;
-				
+
 				if (answer !== undefined) {
 					var tex = generateTeX(output, null);
 
@@ -137,20 +137,50 @@ mod.add('calc', {
 					if (rounded !== answer && !infinite)
 						approx = ' \\approx ' + rounded;
 
-					katex.render(tex, $('#calc-math')[0], {displayMode: true});
-					if (fraction !== undefined)
-						katex.render(fraction, $('#calc-fraction')[0], {displayMode: true});
-					else
-						$('#calc-fraction').empty();
-					if (exact !== undefined) {
-						exact = exact.replace(/Infinity/g, '\\infty');
-						katex.render(exact, $('#calc-exact')[0], {displayMode: true});
+					var vcalc = $('<div></div>');
+					var vfraction = $('<div></div>');
+					var vexact = $('<div></div>');
+					var vapprox = $('<div></div>');
+					exact = (exact || ' ').replace(/Infinity/g, '\\infty');
+					vcalc.html('$$' + tex + '$$');
+					vfraction.html('$$' + (fraction || ' ') + '$$');
+					vexact.html('$$' + (exact || ' ') + '$$');
+					vapprox.html('$$' + (approx || ' ') + '$$');
+					MathJax.Hub.Queue(
+						['Typeset', MathJax.Hub, vcalc[0]],
+						[function() {
+								ui.calculator.outputs.math.calc.html(vcalc.html());
+						}, 'all done']
+					);
+					if (fraction !== undefined) {
+						MathJax.Hub.Queue(
+							['Typeset', MathJax.Hub, vfraction[0]],
+							[function() {
+								ui.calculator.outputs.math.results.fraction.html(vfraction.html());
+							}, 'all done']
+						);
 					} else
-						$('#calc-exact').empty();
-					if (approx !== undefined)
-						katex.render(approx, $('#calc-approx')[0], {displayMode: true});
-					else
-						$('#calc-approx').empty();
+						ui.calculator.outputs.math.results.fraction.empty();
+
+					if (exact !== undefined) {
+						MathJax.Hub.Queue(
+							['Typeset', MathJax.Hub, vexact[0]],
+							[function() {
+								ui.calculator.outputs.math.results.exact.html(vexact.html());
+							}, 'all done']
+						);
+					} else
+						ui.calculator.outputs.math.results.exact.empty();
+
+					if (approx !== undefined) {
+						MathJax.Hub.Queue(
+							['Typeset', MathJax.Hub, vapprox[0]],
+							[function() {
+								ui.calculator.outputs.math.results.approx.html(vapprox.html());
+							}, 'all done']
+						);
+					} else
+						ui.calculator.outputs.math.results.approx.empty();
 
 					// reset variables to how it was before
 					scope = $.extend({}, oldScope); // clone, JavaScript is silly

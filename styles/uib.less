@@ -49,6 +49,11 @@
 	-o-transform: @t;
 	transform: @t;
 }
+.flex() {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
 
 @background: #fff;
 @text: #000;
@@ -70,6 +75,23 @@ button {
 	&:active {
 		opacity: .5;
 	}
+}
+
+#MathJax_Message {
+	position: fixed;
+	font-family: 'Lato', sans-serif;
+	top: 0;
+	right: 0;
+	bottom: auto!important;
+	left: auto!important;
+	pointer-events: none;
+	width: auto;
+	height: auto;
+	background: @background!important;
+	color: @text!important;
+	border: none!important;
+	border-radius: 2px;
+	font-size: .5em!important;
 }
 
 #app {
@@ -164,7 +186,7 @@ button {
 			height: 56px;
 			background: @base;
 			color: @textlight;
-			display: flex;
+			.flex();
 
 			input {
 				width: 100%;
@@ -186,7 +208,7 @@ button {
 				position: relative;
 				height: 100%;
 				width: 128px;
-				display: flex;
+				.flex();
 
 				button {
 					height: 100%;
@@ -227,9 +249,17 @@ button {
 			left: ~"calc(50vw - 800px)";
 		}
 
+		&.hidden #variables-toggle {
+			.transform(translateX(20px));
+		}
 		#variables-header {
 			position: relative;
 			background: rgba(0,0,0, 0.1);
+
+			#variables-toggle {
+				position: absolute;
+				left: 100%;
+			}
 
 			#variables-search {
 				#vsearch-input {

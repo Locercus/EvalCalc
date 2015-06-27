@@ -53,9 +53,15 @@ mod.add('ui-base', {
 		ui.calculator.input.buttons.append(ui.calculator.input.buttons.tidy = $('<button id="input-tidy">TIDY</button>'));
 		ui.app.append(ui.variables = $('<div id="variables" class="hidden"></div>'));
 		ui.variables.append(ui.variables.header = $('<header id="variables-header"></header>'));
+		ui.variables.header.append(ui.variables.header.toggle = $('<button id="variables-toggle">V</button>'));
 		ui.variables.header.append(ui.variables.header.search = $('<div id="variables-search"></div>'));
 		ui.variables.header.search.append(ui.variables.header.search.input = $('<input type="search" id="vsearch-input" placeholder="Search">'));
 		ui.variables.header.append(ui.variables.header.clear = $('<button id="variables-clear">CLR</button>'));
+
+		ui.calculator.outputs.math.calc.addClass('tjax');
+		ui.calculator.outputs.math.results.fraction.addClass('tjax');
+		ui.calculator.outputs.math.results.exact.addClass('tjax');
+		ui.calculator.outputs.math.results.approx.addClass('tjax');
 
 		ui.calculator.input.input.on('input', function() {
 			calc.handle($(this).val());
@@ -76,15 +82,21 @@ mod.add('ui-base', {
 			if(valid) {
 				if(output === 'undefined')
 					output = '';
-
-				ui.calculator.input.input.val(output).focus();
 			}
 		});
 
+		ui.variables.header.toggle.click(function() {
+			ui.variables.setOpen(!ui.variables.getOpen());
+			updateMenu();
+		});
+
 		ui.variables.setOpen = function(open) {
-			$(this).toggleClass('hidden', !open);
+			ui.variables.toggleClass('hidden', !open);
 			ui.calculator.toggleClass('variablesOpen', open);
 		};
+		ui.variables.getOpen = function() {
+			return !ui.variables.hasClass('hidden');
+		}
 
 		var lastWindowWidth = 0;
 		$(window).resize(function() {

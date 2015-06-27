@@ -79,11 +79,11 @@ function generateTeX(node, parent) {
 			return node.name + "(" + node.params.join(", ") + ") = " + value;
 		}
 		case 'FunctionNode': {
-			var args = [];
+			var args = ['','','','','','','','','',''];
 
-			$.each(node.args, function() {
-				args.push(generateTeX(this, node));
-			});
+			for (var i in node.args) {
+				args[i] = (generateTeX(node.args[i], node));
+			}
 
 			if(node.name.match(/^[a-z]$/i))
 				return node.name + "\\left(" + args.join(', ') + '\\right)';
@@ -139,10 +139,7 @@ function generateTeX(node, parent) {
 					return '\\text{norm}\\left(' + args.join(', ') + '\\right)';
 				}
 				case 'nthRoot': {
-					// KaTeX doesn't support optional arguments to \sqrt, so this is a super dirty and broken fix - 11/4/2014
-					// This doesn't look nearly as good as it should, but it's the closest we'll get
-					// LaTeX is not very friendly to overlapping text, and the horribly broken KaTeX implementation doesn't make it any better
-					return '^{' + args[1] + '}\\enspace\\ \\llap{\\sqrt{' + args[0] + '}}';
+					return '\\sqrt[' + args[1] + ']{' + args[0] + '}';
 				}
 				case 'pow': {
 					return args[0] + '^{' + args[1] + '}';

@@ -23,151 +23,158 @@
  * limitations under the License.
  */
 
-if ('electron' in window) {
-	var remote = require('remote');
-	var Menu = remote.require('menu');
-	window.updateMenu = function() {
-		var template = [
-			{
-				label: 'EvalCalc',
-				submenu: [
-					{
-						label: 'About EvalCalc',
-						selector: 'orderFrontStandardAboutPanel:'
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: 'Services',
-						submenu: []
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: 'Hide EvalCalc',
-						accelerator: 'Command+H',
-						selector: 'hide:'
-					},
-					{
-						label: 'Hide Others',
-						accelerator: 'Command+Shift+H',
-						selector: 'hideOtherApplications:'
-					},
-					{
-						label: 'Show All',
-						selector: 'unhideAllApplications:'
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: 'Quit',
-						accelerator: 'Command+Q',
-						selector: 'terminate:'
-					}
-				]
-			},
-			{
-				label: 'Edit',
-				submenu: [
-					{
-						label: 'Undo',
-						accelerator: 'Command+Z',
-						selector: 'undo:'
-					},
-					{
-						label: 'Redo',
-						accelerator: 'Shift+Command+Z',
-						selector: 'redo:'
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: 'Cut',
-						accelerator: 'Command+X',
-						selector: 'cut:'
-					},
-					{
-						label: 'Copy',
-						accelerator: 'Command+C',
-						selector: 'copy:'
-					},
-					{
-						label: 'Paste',
-						accelerator: 'Command+V',
-						selector: 'paste:'
-					},
-					{
-						label: 'Select All',
-						accelerator: 'Command+A',
-						selector: 'selectAll:'
-					}
-				]
-			},
-			{
-				label: 'View',
-				submenu: [
-					{
-						label: 'Reload',
-						accelerator: 'Command+R',
-						click: function() { remote.getCurrentWindow().reload(); }
-					},
-					{
-						label: 'Toggle DevTools',
-						accelerator: 'Alt+Command+I',
-						click: function() { remote.getCurrentWindow().toggleDevTools(); }
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: 'Variables',
-						type: 'checkbox',
-						enabled: ($(window).width() < 1600),
-						accelerator: 'Command+B',
-						click: function(e) { ui.variables.setOpen(!e.checked); }
-					}
-				]
-			},
-			{
-				label: 'Window',
-				submenu: [
-					{
-						label: 'Minimize',
-						accelerator: 'Command+M',
-						selector: 'performMiniaturize:'
-					},
-					{
-						label: 'Close',
-						accelerator: 'Command+W',
-						selector: 'performClose:'
-					},
-					{
-						type: 'separator'
-					},
-					{
-						label: 'Bring All to Front',
-						selector: 'arrangeInFront:'
-					}
-				]
-			},
-			{
-				label: 'Help',
-				submenu: [
-					{
-						label: 'Math Functions',
-						click: function() { alert('Not Implemented yet'); }
-					}
-				]
-			}
-		];
-		menu = Menu.buildFromTemplate(template);
-		Menu.setApplicationMenu(menu);	
-	};
-	updateMenu();
-} else {
-	window.updateMenu = function(){};
-}
+mod.add('menubar', {
+	version: '0.1',
+	author: 'EvalCalc',
+	description: 'Menubar module'
+}, function() {
+	if ('process' in window && 'versions' in process && 'electron' in process.versions) {
+		var remote = require('remote');
+		var Menu = remote.require('menu');
+		window.updateMenu = function() {
+			var template = [
+				{
+					label: 'EvalCalc',
+					submenu: [
+						{
+							label: 'About EvalCalc',
+							selector: 'orderFrontStandardAboutPanel:'
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Services',
+							submenu: []
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Hide EvalCalc',
+							accelerator: 'Command+H',
+							selector: 'hide:'
+						},
+						{
+							label: 'Hide Others',
+							accelerator: 'Command+Shift+H',
+							selector: 'hideOtherApplications:'
+						},
+						{
+							label: 'Show All',
+							selector: 'unhideAllApplications:'
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Quit',
+							accelerator: 'Command+Q',
+							selector: 'terminate:'
+						}
+					]
+				},
+				{
+					label: 'Edit',
+					submenu: [
+						{
+							label: 'Undo',
+							accelerator: 'Command+Z',
+							selector: 'undo:'
+						},
+						{
+							label: 'Redo',
+							accelerator: 'Shift+Command+Z',
+							selector: 'redo:'
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Cut',
+							accelerator: 'Command+X',
+							selector: 'cut:'
+						},
+						{
+							label: 'Copy',
+							accelerator: 'Command+C',
+							selector: 'copy:'
+						},
+						{
+							label: 'Paste',
+							accelerator: 'Command+V',
+							selector: 'paste:'
+						},
+						{
+							label: 'Select All',
+							accelerator: 'Command+A',
+							selector: 'selectAll:'
+						}
+					]
+				},
+				{
+					label: 'View',
+					submenu: [
+						{
+							label: 'Reload',
+							accelerator: 'Command+R',
+							click: function() { remote.getCurrentWindow().reload(); }
+						},
+						{
+							label: 'Toggle DevTools',
+							accelerator: 'Alt+Command+I',
+							click: function() { remote.getCurrentWindow().toggleDevTools(); }
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Variables',
+							type: 'checkbox',
+							enabled: ($(window).width() < 1600),
+							accelerator: 'Command+B',
+							checked: (('ui' in window)?ui.variables.getOpen():false),
+							click: function(e) { ui.variables.setOpen(e.checked); }
+						}
+					]
+				},
+				{
+					label: 'Window',
+					submenu: [
+						{
+							label: 'Minimize',
+							accelerator: 'Command+M',
+							selector: 'performMiniaturize:'
+						},
+						{
+							label: 'Close',
+							accelerator: 'Command+W',
+							selector: 'performClose:'
+						},
+						{
+							type: 'separator'
+						},
+						{
+							label: 'Bring All to Front',
+							selector: 'arrangeInFront:'
+						}
+					]
+				},
+				{
+					label: 'Help',
+					submenu: [
+						{
+							label: 'Math Functions',
+							click: function() { alert('Not Implemented yet'); }
+						}
+					]
+				}
+			];
+			menu = Menu.buildFromTemplate(template);
+			Menu.setApplicationMenu(menu);
+		};
+		updateMenu();
+	} else {
+		window.updateMenu = function(){};
+	}
+});

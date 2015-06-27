@@ -84,7 +84,7 @@ var mod = {
 		if (typeof module != 'function') {
 			throw new Error("Failed to add module " + name + ": module is not a function");
 		}
-		
+
 		//check if module identifier is already registered
 		if (name in mod.mod) {
 			throw new Error("Failed to add module " + name + ": module is a duplicate");
@@ -115,11 +115,13 @@ var mod = {
 document.onready = function(){
 	requestAnimationFrame(function() {
 		for ( var i in mod.ac) {
-			if ('init' in mod.ac[i]) {
-				try {
-					mod.ac[i].init();
-				} catch(err) {
-					console.log(err);
+			if (mod.ac[i] !== undefined) {
+				if ('init' in mod.ac[i]) {
+					try {
+						mod.ac[i].init();
+					} catch(err) {
+						console.log(err);
+					}
 				}
 			}
 		}
