@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Jonatan Nordentoft, Creeper32605
+ * Copyright 2015 Mia Nordentoft, Creeper32605
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
